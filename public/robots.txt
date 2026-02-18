@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://conciergeries-france.fr/sitemap.xml
+
+# Interdire l'accès aux pages d'administration
+Disallow: /admin/
+Disallow: /api/
+
+# Autoriser les robots d'indexation
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

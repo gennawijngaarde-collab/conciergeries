@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-label="Comment optimiser son annonce Airbnb pour plus de r�servations">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1260" cy="240" r="300" fill="#ffffff" opacity="0.10"/>
+  <rect x="120" y="160" width="1360" height="560" rx="32" fill="#0b1220" opacity="0.22"/>
+  <text x="160" y="250" fill="#ffedd5" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="30" font-weight="700">
+    Conseils
+  </text>
+  <text x="160" y="330" fill="#ffffff" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="60" font-weight="900">
+    Optimiser son annonce Airbnb
+  </text>
+  <text x="160" y="395" fill="#ffffff" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="40" font-weight="700" opacity="0.95">
+    Plus de r�servations
+  </text>
+  <text x="160" y="475" fill="#ffe4e6" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="28" font-weight="600">
+    Photos " Titre " Description " Tarifs " Avis
+  </text>
+  <text x="160" y="700" fill="#ffffff" opacity="0.85" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="24">
+    conciergeries-france
+  </text>
+</svg>
