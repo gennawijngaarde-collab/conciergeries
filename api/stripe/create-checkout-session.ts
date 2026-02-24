@@ -24,9 +24,7 @@ function requireEnv(name: string): string {
   return v;
 }
 
-const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY'), {
-  apiVersion: '2025-01-27.acacia',
-});
+const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY'));
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
