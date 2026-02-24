@@ -24,6 +24,14 @@ function requireEnv(name: string): string {
   return v;
 }
 
+function requireEnvAny(names: string[]): string {
+  for (const name of names) {
+    const v = process.env[name];
+    if (v) return v;
+  }
+  throw new Error(`Missing env var: ${names[0]}`);
+}
+
 const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY'));
 
 export default async function handler(req: any, res: any) {
@@ -37,8 +45,8 @@ export default async function handler(req: any, res: any) {
     const values: ReqBody = schema.parse(body);
 
     const baseUrl = requireEnv('PUBLIC_BASE_URL').replace(/\/+$/, '');
-    const priceStandard = requireEnv('STRIPE_PRICE_STANDARD');
-    const pricePremium = requireEnv('STRIPE_PRICE_PREMIUM');
+    const priceStandard = requireEnvAny(['STRIPE_STANDARD_PRICE', 'STRIPE_PRICE_STANDARD']);
+    const pricePremium = requireEnvAny(['STRIPE_PREMIUM_PRICE', 'STRIPE_PRICE_PREMIUM']);
 
     const price = values.plan === 'premium' ? pricePremium : priceStandard;
 
