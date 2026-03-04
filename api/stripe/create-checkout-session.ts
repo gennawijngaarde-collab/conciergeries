@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
 
 const schema = z.object({
   plan: z.enum(['standard', 'premium']),
@@ -41,6 +42,17 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
+    const authHeader = (req.headers?.authorization ?? req.headers?.Authorization) as string | undefined;
+    const token =
+      typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')
+        ? authHeader.slice(7).trim()
+        : null;
+
+    if (!token) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+
     const body = (typeof req.body === 'string' ? JSON.parse(req.body) : req.body) as unknown;
     const values: ReqBody = schema.parse(body);
 
@@ -50,14 +62,32 @@ export default async function handler(req: any, res: any) {
 
     const price = values.plan === 'premium' ? pricePremium : priceStandard;
 
+    const supabaseUrl = requireEnvAny(['SUPABASE_URL', 'VITE_SUPABASE_URL']);
+    const supabaseAnonKey = requireEnvAny(['SUPABASE_ANON_KEY', 'VITE_SUPABASE_ANON_KEY']);
+    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !userData?.user) {
+      res.status(401).json({ error: 'Unauthorized' });
+      return;
+    }
+    const userId = userData.user.id;
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price, quantity: 1 }],
       customer_email: values.email,
       allow_promotion_codes: true,
+      client_reference_id: userId,
       success_url: `${baseUrl}/devenir-partenaire?success=1&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/devenir-partenaire?canceled=1`,
+      subscription_data: {
+        metadata: {
+          userId,
+          plan: values.plan,
+        },
+      },
       metadata: {
+        userId,
         plan: values.plan,
         conciergerieName: values.conciergerieName,
         contactName: values.contactName,

@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { Resend } from 'resend';
+import { createClient } from '@supabase/supabase-js';
 
 function requireEnv(name: string): string {
   const v = process.env[name];
@@ -7,9 +8,25 @@ function requireEnv(name: string): string {
   return v;
 }
 
+function requireEnvAny(names: string[]): string {
+  for (const name of names) {
+    const v = process.env[name];
+    if (v) return v;
+  }
+  throw new Error(`Missing env var: ${names[0]}`);
+}
+
 const stripe = new Stripe(requireEnv('STRIPE_SECRET_KEY'));
 
 const resend = new Resend(requireEnv('RESEND_API_KEY'));
+
+const supabaseAdmin = createClient(
+  requireEnvAny(['SUPABASE_URL', 'VITE_SUPABASE_URL']),
+  requireEnv('SUPABASE_SERVICE_ROLE_KEY'),
+  {
+    auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  }
+);
 
 async function readRawBody(req: any): Promise<Buffer> {
   const chunks: Buffer[] = [];
@@ -45,6 +62,30 @@ export default async function handler(req: any, res: any) {
   try {
     const adminEmail = requireEnv('ADMIN_NOTIFY_EMAIL');
 
+    const upsertSubscription = async (args: {
+      userId: string;
+      plan?: string | null;
+      status: string;
+      stripeCustomerId?: string | null;
+      stripeSubscriptionId?: string | null;
+      currentPeriodEnd?: number | null;
+    }) => {
+      const row = {
+        user_id: args.userId,
+        plan: (args.plan ?? 'standard').toLowerCase(),
+        status: args.status,
+        stripe_customer_id: args.stripeCustomerId ?? null,
+        stripe_subscription_id: args.stripeSubscriptionId ?? null,
+        current_period_end: args.currentPeriodEnd ? new Date(args.currentPeriodEnd * 1000).toISOString() : null,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { error } = await supabaseAdmin
+        .from('subscriptions')
+        .upsert(row, { onConflict: 'stripe_subscription_id' });
+      if (error) throw error;
+    };
+
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       const subscriptionId = typeof session.subscription === 'string' ? session.subscription : session.subscription?.id;
@@ -52,6 +93,19 @@ export default async function handler(req: any, res: any) {
 
       const metadata = session.metadata ?? {};
       const plan = metadata.plan ?? 'standard';
+      const userId = metadata.userId ?? session.client_reference_id;
+
+      if (subscriptionId && userId) {
+        const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        await upsertSubscription({
+          userId,
+          plan: (sub.metadata?.plan as string | undefined) ?? plan,
+          status: sub.status,
+          stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
+          stripeSubscriptionId: sub.id,
+          currentPeriodEnd: sub.current_period_end ?? null,
+        });
+      }
 
       await resend.emails.send({
         from: 'Conciergeries France <onboarding@resend.dev>',
@@ -79,6 +133,22 @@ export default async function handler(req: any, res: any) {
           <p><strong>customerId</strong>: ${escapeHtml(customerId ?? '')}</p>
         `,
       });
+    }
+
+    if (event.type === 'customer.subscription.updated' || event.type === 'customer.subscription.deleted') {
+      const sub = event.data.object as Stripe.Subscription;
+      const userId = (sub.metadata?.userId as string | undefined) ?? null;
+      const plan = (sub.metadata?.plan as string | undefined) ?? null;
+      if (userId) {
+        await upsertSubscription({
+          userId,
+          plan,
+          status: sub.status,
+          stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
+          stripeSubscriptionId: sub.id,
+          currentPeriodEnd: sub.current_period_end ?? null,
+        });
+      }
     }
 
     if (event.type === 'customer.subscription.deleted') {

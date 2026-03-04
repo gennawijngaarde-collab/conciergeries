@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, useWatch } from 'react-hook-form';
@@ -29,6 +29,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useAuth } from '@/context/AuthContext';
 
 const planSchema = z.enum(['standard', 'premium']);
 
@@ -57,6 +58,13 @@ const DevenirPartenaire = () => {
   const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const { user, session, loading: authLoading } = useAuth();
+
+  const accountLink = useMemo(() => {
+    const redirect = encodeURIComponent(location.pathname + location.search + location.hash);
+    return `/compte?redirect=${redirect}`;
+  }, [location.pathname, location.search, location.hash]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -90,9 +98,17 @@ const DevenirPartenaire = () => {
     setIsRedirectingToStripe(true);
 
     try {
+      const token = session?.access_token;
+      if (!token) {
+        throw new Error('Connectez-vous avant de payer.');
+      }
+
       const res = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(values),
       });
 
@@ -117,6 +133,9 @@ const DevenirPartenaire = () => {
           throw new Error(
             "API Stripe introuvable (404). Vérifie que le projet Vercel déployé contient bien le dossier `api/` et redeploie."
           );
+        }
+        if (res.status === 401) {
+          throw new Error('Veuillez vous connecter avant de payer.');
         }
 
         throw new Error(`${baseMsg} (HTTP ${res.status})`);
@@ -254,6 +273,22 @@ const DevenirPartenaire = () => {
             Le Premium ajoute de la mise en avant et un badge visible dans l&apos;annuaire.
           </p>
         </div>
+
+        {!authLoading && !user && (
+          <div className="mb-8">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <div className="font-semibold">Connexion requise</div>
+                <div className="text-amber-800">
+                  Pour payer et créer votre accès à l&apos;espace partenaire, connectez-vous (ou créez un compte).
+                </div>
+              </div>
+              <Button asChild className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800">
+                <Link to={accountLink}>Se connecter</Link>
+              </Button>
+            </div>
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Standard */}
@@ -646,11 +681,17 @@ const DevenirPartenaire = () => {
 
                     <Button
                       type="submit"
-                      disabled={isRedirectingToStripe}
+                      disabled={isRedirectingToStripe || authLoading || !user}
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-6 disabled:opacity-70"
                     >
                       <BadgeCheck className="w-4 h-4 mr-2" />
-                      {isRedirectingToStripe ? 'Redirection vers Stripe…' : 'Payer et envoyer la demande'}
+                      {authLoading
+                        ? 'Chargement…'
+                        : !user
+                          ? 'Connectez-vous pour payer'
+                          : isRedirectingToStripe
+                            ? 'Redirection vers Stripe…'
+                            : 'Payer et envoyer la demande'}
                     </Button>
 
                     <div className="text-xs text-gray-500">

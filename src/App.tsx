@@ -11,6 +11,9 @@ import { MentionsLegales, Confidentialite, CGV } from '@/pages/Legal';
 import NotFound from '@/pages/NotFound';
 import DevenirPartenaire from '@/pages/DevenirPartenaire';
 import Devis from '@/pages/Devis';
+import Account from '@/pages/Account';
+import PartnerDashboard from '@/pages/PartnerDashboard';
+import RequireAuth from '@/components/RequireAuth';
 
 function App() {
   return (
@@ -27,6 +30,15 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/devenir-partenaire" element={<DevenirPartenaire />} />
           <Route path="/devis" element={<Devis />} />
+          <Route path="/compte" element={<Account />} />
+          <Route
+            path="/espace-partenaire"
+            element={
+              <RequireAuth>
+                <PartnerDashboard />
+              </RequireAuth>
+            }
+          />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="/cgv" element={<CGV />} />
