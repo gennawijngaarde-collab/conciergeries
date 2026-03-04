@@ -97,13 +97,14 @@ export default async function handler(req: any, res: any) {
 
       if (subscriptionId && userId) {
         const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
         await upsertSubscription({
           userId,
           plan: (sub.metadata?.plan as string | undefined) ?? plan,
           status: sub.status,
           stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
           stripeSubscriptionId: sub.id,
-          currentPeriodEnd: sub.current_period_end ?? null,
+          currentPeriodEnd,
         });
       }
 
@@ -140,13 +141,14 @@ export default async function handler(req: any, res: any) {
       const userId = (sub.metadata?.userId as string | undefined) ?? null;
       const plan = (sub.metadata?.plan as string | undefined) ?? null;
       if (userId) {
+        const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
         await upsertSubscription({
           userId,
           plan,
           status: sub.status,
           stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
           stripeSubscriptionId: sub.id,
-          currentPeriodEnd: sub.current_period_end ?? null,
+          currentPeriodEnd,
         });
       }
     }
