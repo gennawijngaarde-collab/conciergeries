@@ -63,7 +63,7 @@ const Conciergeries = () => {
     return () => {
       mounted = false;
     };
-  }, [conciergeries]);
+  }, []);
 
   // Extract unique services and platforms
   const allServices = useMemo(() => {
@@ -76,7 +76,7 @@ const Conciergeries = () => {
     const platforms = new Set<string>();
     conciergeries.forEach(c => c.platforms.forEach(p => platforms.add(p)));
     return [...platforms].sort();
-  }, []);
+  }, [conciergeries]);
 
   // Filter conciergeries
   const filteredConciergeries = useMemo(() => {
@@ -100,7 +100,36 @@ const Conciergeries = () => {
       }
       return true;
     });
-  }, [searchQuery, minRating, selectedServices, selectedPlatforms]);
+  }, [conciergeries, searchQuery, minRating, selectedServices, selectedPlatforms]);
+
+  // Prioritize paid listings in directory: Premium first, then Standard, then others.
+  const prioritizedConciergeries = useMemo(() => {
+    const planRank = (c: Conciergerie) => {
+      const p = String(c.listingPlan ?? '').toLowerCase();
+      if (p === 'premium') return 2;
+      if (p === 'standard') return 1;
+      return 0;
+    };
+    const hasPartnerSignals = (c: Conciergerie) => Boolean(c.logoUrl);
+
+    return [...filteredConciergeries].sort((a, b) => {
+      const r = planRank(b) - planRank(a);
+      if (r !== 0) return r;
+
+      // Within the same plan, prefer subscribed/partner profiles when detectable.
+      const pr = Number(hasPartnerSignals(b)) - Number(hasPartnerSignals(a));
+      if (pr !== 0) return pr;
+
+      // Then by popularity/quality.
+      const rr = (b.reviews ?? 0) - (a.reviews ?? 0);
+      if (rr !== 0) return rr;
+      const rating = (b.rating ?? 0) - (a.rating ?? 0);
+      if (rating !== 0) return rating;
+
+      // Stable fallback.
+      return String(a.name).localeCompare(String(b.name), 'fr', { sensitivity: 'base' });
+    });
+  }, [filteredConciergeries]);
 
   const getLogoSrc = (c: Conciergerie) => {
     if (c.logoUrl) return c.logoUrl;
@@ -357,7 +386,7 @@ const Conciergeries = () => {
 
             {viewMode === 'grid' ? (
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filteredConciergeries.map((conciergerie) => (
+                {prioritizedConciergeries.map((conciergerie) => (
                   <Card key={conciergerie.id} className="group overflow-hidden hover:shadow-xl transition-shadow">
                     <CardContent className="p-0">
                       <div className="relative h-32 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
@@ -442,7 +471,7 @@ const Conciergeries = () => {
               </div>
             ) : (
               <Card className="h-[600px] overflow-hidden">
-                <Map conciergeries={filteredConciergeries} />
+                <Map conciergeries={prioritizedConciergeries} />
               </Card>
             )}
 
