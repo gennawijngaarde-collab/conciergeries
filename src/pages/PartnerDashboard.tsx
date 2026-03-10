@@ -2,7 +2,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -371,57 +380,92 @@ export default function PartnerDashboard() {
   const isActive = ['active', 'trialing'].includes((sub?.status ?? '').toLowerCase());
   const canOpenPortal = Boolean(sub?.stripe_customer_id);
   const planLabel = (sub?.plan ?? '').toLowerCase() === 'premium' ? 'Premium' : 'Standard';
+  const listingStatus = String(profile?.subscription_status ?? sub?.status ?? 'inactive').toLowerCase();
+  const listingVisible = ['active', 'trialing'].includes(listingStatus);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-start justify-between gap-4 mb-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Espace partenaire</h1>
             <p className="text-sm text-gray-600 mt-1">{user?.email}</p>
+            <div className="flex items-center gap-2 mt-3">
+              <Badge className={statusBadge(sub?.status ?? 'inconnu')}>
+                {loading ? 'Chargement…' : sub?.status ?? 'Aucun abonnement'}
+              </Badge>
+              {sub?.plan && (
+                <Badge
+                  className={
+                    planLabel === 'Premium'
+                      ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                  }
+                >
+                  {planLabel}
+                </Badge>
+              )}
+              <Badge className={listingVisible ? 'bg-green-100 text-green-700 hover:bg-green-100' : 'bg-gray-100 text-gray-700 hover:bg-gray-100'}>
+                {listingVisible ? 'Fiche visible' : 'Fiche inactive'}
+              </Badge>
+            </div>
           </div>
-          <Button variant="outline" onClick={() => void signOut()}>
-            Se déconnecter
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button asChild variant="outline">
+              <Link to="/conciergeries">Voir l&apos;annuaire</Link>
+            </Button>
+            <Button variant="outline" onClick={() => void signOut()}>
+              Se déconnecter
+            </Button>
+          </div>
         </div>
 
-        <Card className="shadow-xl border-0">
-          <CardContent className="p-6 lg:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Badge className={statusBadge(sub?.status ?? 'inconnu')}>
-                    {loading ? 'Chargement…' : sub?.status ?? 'Aucun abonnement'}
-                  </Badge>
-                  {sub?.plan && (
-                    <Badge
-                      className={
-                        planLabel === 'Premium'
-                          ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
-                      }
-                    >
-                      {planLabel}
+        {(error || syncNote) && (
+          <div className="space-y-3 mb-6">
+            {error && (
+              <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+            {syncNote && (
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+                {syncNote}
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="shadow-xl border-0">
+              <CardHeader className="border-b">
+                <CardTitle>Abonnement</CardTitle>
+                <CardDescription>Gère ton abonnement Stripe et vérifie le statut.</CardDescription>
+                <CardAction>
+                  <div className="flex items-center gap-2">
+                    <Badge className={statusBadge(sub?.status ?? 'inconnu')}>
+                      {loading ? 'Chargement…' : sub?.status ?? 'Aucun abonnement'}
                     </Badge>
-                  )}
-                </div>
-
-                {error && (
-                  <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 mb-4">
-                    {error}
+                    {sub?.plan && (
+                      <Badge
+                        className={
+                          planLabel === 'Premium'
+                            ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                        }
+                      >
+                        {planLabel}
+                      </Badge>
+                    )}
                   </div>
-                )}
-                {syncNote && (
-                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 mb-4">
-                    {syncNote}
-                  </div>
-                )}
+                </CardAction>
+              </CardHeader>
 
-                {!loading && !sub && (
+              <CardContent className="space-y-4">
+                {!loading && !sub ? (
                   <div className="space-y-3">
-                    <p className="text-gray-700">
-                      Aucun abonnement actif détecté. Pour apparaître dans l&apos;annuaire avec un badge, choisissez
-                      Standard ou Premium.
+                    <p className="text-sm text-gray-700">
+                      Aucun abonnement détecté. Pour apparaître dans l&apos;annuaire avec un badge, choisissez Standard ou Premium.
                     </p>
                     {lastSessionId && (
                       <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing}>
@@ -429,32 +473,190 @@ export default function PartnerDashboard() {
                       </Button>
                     )}
                   </div>
-                )}
-
-                {!loading && sub && (
-                  <div className="text-sm text-gray-700 space-y-1">
-                    <div>
-                      <span className="text-gray-500">Plan</span> : <strong>{planLabel}</strong>
+                ) : (
+                  <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                    <div className="rounded-lg border bg-white p-4">
+                      <div className="text-gray-500">Plan</div>
+                      <div className="font-semibold text-gray-900">{sub?.plan ? planLabel : '—'}</div>
                     </div>
-                    {sub.current_period_end && (
-                      <div>
-                        <span className="text-gray-500">Prochaine échéance</span> :{' '}
-                        <strong>{new Date(sub.current_period_end).toLocaleDateString('fr-FR')}</strong>
+                    <div className="rounded-lg border bg-white p-4">
+                      <div className="text-gray-500">Prochaine échéance</div>
+                      <div className="font-semibold text-gray-900">
+                        {sub?.current_period_end ? new Date(sub.current_period_end).toLocaleDateString('fr-FR') : '—'}
                       </div>
-                    )}
-                    {sub.stripe_subscription_id && (
-                      <div className="text-xs text-gray-500">
-                        Référence Stripe: <code className="bg-gray-100 px-2 py-1 rounded">{sub.stripe_subscription_id}</code>
+                    </div>
+                    <div className="rounded-lg border bg-white p-4">
+                      <div className="text-gray-500">Référence Stripe</div>
+                      <div className="font-mono text-xs text-gray-800 break-all">
+                        {sub?.stripe_subscription_id ?? '—'}
                       </div>
-                    )}
+                    </div>
                   </div>
                 )}
-              </div>
+              </CardContent>
+            </Card>
 
-              <div className="flex flex-col gap-3 sm:min-w-56">
+            <Card className="shadow-xl border-0">
+              <CardHeader className="border-b">
+                <CardTitle>Ma fiche conciergerie</CardTitle>
+                <CardDescription>Renseigne les infos qui apparaissent dans l’annuaire.</CardDescription>
+                <CardAction>
+                  {profile?.slug ? (
+                    <Button asChild variant="outline">
+                      <Link to={`/conciergerie/${profile.slug}`}>Aperçu</Link>
+                    </Button>
+                  ) : null}
+                </CardAction>
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+                {profileMsg && (
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+                    {profileMsg}
+                  </div>
+                )}
+
+                {profileLoading ? (
+                  <div className="text-sm text-gray-600">Chargement de la fiche…</div>
+                ) : profileTableMissing ? (
+                  <div className="text-sm text-gray-700 space-y-3">
+                    <p>Une configuration Supabase est requise pour activer les fiches conciergerie.</p>
+                    <p className="text-gray-600">
+                      Exécute <code className="bg-gray-100 px-2 py-1 rounded">supabase/partner_profiles.sql</code> dans Supabase,
+                      puis clique sur <strong>Recharger</strong>.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Nom *</label>
+                        <Input
+                          value={draft.name}
+                          onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+                          placeholder="Nom de la conciergerie"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Villes / zones *</label>
+                        <Input
+                          value={draft.city}
+                          onChange={(e) => setDraft((d) => ({ ...d, city: e.target.value }))}
+                          placeholder="Ex: Paris, Lyon, Bordeaux…"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-sm font-medium text-gray-700">Description *</label>
+                        <Textarea
+                          value={draft.description}
+                          onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))}
+                          rows={6}
+                          placeholder="Présente tes services, ton positionnement, tes points forts…"
+                        />
+                        <div className="mt-2 text-xs text-gray-500">
+                          Minimum recommandé: 30 caractères. Actuel: <strong>{draft.description.trim().length}</strong>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Site web</label>
+                        <Input
+                          value={draft.website}
+                          onChange={(e) => setDraft((d) => ({ ...d, website: e.target.value }))}
+                          placeholder="https://…"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Logo (URL)</label>
+                        <Input
+                          value={draft.logoUrl}
+                          onChange={(e) => setDraft((d) => ({ ...d, logoUrl: e.target.value }))}
+                          placeholder="https://…/logo.png"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Téléphone</label>
+                        <Input
+                          value={draft.phone}
+                          onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))}
+                          placeholder="+33…"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700">Email</label>
+                        <Input
+                          value={draft.email}
+                          onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+                          placeholder="contact@…"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-sm font-medium text-gray-700">Adresse</label>
+                        <Input
+                          value={draft.address}
+                          onChange={(e) => setDraft((d) => ({ ...d, address: e.target.value }))}
+                          placeholder="Adresse (optionnel)"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-sm font-medium text-gray-700">Services (séparés par des virgules)</label>
+                        <Input
+                          value={draft.servicesCsv}
+                          onChange={(e) => setDraft((d) => ({ ...d, servicesCsv: e.target.value }))}
+                          placeholder="Gestion complète, Ménage, Accueil…"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="text-sm font-medium text-gray-700">Plateformes (séparées par des virgules)</label>
+                        <Input
+                          value={draft.platformsCsv}
+                          onChange={(e) => setDraft((d) => ({ ...d, platformsCsv: e.target.value }))}
+                          placeholder="Airbnb, Booking.com, Abritel…"
+                        />
+                      </div>
+                    </div>
+
+                    {profile?.slug && (
+                      <div className="text-xs text-gray-500">
+                        URL de votre fiche:{' '}
+                        <code className="bg-gray-100 px-2 py-1 rounded">/conciergerie/{profile.slug}</code>
+                      </div>
+                    )}
+                  </>
+                )}
+              </CardContent>
+
+              {!profileTableMissing && !profileLoading && (
+                <CardFooter className="border-t flex flex-col sm:flex-row gap-3">
+                  <Button
+                    onClick={() => void saveProfile()}
+                    disabled={profileBusy || !draft.name.trim() || !draft.city.trim() || draft.description.trim().length < 30}
+                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 w-full sm:w-auto"
+                  >
+                    {profileBusy ? 'Enregistrement…' : 'Enregistrer'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => void fetchProfile()}
+                    disabled={profileBusy}
+                    className="w-full sm:w-auto"
+                  >
+                    Recharger
+                  </Button>
+                </CardFooter>
+              )}
+            </Card>
+          </div>
+
+          <div className="space-y-6">
+            <Card className="shadow-xl border-0">
+              <CardHeader className="border-b">
+                <CardTitle>Actions rapides</CardTitle>
+                <CardDescription>Les actions les plus utiles, au même endroit.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
                 {sub && canOpenPortal ? (
                   <Button
-                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 w-full"
                     onClick={() => void openCustomerPortal()}
                     disabled={portalBusy}
                   >
@@ -463,186 +665,100 @@ export default function PartnerDashboard() {
                 ) : (
                   <Button
                     asChild
-                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
+                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 w-full"
                   >
-                    <Link to="/devenir-partenaire">S'abonner</Link>
+                    <Link to="/devenir-partenaire">S&apos;abonner</Link>
                   </Button>
                 )}
-                <Button asChild variant="outline">
-                  <Link to="/conciergeries">Voir l&apos;annuaire</Link>
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="shadow-xl border-0 mt-8">
-          <CardContent className="p-6 lg:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Ma fiche conciergerie</h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Complète ta fiche pour apparaître dans l’annuaire avec ton badge {planLabel}.
-                </p>
-              </div>
-              {profile?.slug && (
-                <Button asChild variant="outline">
-                  <Link to={`/conciergerie/${profile.slug}`}>Aperçu dans l’annuaire</Link>
-                </Button>
-              )}
-            </div>
-
-            {profileMsg && (
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 mb-4">
-                {profileMsg}
-              </div>
-            )}
-
-            {profileLoading ? (
-              <div className="text-sm text-gray-600">Chargement de la fiche…</div>
-            ) : profileTableMissing ? (
-              <div className="text-sm text-gray-700 space-y-3">
-                <p>
-                  Une configuration Supabase est requise pour activer les fiches conciergerie.
-                </p>
-                <p className="text-gray-600">
-                  Exécute <code className="bg-gray-100 px-2 py-1 rounded">supabase/partner_profiles.sql</code> dans Supabase,
-                  puis clique sur <strong>Recharger</strong>.
-                </p>
-              </div>
-            ) : (
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Nom *</label>
-                  <Input value={draft.name} onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))} placeholder="Nom de la conciergerie" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Villes / zones *</label>
-                  <Input value={draft.city} onChange={(e) => setDraft((d) => ({ ...d, city: e.target.value }))} placeholder="Ex: Paris, Lyon, Bordeaux…" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="text-sm font-medium text-gray-700">Description *</label>
-                  <Textarea value={draft.description} onChange={(e) => setDraft((d) => ({ ...d, description: e.target.value }))} rows={5} placeholder="Présente tes services, ton positionnement, tes points forts…" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Site web</label>
-                  <Input value={draft.website} onChange={(e) => setDraft((d) => ({ ...d, website: e.target.value }))} placeholder="https://…" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Logo (URL)</label>
-                  <Input value={draft.logoUrl} onChange={(e) => setDraft((d) => ({ ...d, logoUrl: e.target.value }))} placeholder="https://…/logo.png" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Téléphone</label>
-                  <Input value={draft.phone} onChange={(e) => setDraft((d) => ({ ...d, phone: e.target.value }))} placeholder="+33…" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
-                  <Input value={draft.email} onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))} placeholder="contact@…" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="text-sm font-medium text-gray-700">Adresse</label>
-                  <Input value={draft.address} onChange={(e) => setDraft((d) => ({ ...d, address: e.target.value }))} placeholder="Adresse (optionnel)" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="text-sm font-medium text-gray-700">Services (séparés par des virgules)</label>
-                  <Input value={draft.servicesCsv} onChange={(e) => setDraft((d) => ({ ...d, servicesCsv: e.target.value }))} placeholder="Gestion complète, Ménage, Accueil…" />
-                </div>
-                <div className="sm:col-span-2">
-                  <label className="text-sm font-medium text-gray-700">Plateformes (séparées par des virgules)</label>
-                  <Input value={draft.platformsCsv} onChange={(e) => setDraft((d) => ({ ...d, platformsCsv: e.target.value }))} placeholder="Airbnb, Booking.com, Abritel…" />
-                </div>
-
-                <div className="sm:col-span-2 flex flex-col sm:flex-row gap-3 pt-2">
-                  <Button
-                    onClick={() => void saveProfile()}
-                    disabled={profileBusy || !draft.name.trim() || !draft.city.trim() || draft.description.trim().length < 30}
-                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
-                  >
-                    {profileBusy ? 'Enregistrement…' : 'Enregistrer la fiche'}
+                {lastSessionId && (
+                  <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing} className="w-full">
+                    {syncing ? 'Synchronisation…' : 'Synchroniser mon paiement'}
                   </Button>
-                  <Button variant="outline" onClick={() => void fetchProfile()} disabled={profileBusy}>
-                    Recharger
-                  </Button>
-                  {profile && (
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button variant="destructive" disabled={profileBusy || deleteBusy}>
-                          Supprimer ma fiche
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Supprimer votre fiche ?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Cette action retire votre conciergerie de l’annuaire. Votre abonnement Stripe n’est pas annulé.
-                            Vous pourrez recréer une fiche plus tard depuis cet espace.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Annuler</AlertDialogCancel>
-                          <AlertDialogAction
-                            className="bg-destructive text-white hover:bg-destructive/90"
-                            onClick={() => void deleteProfile()}
-                          >
-                            {deleteBusy ? 'Suppression…' : 'Supprimer'}
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  )}
-                </div>
+                )}
+
+                <Separator />
 
                 {profile?.slug && (
-                  <div className="sm:col-span-2 text-xs text-gray-500">
-                    URL de votre fiche: <code className="bg-gray-100 px-2 py-1 rounded">/conciergerie/{profile.slug}</code>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to={`/conciergerie/${profile.slug}`}>Voir ma fiche publique</Link>
+                  </Button>
+                )}
+
+                <Button variant="outline" onClick={() => void fetchProfile()} disabled={profileBusy} className="w-full">
+                  Recharger la fiche
+                </Button>
+
+                {profile && (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" disabled={profileBusy || deleteBusy} className="w-full">
+                        Supprimer ma fiche
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Supprimer votre fiche ?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Cette action retire votre conciergerie de l’annuaire. Votre abonnement Stripe n’est pas annulé.
+                          Vous pourrez recréer une fiche plus tard depuis cet espace.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-destructive text-white hover:bg-destructive/90"
+                          onClick={() => void deleteProfile()}
+                        >
+                          {deleteBusy ? 'Suppression…' : 'Supprimer'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-xl border-0">
+              <CardHeader className="border-b">
+                <CardTitle>Sécurité</CardTitle>
+                <CardDescription>Change ton mot de passe à tout moment.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {pwdMsg && (
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+                    {pwdMsg}
                   </div>
                 )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
 
-        <Card className="shadow-xl border-0 mt-8">
-          <CardContent className="p-6 lg:p-8">
-            <h2 className="text-xl font-bold text-gray-900">Sécurité</h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Change ton mot de passe à tout moment.
-            </p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+                    <Input
+                      type="password"
+                      value={pwdDraft.password}
+                      onChange={(e) => setPwdDraft((d) => ({ ...d, password: e.target.value }))}
+                      placeholder="••••••••"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">Confirmer</label>
+                    <Input
+                      type="password"
+                      value={pwdDraft.confirm}
+                      onChange={(e) => setPwdDraft((d) => ({ ...d, confirm: e.target.value }))}
+                      placeholder="••••••••"
+                    />
+                  </div>
+                </div>
 
-            {pwdMsg && (
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 mt-4">
-                {pwdMsg}
-              </div>
-            )}
-
-            <div className="grid sm:grid-cols-2 gap-5 mt-5">
-              <div>
-                <label className="text-sm font-medium text-gray-700">Nouveau mot de passe</label>
-                <Input
-                  type="password"
-                  value={pwdDraft.password}
-                  onChange={(e) => setPwdDraft((d) => ({ ...d, password: e.target.value }))}
-                  placeholder="••••••••"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700">Confirmer</label>
-                <Input
-                  type="password"
-                  value={pwdDraft.confirm}
-                  onChange={(e) => setPwdDraft((d) => ({ ...d, confirm: e.target.value }))}
-                  placeholder="••••••••"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <Button onClick={() => void updatePassword()} disabled={pwdBusy}>
+                <Button onClick={() => void updatePassword()} disabled={pwdBusy} className="w-full">
                   {pwdBusy ? 'Mise à jour…' : 'Mettre à jour le mot de passe'}
                 </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
