@@ -35,6 +35,8 @@ export default function Account() {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [resetBusy, setResetBusy] = useState(false);
+  const [resetNote, setResetNote] = useState<string | null>(null);
 
   const redirectTo = useMemo(() => {
     const q = searchParams.get('redirect');
@@ -60,6 +62,7 @@ export default function Account() {
 
   const onSubmit = async (values: FormValues) => {
     setError(null);
+    setResetNote(null);
     setBusy(true);
     try {
       if (mode === 'signup') {
@@ -81,6 +84,27 @@ export default function Account() {
       setError(e?.message ?? 'Erreur inconnue');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const sendReset = async () => {
+    setError(null);
+    setResetNote(null);
+    const email = String(form.getValues('email') ?? '').trim();
+    if (!email) {
+      setResetNote('Renseignez votre email pour recevoir le lien.');
+      return;
+    }
+    setResetBusy(true);
+    try {
+      const redirectTo = `${window.location.origin}/reinitialiser-mot-de-passe`;
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+      setResetNote('Email envoyé. Vérifiez votre boîte de réception (et vos spams).');
+    } catch (e: any) {
+      setResetNote(e?.message ?? "Impossible d'envoyer l'email");
+    } finally {
+      setResetBusy(false);
     }
   };
 
@@ -150,6 +174,20 @@ export default function Account() {
                     </FormItem>
                   )}
                 />
+
+                {mode === 'login' && (
+                  <div className="flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => void sendReset()}
+                      disabled={resetBusy}
+                      className="text-sm text-blue-600 hover:underline disabled:opacity-50"
+                    >
+                      {resetBusy ? 'Envoi…' : 'Mot de passe oublié ?'}
+                    </button>
+                    {resetNote && <span className="text-xs text-gray-600">{resetNote}</span>}
+                  </div>
+                )}
 
                 <Button
                   type="submit"

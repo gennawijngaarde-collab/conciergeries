@@ -12,6 +12,7 @@ import NotFound from '@/pages/NotFound';
 import DevenirPartenaire from '@/pages/DevenirPartenaire';
 import Devis from '@/pages/Devis';
 import Account from '@/pages/Account';
+import ResetPassword from '@/pages/ResetPassword';
 import PartnerDashboard from '@/pages/PartnerDashboard';
 import RequireAuth from '@/components/RequireAuth';
 import FAQ from '@/pages/FAQ';
@@ -33,6 +34,7 @@ function App() {
           <Route path="/devis" element={<Devis />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/compte" element={<Account />} />
+          <Route path="/reinitialiser-mot-de-passe" element={<ResetPassword />} />
           <Route
             path="/espace-partenaire"
             element={

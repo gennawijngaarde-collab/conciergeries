@@ -5,6 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 
@@ -68,12 +79,16 @@ export default function PartnerDashboard() {
   const [syncing, setSyncing] = useState(false);
   const [syncNote, setSyncNote] = useState<string | null>(null);
   const [portalBusy, setPortalBusy] = useState(false);
+  const [pwdBusy, setPwdBusy] = useState(false);
+  const [pwdMsg, setPwdMsg] = useState<string | null>(null);
+  const [pwdDraft, setPwdDraft] = useState({ password: '', confirm: '' });
 
   const [profile, setProfile] = useState<PartnerProfileRow | null>(null);
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileBusy, setProfileBusy] = useState(false);
   const [profileMsg, setProfileMsg] = useState<string | null>(null);
   const [profileTableMissing, setProfileTableMissing] = useState(false);
+  const [deleteBusy, setDeleteBusy] = useState(false);
 
   const [draft, setDraft] = useState({
     name: '',
@@ -291,6 +306,7 @@ export default function PartnerDashboard() {
       if (error) throw error;
       setProfile((data as any) ?? null);
       setProfileMsg('Fiche enregistrée.');
+      window.dispatchEvent(new Event('partner-profile:changed'));
     } catch (e: any) {
       setProfileMsg(e?.message ?? 'Impossible d’enregistrer la fiche');
     } finally {
@@ -298,7 +314,62 @@ export default function PartnerDashboard() {
     }
   }, [user, draft, profile?.slug, profile?.plan, profile?.subscription_status, profile?.stripe_customer_id, profile?.stripe_subscription_id, sub?.plan, sub?.status, sub?.stripe_customer_id, sub?.stripe_subscription_id]);
 
+  const deleteProfile = useCallback(async () => {
+    if (!user) return;
+    setProfileMsg(null);
+    setDeleteBusy(true);
+    try {
+      const { error } = await supabase.from('partner_profiles').delete().eq('user_id', user.id);
+      if (error) throw error;
+      setProfile(null);
+      setDraft({
+        name: '',
+        city: '',
+        description: '',
+        website: '',
+        phone: '',
+        email: '',
+        address: '',
+        logoUrl: '',
+        servicesCsv: '',
+        platformsCsv: '',
+      });
+      setProfileMsg('Fiche supprimée.');
+      window.dispatchEvent(new Event('partner-profile:changed'));
+    } catch (e: any) {
+      setProfileMsg(e?.message ?? 'Impossible de supprimer la fiche');
+    } finally {
+      setDeleteBusy(false);
+    }
+  }, [user]);
+
+  const updatePassword = useCallback(async () => {
+    setPwdMsg(null);
+    const p = pwdDraft.password.trim();
+    const c = pwdDraft.confirm.trim();
+    if (p.length < 6) {
+      setPwdMsg('Mot de passe trop court (min. 6 caractères).');
+      return;
+    }
+    if (p !== c) {
+      setPwdMsg('Les mots de passe ne correspondent pas.');
+      return;
+    }
+    setPwdBusy(true);
+    try {
+      const { error } = await supabase.auth.updateUser({ password: p });
+      if (error) throw error;
+      setPwdDraft({ password: '', confirm: '' });
+      setPwdMsg('Mot de passe mis à jour.');
+    } catch (e: any) {
+      setPwdMsg(e?.message ?? 'Impossible de changer le mot de passe');
+    } finally {
+      setPwdBusy(false);
+    }
+  }, [pwdDraft.password, pwdDraft.confirm]);
+
   const isActive = ['active', 'trialing'].includes((sub?.status ?? '').toLowerCase());
+  const canOpenPortal = Boolean(sub?.stripe_customer_id);
   const planLabel = (sub?.plan ?? '').toLowerCase() === 'premium' ? 'Premium' : 'Standard';
 
   return (
@@ -381,16 +452,19 @@ export default function PartnerDashboard() {
               </div>
 
               <div className="flex flex-col gap-3 sm:min-w-56">
-                {isActive ? (
+                {sub && canOpenPortal ? (
                   <Button
                     className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
                     onClick={() => void openCustomerPortal()}
                     disabled={portalBusy}
                   >
-                    {portalBusy ? 'Ouverture…' : 'Gérer mon abonnement'}
+                    {portalBusy ? 'Ouverture…' : isActive ? 'Gérer mon abonnement' : 'Se réabonner / gérer'}
                   </Button>
                 ) : (
-                  <Button asChild className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800">
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
+                  >
                     <Link to="/devenir-partenaire">S'abonner</Link>
                   </Button>
                 )}
@@ -490,6 +564,33 @@ export default function PartnerDashboard() {
                   <Button variant="outline" onClick={() => void fetchProfile()} disabled={profileBusy}>
                     Recharger
                   </Button>
+                  {profile && (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" disabled={profileBusy || deleteBusy}>
+                          Supprimer ma fiche
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Supprimer votre fiche ?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Cette action retire votre conciergerie de l’annuaire. Votre abonnement Stripe n’est pas annulé.
+                            Vous pourrez recréer une fiche plus tard depuis cet espace.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Annuler</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-destructive text-white hover:bg-destructive/90"
+                            onClick={() => void deleteProfile()}
+                          >
+                            {deleteBusy ? 'Suppression…' : 'Supprimer'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  )}
                 </div>
 
                 {profile?.slug && (
@@ -499,6 +600,47 @@ export default function PartnerDashboard() {
                 )}
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-xl border-0 mt-8">
+          <CardContent className="p-6 lg:p-8">
+            <h2 className="text-xl font-bold text-gray-900">Sécurité</h2>
+            <p className="text-sm text-gray-600 mt-1">
+              Change ton mot de passe à tout moment.
+            </p>
+
+            {pwdMsg && (
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 mt-4">
+                {pwdMsg}
+              </div>
+            )}
+
+            <div className="grid sm:grid-cols-2 gap-5 mt-5">
+              <div>
+                <label className="text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+                <Input
+                  type="password"
+                  value={pwdDraft.password}
+                  onChange={(e) => setPwdDraft((d) => ({ ...d, password: e.target.value }))}
+                  placeholder="••••••••"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700">Confirmer</label>
+                <Input
+                  type="password"
+                  value={pwdDraft.confirm}
+                  onChange={(e) => setPwdDraft((d) => ({ ...d, confirm: e.target.value }))}
+                  placeholder="••••••••"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <Button onClick={() => void updatePassword()} disabled={pwdBusy}>
+                  {pwdBusy ? 'Mise à jour…' : 'Mettre à jour le mot de passe'}
+                </Button>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>

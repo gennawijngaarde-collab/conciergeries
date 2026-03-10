@@ -76,13 +76,14 @@ export default async function handler(req: any, res: any) {
     const stripeCustomerId =
       (typeof sub.customer === 'string' ? sub.customer : (sub.customer as any)?.id) ?? null;
 
+    const listingStatus = (sub as any)?.cancel_at_period_end ? 'canceled' : sub.status;
     const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
 
     const { error: upsertError } = await supabaseAdmin.from('subscriptions').upsert(
       {
         user_id: userId,
         plan: String(plan).toLowerCase(),
-        status: sub.status,
+        status: listingStatus,
         stripe_customer_id: stripeCustomerId,
         stripe_subscription_id: sub.id,
         current_period_end: currentPeriodEnd ? new Date(currentPeriodEnd * 1000).toISOString() : null,
@@ -96,7 +97,7 @@ export default async function handler(req: any, res: any) {
     const profilePayload: any = {
       user_id: userId,
       plan: String(plan).toLowerCase(),
-      subscription_status: sub.status,
+      subscription_status: listingStatus,
       stripe_customer_id: stripeCustomerId,
       stripe_subscription_id: sub.id,
       updated_at: new Date().toISOString(),
@@ -130,7 +131,7 @@ export default async function handler(req: any, res: any) {
       }
     }
 
-    res.status(200).json({ ok: true, status: sub.status, plan: String(plan).toLowerCase() });
+    res.status(200).json({ ok: true, status: listingStatus, plan: String(plan).toLowerCase() });
   } catch (err: any) {
     res.status(500).json({ error: err?.message ?? 'Sync failed' });
   }

@@ -26,9 +26,12 @@ export default function MyProfileButton() {
         setSlug(null);
       }
     }
+    const reload = () => void load();
+    window.addEventListener('partner-profile:changed', reload);
     void load();
     return () => {
       mounted = false;
+      window.removeEventListener('partner-profile:changed', reload);
     };
   }, [user]);
 

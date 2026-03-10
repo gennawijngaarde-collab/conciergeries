@@ -37,6 +37,14 @@ for select
 to anon, authenticated
 using (lower(subscription_status) in ('active', 'trialing'));
 
+-- Owners: can always read their own profile (even inactive).
+drop policy if exists "partner_profiles_owner_select" on public.partner_profiles;
+create policy "partner_profiles_owner_select"
+on public.partner_profiles
+for select
+to authenticated
+using (auth.uid() = user_id);
+
 -- Owners: can create/update their own profile.
 drop policy if exists "partner_profiles_owner_insert" on public.partner_profiles;
 create policy "partner_profiles_owner_insert"
@@ -52,4 +60,12 @@ for update
 to authenticated
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
+
+-- Owners: can delete their own profile.
+drop policy if exists "partner_profiles_owner_delete" on public.partner_profiles;
+create policy "partner_profiles_owner_delete"
+on public.partner_profiles
+for delete
+to authenticated
+using (auth.uid() = user_id);
 
