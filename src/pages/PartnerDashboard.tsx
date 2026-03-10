@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,41 +27,84 @@ function statusBadge(status: string) {
 }
 
 export default function PartnerDashboard() {
-  const { user, signOut } = useAuth();
+  const { user, session, signOut } = useAuth();
   const [sub, setSub] = useState<SubscriptionRow | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncNote, setSyncNote] = useState<string | null>(null);
+
+  const lastSessionId = useMemo(() => {
+    try {
+      return localStorage.getItem('stripe:lastCheckoutSessionId') || '';
+    } catch {
+      return '';
+    }
+  }, []);
+
+  const fetchSubscription = useCallback(async () => {
+    if (!user) return;
+    setError(null);
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      setSub((data as any) ?? null);
+    } catch (e: any) {
+      setError(e?.message ?? 'Erreur inconnue');
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
-    let mounted = true;
-    async function load() {
-      if (!user) return;
-      setError(null);
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('subscriptions')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-        if (error) throw error;
-        if (!mounted) return;
-        setSub((data as any) ?? null);
-      } catch (e: any) {
-        if (!mounted) return;
-        setError(e?.message ?? 'Erreur inconnue');
-      } finally {
-        if (!mounted) return;
-        setLoading(false);
-      }
+    void fetchSubscription();
+  }, [fetchSubscription]);
+
+  const syncFromStripe = useCallback(async () => {
+    setSyncNote(null);
+    setError(null);
+    const token = session?.access_token;
+    if (!token) {
+      setSyncNote('Veuillez vous reconnecter pour synchroniser.');
+      return;
     }
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, [user]);
+    if (!lastSessionId) {
+      setSyncNote("Aucune référence de paiement trouvée. Revenez depuis la page de paiement après validation.");
+      return;
+    }
+
+    setSyncing(true);
+    try {
+      const res = await fetch('/api/stripe/sync-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ sessionId: lastSessionId }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => '');
+        const msg = text?.trim() ? text.trim() : `Erreur HTTP ${res.status}`;
+        throw new Error(msg);
+      }
+
+      setSyncNote('Synchronisation effectuée. Rafraîchissement du statut…');
+      await fetchSubscription();
+    } catch (e: any) {
+      setSyncNote(e?.message ?? 'Synchronisation impossible');
+    } finally {
+      setSyncing(false);
+    }
+  }, [session?.access_token, lastSessionId, fetchSubscription]);
 
   const isActive = ['active', 'trialing'].includes((sub?.status ?? '').toLowerCase());
   const planLabel = (sub?.plan ?? '').toLowerCase() === 'premium' ? 'Premium' : 'Standard';
@@ -105,12 +148,24 @@ export default function PartnerDashboard() {
                     {error}
                   </div>
                 )}
+                {syncNote && (
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800 mb-4">
+                    {syncNote}
+                  </div>
+                )}
 
                 {!loading && !sub && (
-                  <p className="text-gray-700">
-                    Aucun abonnement actif détecté. Pour apparaître dans l&apos;annuaire avec un badge, choisissez
-                    Standard ou Premium.
-                  </p>
+                  <div className="space-y-3">
+                    <p className="text-gray-700">
+                      Aucun abonnement actif détecté. Pour apparaître dans l&apos;annuaire avec un badge, choisissez
+                      Standard ou Premium.
+                    </p>
+                    {lastSessionId && (
+                      <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing}>
+                        {syncing ? 'Synchronisation…' : 'Synchroniser mon paiement'}
+                      </Button>
+                    )}
+                  </div>
                 )}
 
                 {!loading && sub && (

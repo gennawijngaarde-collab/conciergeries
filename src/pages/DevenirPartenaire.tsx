@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -92,6 +92,15 @@ const DevenirPartenaire = () => {
   const success = searchParams.get('success') === '1';
   const canceled = searchParams.get('canceled') === '1';
   const sessionId = searchParams.get('session_id');
+
+  useEffect(() => {
+    if (!success || !sessionId) return;
+    try {
+      localStorage.setItem('stripe:lastCheckoutSessionId', sessionId);
+    } catch {
+      // ignore
+    }
+  }, [success, sessionId]);
 
   const onSubmit = async (values: FormValues) => {
     setSubmitError(null);
