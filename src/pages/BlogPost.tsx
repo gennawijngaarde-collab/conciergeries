@@ -10,17 +10,12 @@ import BlogCard from '@/components/BlogCard';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [imageError, setImageError] = useState(false);
   
   const post = blogPosts.find(p => p.slug === slug);
   
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
-
-  useEffect(() => {
-    setImageError(false);
-  }, [post.image]);
 
   // Get related posts (same category or tags)
   const relatedPosts = blogPosts
@@ -49,6 +44,24 @@ const BlogPost = () => {
     const cleaned = post.image.replace(/^\//, '');
     return `${import.meta.env.BASE_URL}${cleaned}`;
   }, [post.image]);
+  const fallbackSrc = useMemo(() => {
+    const cleaned = `images/blog/${post.slug}.svg`;
+    return `${import.meta.env.BASE_URL}${cleaned}`;
+  }, [post.slug]);
+
+  const [resolvedSrc, setResolvedSrc] = useState<string>('');
+
+  useEffect(() => {
+    setResolvedSrc(imageSrc || fallbackSrc);
+  }, [imageSrc, fallbackSrc]);
+
+  const handleImgError = () => {
+    if (resolvedSrc && resolvedSrc !== fallbackSrc) {
+      setResolvedSrc(fallbackSrc);
+      return;
+    }
+    setResolvedSrc('');
+  };
 
   // Convert markdown-like content to HTML
   const formatContent = (content: string) => {
@@ -136,13 +149,13 @@ const BlogPost = () => {
 
       {/* Featured Image */}
       <div className="relative h-64 sm:h-80 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
-        {!imageError && imageSrc && (
+        {resolvedSrc && (
           <img
-            src={imageSrc}
+            src={resolvedSrc}
             alt={imageAlt}
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
-            onError={() => setImageError(true)}
+            onError={handleImgError}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
@@ -151,7 +164,7 @@ const BlogPost = () => {
             <span className="text-5xl">📝</span>
           </div>
           <p className="text-white/80">
-            {imageError ? "Illustration indisponible" : "Illustration de l'article"}
+            {resolvedSrc ? "Illustration de l'article" : "Illustration indisponible"}
           </p>
         </div>
       </div>

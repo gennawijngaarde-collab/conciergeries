@@ -11,11 +11,7 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post, featured = false }: BlogCardProps) => {
-  const [imageError, setImageError] = useState(false);
-
-  useEffect(() => {
-    setImageError(false);
-  }, [post.image]);
+  const imageAlt = useMemo(() => post.imageAlt ?? post.title, [post.imageAlt, post.title]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -28,13 +24,30 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
 
   // Estimate reading time (200 words per minute)
   const readingTime = Math.ceil(post.content.split(' ').length / 200);
-  const imageAlt = useMemo(() => post.imageAlt ?? post.title, [post.imageAlt, post.title]);
   const imageSrc = useMemo(() => {
     if (!post.image) return '';
     if (/^https?:\/\//i.test(post.image)) return post.image;
     const cleaned = post.image.replace(/^\//, '');
     return `${import.meta.env.BASE_URL}${cleaned}`;
   }, [post.image]);
+  const fallbackSrc = useMemo(() => {
+    const cleaned = `images/blog/${post.slug}.svg`;
+    return `${import.meta.env.BASE_URL}${cleaned}`;
+  }, [post.slug]);
+
+  const [resolvedSrc, setResolvedSrc] = useState<string>('');
+
+  useEffect(() => {
+    setResolvedSrc(imageSrc || fallbackSrc);
+  }, [imageSrc, fallbackSrc]);
+
+  const handleImgError = () => {
+    if (resolvedSrc && resolvedSrc !== fallbackSrc) {
+      setResolvedSrc(fallbackSrc);
+      return;
+    }
+    setResolvedSrc('');
+  };
 
   if (featured) {
     return (
@@ -43,13 +56,13 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
           <div className="grid md:grid-cols-2 gap-0">
             {/* Image */}
             <div className="relative h-64 md:h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
-              {!imageError && imageSrc && (
+              {resolvedSrc && (
                 <img
-                  src={imageSrc}
+                  src={resolvedSrc}
                   alt={imageAlt}
                   className="absolute inset-0 w-full h-full object-cover"
                   loading="lazy"
-                  onError={() => setImageError(true)}
+                  onError={handleImgError}
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
@@ -110,13 +123,13 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
       <CardContent className="p-0 flex flex-col h-full">
         {/* Image */}
         <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
-          {!imageError && imageSrc && (
+          {resolvedSrc && (
             <img
-              src={imageSrc}
+              src={resolvedSrc}
               alt={imageAlt}
               className="absolute inset-0 w-full h-full object-cover"
               loading="lazy"
-              onError={() => setImageError(true)}
+              onError={handleImgError}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />

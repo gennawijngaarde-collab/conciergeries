@@ -14,6 +14,7 @@ import Devis from '@/pages/Devis';
 import Account from '@/pages/Account';
 import PartnerDashboard from '@/pages/PartnerDashboard';
 import RequireAuth from '@/components/RequireAuth';
+import FAQ from '@/pages/FAQ';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/devenir-partenaire" element={<DevenirPartenaire />} />
           <Route path="/devis" element={<Devis />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/compte" element={<Account />} />
           <Route
             path="/espace-partenaire"

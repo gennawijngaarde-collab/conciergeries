@@ -9,6 +9,7 @@ const Footer = () => {
       { label: 'Accueil', path: '/' },
       { label: 'Nos conciergeries', path: '/conciergeries' },
       { label: 'Blog', path: '/blog' },
+      { label: 'FAQ', path: '/faq' },
       { label: 'Devenir partenaire', path: '/devenir-partenaire' },
       { label: 'Contact', path: '/contact' },
     ],
