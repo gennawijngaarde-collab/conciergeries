@@ -74,7 +74,7 @@ export default async function handler(req: any, res: any) {
       return;
     }
 
-    const baseUrl = requireEnv('PUBLIC_BASE_URL').replace(/\\/+$/, '');
+    const baseUrl = requireEnv('PUBLIC_BASE_URL').replace(/\/+$/, '');
 
     const portal = await stripe.billingPortal.sessions.create({
       customer: stripeCustomerId,
