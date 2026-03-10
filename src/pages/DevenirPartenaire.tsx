@@ -229,8 +229,9 @@ const DevenirPartenaire = () => {
                   {success ? (
                     <div className="text-gray-700 space-y-2">
                       <p>
-                        Merci. Votre paiement a été validé. Nous avons reçu votre demande et revenons vers vous
-                        sous <strong>48h ouvrées</strong> pour activer votre fiche et votre badge.
+                        Merci. Votre paiement a été validé et votre abonnement est en cours d’activation.
+                        Accédez à votre <strong>espace partenaire</strong> pour voir le statut (cela peut prendre
+                        quelques secondes après le paiement).
                       </p>
                       {sessionId && (
                         <p className="text-sm text-gray-500">
@@ -246,9 +247,21 @@ const DevenirPartenaire = () => {
                   )}
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button asChild className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800">
-                    <a href="#formulaire">Aller au formulaire</a>
-                  </Button>
+                  {success ? (
+                    <Button
+                      asChild
+                      className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
+                    >
+                      <Link to="/espace-partenaire">Aller à l’espace partenaire</Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      asChild
+                      className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"
+                    >
+                      <a href="#formulaire">Aller au formulaire</a>
+                    </Button>
+                  )}
                   <Button asChild variant="outline">
                     <a href="mailto:contact@conciergeries-france.fr">
                       <Mail className="w-4 h-4 mr-2" />
@@ -411,8 +424,8 @@ const DevenirPartenaire = () => {
                   </a>
                 </div>
                 <div className="mt-5 text-sm text-gray-600">
-                  Nous revenons vers vous sous <strong>48h ouvrées</strong> pour valider la fiche et activer
-                  l&apos;abonnement.
+                  Après paiement, votre abonnement est synchronisé automatiquement. Si le statut n’apparaît pas
+                  tout de suite dans l’espace partenaire, rafraîchissez la page après quelques secondes.
                 </div>
               </CardContent>
             </Card>
