@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Phone, Mail, Globe, Check, ExternalLink, Building2, Award, TrendingUp, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,13 +6,67 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import conciergeries from '@/data/conciergeries';
+import { supabase } from '@/lib/supabaseClient';
+import type { Conciergerie } from '@/types/conciergerie';
 
 const ConciergerieDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   
-  const conciergerie = conciergeries.find(c => c.slug === slug);
+  const staticConciergerie = conciergeries.find(c => c.slug === slug);
+  const [remoteConciergerie, setRemoteConciergerie] = useState<Conciergerie | null>(null);
+  const [loadingRemote, setLoadingRemote] = useState(false);
   
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      if (staticConciergerie || !slug) return;
+      setLoadingRemote(true);
+      try {
+        const { data, error } = await supabase.from('partner_profiles').select('*').eq('slug', slug).maybeSingle();
+        if (error) throw error;
+        if (!mounted) return;
+        if (data) {
+          const plan = String((data as any).plan ?? 'standard').toLowerCase() === 'premium' ? 'premium' : 'standard';
+          const mapped: Conciergerie = {
+            id: (data as any).id,
+            name: (data as any).name,
+            slug: (data as any).slug,
+            city: (data as any).city,
+            rating: 5,
+            reviews: 0,
+            website: (data as any).website ?? null,
+            phone: (data as any).phone ?? null,
+            email: (data as any).email ?? null,
+            address: (data as any).address ?? null,
+            description: (data as any).description,
+            logo: 'default',
+            logoUrl: (data as any).logo_url ?? undefined,
+            services: Array.isArray((data as any).services) ? (data as any).services : [],
+            platforms: Array.isArray((data as any).platforms) ? (data as any).platforms : [],
+            listingPlan: plan,
+          };
+          setRemoteConciergerie(mapped);
+        } else {
+          setRemoteConciergerie(null);
+        }
+      } catch {
+        if (!mounted) return;
+        setRemoteConciergerie(null);
+      } finally {
+        if (!mounted) return;
+        setLoadingRemote(false);
+      }
+    }
+    void load();
+    return () => {
+      mounted = false;
+    };
+  }, [slug, staticConciergerie]);
+
+  const conciergerie = useMemo(() => staticConciergerie ?? remoteConciergerie, [staticConciergerie, remoteConciergerie]);
+
   if (!conciergerie) {
+    if (loadingRemote) return null;
     return <Navigate to="/conciergeries" replace />;
   }
 
@@ -28,6 +83,7 @@ const ConciergerieDetail = () => {
   const getLogoUrl = (logo: string) => {
     return `/logos/${logo}.svg`;
   };
+  const logoSrc = conciergerie.logoUrl || getLogoUrl(conciergerie.logo);
 
   const renderStars = (rating: number) => {
     return (
@@ -68,7 +124,7 @@ const ConciergerieDetail = () => {
             {/* Logo */}
             <div className="w-24 h-24 lg:w-32 lg:h-32 bg-white rounded-2xl shadow-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
               <img 
-                src={getLogoUrl(conciergerie.logo)} 
+                src={logoSrc} 
                 alt={conciergerie.name}
                 className="w-20 h-20 lg:w-28 lg:h-28 object-contain"
                 onError={(e) => {

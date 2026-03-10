@@ -15,6 +15,7 @@ const ConciergerieCard = ({ conciergerie, featured = false }: ConciergerieCardPr
   const getLogoUrl = (logo: string) => {
     return `/logos/${logo}.svg`;
   };
+  const logoSrc = conciergerie.logoUrl || getLogoUrl(conciergerie.logo);
 
   const planBadge =
     conciergerie.listingPlan === 'premium' ? (
@@ -43,7 +44,7 @@ const ConciergerieCard = ({ conciergerie, featured = false }: ConciergerieCardPr
           )}
           <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
             <img 
-              src={getLogoUrl(conciergerie.logo)} 
+              src={logoSrc} 
               alt={conciergerie.name}
               className="w-16 h-16 object-contain"
               onError={(e) => {

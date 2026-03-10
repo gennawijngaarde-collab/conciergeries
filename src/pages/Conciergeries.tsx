@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Search, MapPin, SlidersHorizontal, Grid3X3, Map as MapIcon, X, Star, ExternalLink, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,9 @@ import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import Map from '@/components/Map';
-import conciergeries from '@/data/conciergeries';
+import staticConciergeries from '@/data/conciergeries';
+import { supabase } from '@/lib/supabaseClient';
+import type { Conciergerie } from '@/types/conciergerie';
 
 const Conciergeries = () => {
   const [searchParams] = useSearchParams();
@@ -18,13 +20,57 @@ const Conciergeries = () => {
   const [minRating, setMinRating] = useState(0);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
+  const [conciergeries, setConciergeries] = useState<Conciergerie[]>(staticConciergeries as unknown as Conciergerie[]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadPartners() {
+      try {
+        const { data, error } = await supabase
+          .from('partner_profiles')
+          .select('*')
+          .order('updated_at', { ascending: false });
+        if (error) throw error;
+        const partners = ((data as any[]) ?? []).map((p) => {
+          const plan = String(p.plan ?? 'standard').toLowerCase() === 'premium' ? 'premium' : 'standard';
+          const mapped: Conciergerie = {
+            id: p.id,
+            name: p.name,
+            slug: p.slug,
+            city: p.city,
+            rating: 5,
+            reviews: 0,
+            website: p.website ?? null,
+            phone: p.phone ?? null,
+            email: p.email ?? null,
+            address: p.address ?? null,
+            description: p.description,
+            logo: 'default',
+            logoUrl: p.logo_url ?? undefined,
+            services: Array.isArray(p.services) ? p.services : [],
+            platforms: Array.isArray(p.platforms) ? p.platforms : [],
+            listingPlan: plan,
+          };
+          return mapped;
+        });
+        if (!mounted) return;
+        setConciergeries([...(staticConciergeries as any), ...partners]);
+      } catch {
+        // ignore: keep static list
+      }
+    }
+    void loadPartners();
+    return () => {
+      mounted = false;
+    };
+  }, [conciergeries]);
 
   // Extract unique services and platforms
   const allServices = useMemo(() => {
     const services = new Set<string>();
     conciergeries.forEach(c => c.services.forEach(s => services.add(s)));
     return [...services].sort();
-  }, []);
+  }, [conciergeries]);
 
   const allPlatforms = useMemo(() => {
     const platforms = new Set<string>();
@@ -55,6 +101,11 @@ const Conciergeries = () => {
       return true;
     });
   }, [searchQuery, minRating, selectedServices, selectedPlatforms]);
+
+  const getLogoSrc = (c: Conciergerie) => {
+    if (c.logoUrl) return c.logoUrl;
+    return `/logos/${c.logo}.svg`;
+  };
 
   const toggleService = (service: string) => {
     setSelectedServices(prev =>
@@ -323,7 +374,7 @@ const Conciergeries = () => {
                         )}
                         <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
                           <img 
-                            src={`/logos/${conciergerie.logo}.svg`}
+                            src={getLogoSrc(conciergerie)}
                             alt={conciergerie.name}
                             className="w-16 h-16 object-contain"
                             onError={(e) => {
