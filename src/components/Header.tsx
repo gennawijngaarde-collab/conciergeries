@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Building2, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import MyProfileButton from '@/components/MyProfileButton';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -72,6 +73,7 @@ const Header = () => {
               <Phone className="w-4 h-4" />
               01 76 50 50 50
             </a>
+            <MyProfileButton />
             <Button
               asChild
               variant="outline"

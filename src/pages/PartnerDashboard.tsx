@@ -73,6 +73,7 @@ export default function PartnerDashboard() {
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileBusy, setProfileBusy] = useState(false);
   const [profileMsg, setProfileMsg] = useState<string | null>(null);
+  const [profileTableMissing, setProfileTableMissing] = useState(false);
 
   const [draft, setDraft] = useState({
     name: '',
@@ -123,6 +124,7 @@ export default function PartnerDashboard() {
   const fetchProfile = useCallback(async () => {
     if (!user) return;
     setProfileMsg(null);
+    setProfileTableMissing(false);
     setProfileLoading(true);
     try {
       const { data, error } = await supabase
@@ -148,7 +150,20 @@ export default function PartnerDashboard() {
         });
       }
     } catch (e: any) {
-      setProfileMsg(e?.message ?? 'Impossible de charger votre fiche');
+      const msg = e?.message ?? 'Impossible de charger votre fiche';
+      if (
+        e?.code === 'PGRST205' ||
+        /schema cache/i.test(msg) ||
+        /Could not find the table/i.test(msg) ||
+        /partner_profiles/i.test(msg)
+      ) {
+        setProfileTableMissing(true);
+        setProfileMsg(
+          "La table Supabase `partner_profiles` n'existe pas encore. Ouvre Supabase → SQL Editor et exécute le fichier `supabase/partner_profiles.sql`, puis rafraîchis cette page."
+        );
+      } else {
+        setProfileMsg(msg);
+      }
     } finally {
       setProfileLoading(false);
     }
@@ -411,6 +426,16 @@ export default function PartnerDashboard() {
 
             {profileLoading ? (
               <div className="text-sm text-gray-600">Chargement de la fiche…</div>
+            ) : profileTableMissing ? (
+              <div className="text-sm text-gray-700 space-y-3">
+                <p>
+                  Une configuration Supabase est requise pour activer les fiches conciergerie.
+                </p>
+                <p className="text-gray-600">
+                  Exécute <code className="bg-gray-100 px-2 py-1 rounded">supabase/partner_profiles.sql</code> dans Supabase,
+                  puis clique sur <strong>Recharger</strong>.
+                </p>
+              </div>
             ) : (
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
