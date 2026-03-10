@@ -1,16 +1,17 @@
 export interface Conciergerie {
-  id: number;
+  id: number | string;
   name: string;
   slug: string;
   city: string;
-  rating: number;
-  reviews: number;
+  rating?: number;
+  reviews?: number;
   website: string | null;
   phone: string | null;
   email: string | null;
   address: string | null;
   description: string;
-  logo: string;
+  logo?: string;
+  logoUrl?: string;
   services: string[];
   platforms: string[];
   commission?: string;

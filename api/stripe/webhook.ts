@@ -28,6 +28,16 @@ const supabaseAdmin = createClient(
   }
 );
 
+function slugify(input: string) {
+  return String(input || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+}
+
 async function readRawBody(req: any): Promise<Buffer> {
   const chunks: Buffer[] = [];
   for await (const chunk of req) {
@@ -86,6 +96,45 @@ export default async function handler(req: any, res: any) {
       if (error) throw error;
     };
 
+    const upsertPartnerProfile = async (args: {
+      userId: string;
+      plan?: string | null;
+      status: string;
+      stripeCustomerId?: string | null;
+      stripeSubscriptionId?: string | null;
+      fields?: Record<string, string | undefined | null>;
+    }) => {
+      const name = args.fields?.conciergerieName ?? args.fields?.name ?? undefined;
+      const cities = args.fields?.cities ?? args.fields?.city ?? undefined;
+      const description = args.fields?.description ?? undefined;
+
+      const row: any = {
+        user_id: args.userId,
+        plan: (args.plan ?? 'standard').toLowerCase(),
+        subscription_status: args.status,
+        stripe_customer_id: args.stripeCustomerId ?? null,
+        stripe_subscription_id: args.stripeSubscriptionId ?? null,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (name) row.name = name;
+      if (cities) row.city = cities;
+      if (description) row.description = description;
+
+      if (args.fields?.website) row.website = args.fields.website;
+      if (args.fields?.phone) row.phone = args.fields.phone;
+      if (args.fields?.email) row.email = args.fields.email;
+      if (args.fields?.address) row.address = args.fields.address;
+      if (args.fields?.logoUrl) row.logo_url = args.fields.logoUrl;
+
+      // ensure slug exists
+      const baseSlug = slugify(name ?? 'conciergerie');
+      row.slug = baseSlug || `conciergerie-${args.userId.slice(0, 8)}`;
+
+      const { error } = await supabaseAdmin.from('partner_profiles').upsert(row, { onConflict: 'user_id' });
+      if (error) throw error;
+    };
+
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session;
       const subscriptionId = typeof session.subscription === 'string' ? session.subscription : session.subscription?.id;
@@ -105,6 +154,15 @@ export default async function handler(req: any, res: any) {
           stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
           stripeSubscriptionId: sub.id,
           currentPeriodEnd,
+        });
+
+        await upsertPartnerProfile({
+          userId,
+          plan: (sub.metadata?.plan as string | undefined) ?? plan,
+          status: sub.status,
+          stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
+          stripeSubscriptionId: sub.id,
+          fields: metadata as any,
         });
       }
 
@@ -149,6 +207,14 @@ export default async function handler(req: any, res: any) {
           stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
           stripeSubscriptionId: sub.id,
           currentPeriodEnd,
+        });
+
+        await upsertPartnerProfile({
+          userId,
+          plan,
+          status: sub.status,
+          stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
+          stripeSubscriptionId: sub.id,
         });
       }
     }
