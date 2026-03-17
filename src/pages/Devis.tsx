@@ -152,11 +152,11 @@ const Devis = () => {
                     {LEADS_EMAIL}
                   </a>
                   <a
-                    href="tel:+33768661848"
+                    href="tel:+33768661948"
                     className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
-                    07 68 66 18 48
+                    07 68 66 19 48
                   </a>
                 </div>
                 <div className="mt-5 text-sm text-gray-600">
