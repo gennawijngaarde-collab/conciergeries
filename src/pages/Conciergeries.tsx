@@ -11,16 +11,19 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import Map from '@/components/Map';
 import staticConciergeries from '@/data/conciergeries';
 import { supabase } from '@/lib/supabaseClient';
+import { useAuth } from '@/context/AuthContext';
 import type { Conciergerie } from '@/types/conciergerie';
 
 const Conciergeries = () => {
   const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [searchQuery, setSearchQuery] = useState(searchParams.get('city') || '');
   const [minRating, setMinRating] = useState(0);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [conciergeries, setConciergeries] = useState<Conciergerie[]>(staticConciergeries as unknown as Conciergerie[]);
+  const [myProfileSlug, setMyProfileSlug] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -64,6 +67,66 @@ const Conciergeries = () => {
       mounted = false;
     };
   }, []);
+
+  // Ensure the logged-in partner can always find their own profile (even if not public yet).
+  useEffect(() => {
+    let mounted = true;
+    async function loadMyProfile() {
+      if (!user) {
+        setMyProfileSlug(null);
+        return;
+      }
+      try {
+        const { data, error } = await supabase
+          .from('partner_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        if (error) throw error;
+        if (!mounted) return;
+        if (!data) {
+          setMyProfileSlug(null);
+          return;
+        }
+        const p: any = data;
+        const plan = String(p.plan ?? 'standard').toLowerCase() === 'premium' ? 'premium' : 'standard';
+        const mapped: Conciergerie = {
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          city: p.city,
+          rating: 5,
+          reviews: 0,
+          website: p.website ?? null,
+          phone: p.phone ?? null,
+          email: p.email ?? null,
+          address: p.address ?? null,
+          description: p.description,
+          logo: 'default',
+          logoUrl: p.logo_url ?? undefined,
+          services: Array.isArray(p.services) ? p.services : [],
+          platforms: Array.isArray(p.platforms) ? p.platforms : [],
+          listingPlan: plan,
+        };
+        setMyProfileSlug(mapped.slug);
+        setConciergeries((prev) => {
+          const without = prev.filter((c) => c.slug !== mapped.slug);
+          return [...without, mapped];
+        });
+      } catch {
+        if (!mounted) return;
+        setMyProfileSlug(null);
+      }
+    }
+    void loadMyProfile();
+
+    const onChanged = () => void loadMyProfile();
+    window.addEventListener('partner-profile:changed', onChanged);
+    return () => {
+      mounted = false;
+      window.removeEventListener('partner-profile:changed', onChanged);
+    };
+  }, [user]);
 
   // Extract unique services and platforms
   const allServices = useMemo(() => {
@@ -399,6 +462,11 @@ const Conciergeries = () => {
                         {conciergerie.listingPlan === 'standard' && (
                           <Badge className="absolute top-3 left-3 bg-white/90 text-gray-900 font-semibold hover:bg-white/90">
                             Standard
+                          </Badge>
+                        )}
+                        {myProfileSlug && conciergerie.slug === myProfileSlug && (
+                          <Badge className="absolute top-3 right-3 bg-white/15 text-white border border-white/30 hover:bg-white/15">
+                            Votre fiche
                           </Badge>
                         )}
                         <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">

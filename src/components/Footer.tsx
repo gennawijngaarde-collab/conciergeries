@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Pin, Twitter } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -54,17 +54,17 @@ const Footer = () => {
               Trouvez le partenaire idéal pour maximiser vos revenus locatifs.
             </p>
             <div className="flex items-center gap-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
+              <a href="https://pin.it/7hK20swqR" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors">
+                <Pin className="w-5 h-5" />
+              </a>
+              <a href="https://x.com/gwijngaard2630?s=21&t=j9_JQ_5rJBk1sWVAAOFakQ" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-sky-500 rounded-lg flex items-center justify-center transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="https://www.facebook.com/share/15cbwWXW4Po/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
+              <a href="https://www.instagram.com/ma_conciergerie_annuaire?igsh=cjZvZ29sZTN4ZHd4&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-colors">
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-blue-700 rounded-lg flex items-center justify-center transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-sky-500 rounded-lg flex items-center justify-center transition-colors">
-                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -119,9 +119,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="tel:+33176505050" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
+                <a href="tel:+33768661848" className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  01 76 50 50 50
+                  07 68 66 18 48
                 </a>
               </li>
               <li>

@@ -67,11 +67,11 @@ const Header = () => {
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="tel:+33176505050"
+              href="tel:+33768661848"
               className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-blue-600"
             >
               <Phone className="w-4 h-4" />
-              01 76 50 50 50
+              07 68 66 18 48
             </a>
             <MyProfileButton />
             <Button
@@ -119,11 +119,11 @@ const Header = () => {
             ))}
             <div className="pt-4 border-t">
               <a
-                href="tel:+33176505050"
+                href="tel:+33768661848"
                 className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
               >
                 <Phone className="w-4 h-4" />
-                01 76 50 50 50
+                07 68 66 18 48
               </a>
             </div>
           </nav>

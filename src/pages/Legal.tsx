@@ -37,7 +37,7 @@ export const MentionsLegales = () => (
             <h2 className="text-xl font-bold text-gray-900 mb-4">Contact</h2>
             <p className="text-gray-600">
               Email : contact@conciergeries-france.fr<br />
-              Téléphone : 01 76 50 50 50
+              Téléphone : 07 68 66 18 48
             </p>
           </section>
 
