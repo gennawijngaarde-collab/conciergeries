@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://conciergeries-france.fr/sitemap.xml
+Sitemap: https://ma-conciergerie-annuaire.com/sitemap.xml
 
 # Interdire l'accès aux pages d'administration
 Disallow: /admin/
