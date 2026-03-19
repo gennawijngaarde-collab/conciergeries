@@ -16,12 +16,14 @@ import ResetPassword from '@/pages/ResetPassword';
 import PartnerDashboard from '@/pages/PartnerDashboard';
 import RequireAuth from '@/components/RequireAuth';
 import FAQ from '@/pages/FAQ';
+import ScrollToTop from '@/components/ScrollToTop';
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 pt-16 lg:pt-20">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/index.html" element={<Navigate to="/" replace />} />
