@@ -11,20 +11,21 @@ import BlogCard from '@/components/BlogCard';
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   
-  const post = blogPosts.find(p => p.slug === slug);
-  
-  if (!post) {
-    return <Navigate to="/blog" replace />;
-  }
+  const post = useMemo(() => {
+    return blogPosts.find((p) => p.slug === slug) ?? null;
+  }, [slug]);
 
   // Get related posts (same category or tags)
-  const relatedPosts = blogPosts
-    .filter(p => 
-      p.id !== post.id && 
-      (p.category === post.category || 
-       p.tags.some(tag => post.tags.includes(tag)))
-    )
-    .slice(0, 3);
+  const relatedPosts = useMemo(() => {
+    if (!post) return [];
+    return blogPosts
+      .filter(
+        (p) =>
+          p.id !== post.id &&
+          (p.category === post.category || p.tags.some((tag) => post.tags.includes(tag)))
+      )
+      .slice(0, 3);
+  }, [post]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -36,22 +37,29 @@ const BlogPost = () => {
   };
 
   // Estimate reading time
-  const readingTime = Math.ceil(post.content.split(' ').length / 200);
-  const imageAlt = useMemo(() => post.imageAlt ?? post.title, [post.imageAlt, post.title]);
+  const readingTime = useMemo(() => {
+    if (!post) return 0;
+    if (typeof post.readingTimeMinutes === 'number' && Number.isFinite(post.readingTimeMinutes)) {
+      return Math.max(1, Math.round(post.readingTimeMinutes));
+    }
+    return Math.ceil(post.content.split(' ').length / 200);
+  }, [post]);
+  const imageAlt = useMemo(() => (post ? post.imageAlt ?? post.title : ''), [post]);
   const imageSrc = useMemo(() => {
-    if (!post.image) return '';
+    if (!post?.image) return '';
     if (/^https?:\/\//i.test(post.image)) return post.image;
     const cleaned = post.image.replace(/^\//, '');
     return `${import.meta.env.BASE_URL}${cleaned}`;
-  }, [post.image]);
+  }, [post?.image]);
   const fallbackSrc = useMemo(() => {
-    const cleaned = `images/blog/${post.slug}.svg`;
+    const cleaned = `images/blog/${post?.slug ?? 'default'}.svg`;
     return `${import.meta.env.BASE_URL}${cleaned}`;
-  }, [post.slug]);
+  }, [post?.slug]);
 
   const [resolvedSrc, setResolvedSrc] = useState<string>('');
 
   useEffect(() => {
+    if (!post) return;
     setResolvedSrc(imageSrc || fallbackSrc);
   }, [imageSrc, fallbackSrc]);
 
@@ -62,6 +70,34 @@ const BlogPost = () => {
     }
     setResolvedSrc('');
   };
+
+  useEffect(() => {
+    if (!post) return;
+
+    const title = post.metaTitle ?? post.title;
+    document.title = title;
+
+    const ensureMeta = (name: string) => {
+      let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('name', name);
+        document.head.appendChild(tag);
+      }
+      return tag;
+    };
+
+    const desc = post.metaDescription ?? post.excerpt ?? '';
+    ensureMeta('description').setAttribute('content', desc);
+
+    if (post.metaKeywords?.length) {
+      ensureMeta('keywords').setAttribute('content', post.metaKeywords.join(', '));
+    }
+  }, [post]);
+
+  if (!post) return <Navigate to="/blog" replace />;
+
+  const isHtml = post.contentFormat === 'html';
 
   // Convert markdown-like content to HTML
   const formatContent = (content: string) => {
@@ -109,6 +145,39 @@ const BlogPost = () => {
         </div>
       </div>
 
+      {isHtml ? (
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <div className="bg-white rounded-2xl shadow-sm border overflow-hidden">
+            <div className="p-6 sm:p-8 border-b">
+              <Badge className="mb-4 bg-blue-100 text-blue-700 hover:bg-blue-100">{post.category}</Badge>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">{post.title}</h1>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mt-4">
+                <span className="flex items-center gap-1">
+                  <Calendar className="w-4 h-4" />
+                  {formatDate(post.date)}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  {readingTime} min de lecture
+                </span>
+                <span className="flex items-center gap-1">
+                  <User className="w-4 h-4" />
+                  {post.author}
+                </span>
+              </div>
+            </div>
+
+            <iframe
+              title={post.title}
+              srcDoc={post.content}
+              className="w-full"
+              style={{ height: '85vh' }}
+              sandbox=""
+            />
+          </div>
+        </div>
+      ) : (
+        <>
       {/* Article Header */}
       <div className="bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -214,6 +283,8 @@ const BlogPost = () => {
           </div>
         </div>
       </div>
+        </>
+      )}
 
       {/* Author Card */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">

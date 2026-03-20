@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.22)"/>
+  <g fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="10">
+    <path d="M180 220h220M180 300h320M180 380h260" />
+    <path d="M820 220h200M760 300h260M800 380h220" />
+    <circle cx="600" cy="315" r="56" />
+    <path d="M600 259v112M544 315h112" />
+  </g>
+  <text x="120" y="150" fill="white" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="26" opacity="0.9">
+    Guide 2026
+  </text>
+  <text x="120" y="205" fill="white" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="54" font-weight="800">
+    Channel Manager
+  </text>
+  <text x="120" y="265" fill="white" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="30" opacity="0.95">
+    Optimiser la distribution hôtelière et les OTA
+  </text>
+  <text x="120" y="510" fill="rgba(255,255,255,0.85)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22">
+    ma-conciergerie-annuaire.com
+  </text>
+</svg>
+

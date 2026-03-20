@@ -25,10 +25,15 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: string;
+  contentFormat?: 'md' | 'html';
+  readingTimeMinutes?: number;
   author: string;
   date: string;
   category: string;
   image: string;
   imageAlt?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
   tags: string[];
 }

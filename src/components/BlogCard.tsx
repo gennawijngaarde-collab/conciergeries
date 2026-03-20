@@ -23,7 +23,12 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
   };
 
   // Estimate reading time (200 words per minute)
-  const readingTime = Math.ceil(post.content.split(' ').length / 200);
+  const readingTime = useMemo(() => {
+    if (typeof post.readingTimeMinutes === 'number' && Number.isFinite(post.readingTimeMinutes)) {
+      return Math.max(1, Math.round(post.readingTimeMinutes));
+    }
+    return Math.ceil(post.content.split(' ').length / 200);
+  }, [post.readingTimeMinutes, post.content]);
   const imageSrc = useMemo(() => {
     if (!post.image) return '';
     if (/^https?:\/\//i.test(post.image)) return post.image;
