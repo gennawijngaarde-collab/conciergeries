@@ -169,7 +169,8 @@ const BlogPost = () => {
 
             <iframe
               title={post.title}
-              srcDoc={post.content}
+              src={post.htmlPath || undefined}
+              srcDoc={post.htmlPath ? undefined : post.content}
               className="w-full"
               style={{ height: '85vh' }}
               sandbox=""

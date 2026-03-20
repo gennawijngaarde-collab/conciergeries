@@ -26,6 +26,7 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   contentFormat?: 'md' | 'html';
+  htmlPath?: string;
   readingTimeMinutes?: number;
   author: string;
   date: string;
