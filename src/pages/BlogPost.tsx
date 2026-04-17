@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import blogPosts from '@/data/blog-posts';
 import BlogCard from '@/components/BlogCard';
+import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -45,15 +46,14 @@ const BlogPost = () => {
     return Math.ceil(post.content.split(' ').length / 200);
   }, [post]);
   const imageAlt = useMemo(() => (post ? post.imageAlt ?? post.title : ''), [post]);
+  /** Couverture produit (ebook) : ne pas masquer l’image avec un overlay type “article générique”. */
+  const isProductCoverHero = post?.slug === 'formation-conciergerie-airbnb-livre-numerique';
   const imageSrc = useMemo(() => {
     if (!post?.image) return '';
-    if (/^https?:\/\//i.test(post.image)) return post.image;
-    const cleaned = post.image.replace(/^\//, '');
-    return `${import.meta.env.BASE_URL}${cleaned}`;
+    return resolvePublicAssetUrl(post.image);
   }, [post?.image]);
   const fallbackSrc = useMemo(() => {
-    const cleaned = `images/blog/${post?.slug ?? 'default'}.svg`;
-    return `${import.meta.env.BASE_URL}${cleaned}`;
+    return resolvePublicAssetUrl(`/images/blog/${post?.slug ?? 'default'}.svg`);
   }, [post?.slug]);
 
   const [resolvedSrc, setResolvedSrc] = useState<string>('');
@@ -218,25 +218,39 @@ const BlogPost = () => {
       </div>
 
       {/* Featured Image */}
-      <div className="relative h-64 sm:h-80 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
+      <div
+        className={
+          isProductCoverHero
+            ? 'relative min-h-[280px] sm:min-h-[380px] bg-[#0f1f3d] flex items-center justify-center overflow-hidden px-4 py-8'
+            : 'relative h-64 sm:h-80 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden'
+        }
+      >
         {resolvedSrc && (
           <img
             src={resolvedSrc}
             alt={imageAlt}
-            className="absolute inset-0 w-full h-full object-cover"
+            className={
+              isProductCoverHero
+                ? 'relative z-0 max-h-[min(72vh,520px)] w-auto max-w-full object-contain drop-shadow-2xl'
+                : 'absolute inset-0 w-full h-full object-cover'
+            }
             loading="eager"
             onError={handleImgError}
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        <div className="relative z-10 text-center text-white p-8">
-          <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-5xl">📝</span>
-          </div>
-          <p className="text-white/80">
-            {resolvedSrc ? "Illustration de l'article" : "Illustration indisponible"}
-          </p>
-        </div>
+        {!isProductCoverHero && (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            <div className="relative z-10 text-center text-white p-8">
+              <div className="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-5xl">📝</span>
+              </div>
+              <p className="text-white/80">
+                {resolvedSrc ? "Illustration de l'article" : "Illustration indisponible"}
+              </p>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Article Content */}

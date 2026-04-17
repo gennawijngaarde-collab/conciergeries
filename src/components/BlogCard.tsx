@@ -4,14 +4,18 @@ import { Calendar, User, ArrowRight, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { BlogPost } from '@/types/conciergerie';
+import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 
 interface BlogCardProps {
   post: BlogPost;
   featured?: boolean;
 }
 
+const BOOK_COVER_SLUG = 'formation-conciergerie-airbnb-livre-numerique';
+
 const BlogCard = ({ post, featured = false }: BlogCardProps) => {
   const imageAlt = useMemo(() => post.imageAlt ?? post.title, [post.imageAlt, post.title]);
+  const isProductCover = post.slug === BOOK_COVER_SLUG;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -31,13 +35,10 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
   }, [post.readingTimeMinutes, post.content]);
   const imageSrc = useMemo(() => {
     if (!post.image) return '';
-    if (/^https?:\/\//i.test(post.image)) return post.image;
-    const cleaned = post.image.replace(/^\//, '');
-    return `${import.meta.env.BASE_URL}${cleaned}`;
+    return resolvePublicAssetUrl(post.image);
   }, [post.image]);
   const fallbackSrc = useMemo(() => {
-    const cleaned = `images/blog/${post.slug}.svg`;
-    return `${import.meta.env.BASE_URL}${cleaned}`;
+    return resolvePublicAssetUrl(`/images/blog/${post.slug}.svg`);
   }, [post.slug]);
 
   const [resolvedSrc, setResolvedSrc] = useState<string>('');
@@ -60,26 +61,46 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
         <CardContent className="p-0">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Image */}
-            <div className="relative h-64 md:h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden">
+            <div
+              className={
+                isProductCover
+                  ? 'relative min-h-64 md:min-h-full bg-[#0f1f3d] flex items-center justify-center overflow-hidden p-4'
+                  : 'relative h-64 md:h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden'
+              }
+            >
               {resolvedSrc && (
                 <img
                   src={resolvedSrc}
                   alt={imageAlt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={
+                    isProductCover
+                      ? 'relative z-0 max-h-72 md:max-h-[420px] w-auto max-w-full object-contain drop-shadow-xl'
+                      : 'absolute inset-0 w-full h-full object-cover'
+                  }
                   loading="lazy"
                   onError={handleImgError}
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              <Badge className="absolute top-4 left-4 bg-white/90 text-gray-900">
+              {!isProductCover && (
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              )}
+              <Badge
+                className={
+                  isProductCover
+                    ? 'absolute top-4 left-4 bg-amber-100/95 text-gray-900 border border-amber-300/80'
+                    : 'absolute top-4 left-4 bg-white/90 text-gray-900'
+                }
+              >
                 {post.category}
               </Badge>
-              <div className="relative z-10 text-center p-8">
-                <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">📝</span>
+              {!isProductCover && (
+                <div className="relative z-10 text-center p-8">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <span className="text-4xl">📝</span>
+                  </div>
+                  <p className="text-white/80 text-sm">Article à la une</p>
                 </div>
-                <p className="text-white/80 text-sm">Article à la une</p>
-              </div>
+              )}
             </div>
 
             {/* Content */}
@@ -127,23 +148,43 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl h-full flex flex-col">
       <CardContent className="p-0 flex flex-col h-full">
         {/* Image */}
-        <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+        <div
+          className={
+            isProductCover
+              ? 'relative h-56 bg-[#0f1f3d] flex items-center justify-center overflow-hidden p-3'
+              : 'relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden'
+          }
+        >
           {resolvedSrc && (
             <img
               src={resolvedSrc}
               alt={imageAlt}
-              className="absolute inset-0 w-full h-full object-cover"
+              className={
+                isProductCover
+                  ? 'relative z-0 max-h-52 w-auto max-w-full object-contain drop-shadow-lg'
+                  : 'absolute inset-0 w-full h-full object-cover'
+              }
               loading="lazy"
               onError={handleImgError}
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-          <Badge className="absolute top-3 left-3 bg-blue-600 text-white">
+          {!isProductCover && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+          )}
+          <Badge
+            className={
+              isProductCover
+                ? 'absolute top-3 left-3 bg-amber-100 text-gray-900 border border-amber-300/80'
+                : 'absolute top-3 left-3 bg-blue-600 text-white'
+            }
+          >
             {post.category}
           </Badge>
-          <div className="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center">
-            <span className="text-3xl">📝</span>
-          </div>
+          {!isProductCover && (
+            <div className="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center">
+              <span className="text-3xl">📝</span>
+            </div>
+          )}
         </div>
 
         {/* Content */}
