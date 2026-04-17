@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-labelledby="t d">
+  <title id="t">Conciergerie Airbnb  livre numérique</title>
+  <desc id="d">Couverture stylisée : formation complète de zéro à rentable</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1f3d"/>
+      <stop offset="100%" stop-color="#1a2d52"/>
+    </linearGradient>
+    <filter id="sh" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="#e8e4dc"/>
+  <g filter="url(#sh)">
+    <rect x="72" y="56" width="620" height="888" rx="14" fill="url(#bg)"/>
+    <rect x="72" y="56" width="620" height="888" rx="14" fill="none" stroke="#c9a84c" stroke-width="2" opacity="0.55"/>
+  </g>
+  <g fill="#c9a84c">
+    <path d="M130 120h52v40l-26 18-26-18z"/>
+    <rect x="118" y="188" rx="22" ry="22" width="200" height="40" fill="none" stroke="#c9a84c" stroke-width="2"/>
+  </g>
+  <text x="150" y="218" fill="#101427" font-family="system-ui,Segoe UI,sans-serif" font-size="15" font-weight="700">Formation complète 20242026</text>
+  <text x="130" y="320" fill="#fff" font-family="system-ui,Segoe UI,sans-serif" font-size="56" font-weight="800">Conciergerie</text>
+  <text x="130" y="400" fill="#c9a84c" font-family="system-ui,Segoe UI,sans-serif" font-size="56" font-weight="800">Airbnb</text>
+  <text x="130" y="470" fill="#e8ecf7" font-family="system-ui,Segoe UI,sans-serif" font-size="22" font-weight="500">De zéro à rentable  guide pour créer</text>
+  <text x="130" y="500" fill="#e8ecf7" font-family="system-ui,Segoe UI,sans-serif" font-size="22" font-weight="500">et développer son activité</text>
+  <line x1="130" y1="540" x2="640" y2="540" stroke="#c9a84c" stroke-width="3" opacity="0.85"/>
+  <g fill="#f2f4fb" font-family="system-ui,Segoe UI,sans-serif" font-size="20">
+    <text x="155" y="590">" Création dentreprise &amp; statut juridique</text>
+    <text x="155" y="630">" Business plan &amp; prévisionnel financier</text>
+    <text x="155" y="670">" Logiciels, PMS &amp; pricing dynamique</text>
+    <text x="155" y="710">" Marketing, SEO &amp; annuaire</text>
+    <text x="155" y="750">" Fiscalité, TVA &amp; obligations légales</text>
+    <text x="155" y="790">" Scalabilité, recrutement &amp; croissance</text>
+  </g>
+  <g font-family="system-ui,Segoe UI,sans-serif" font-size="16" fill="#dbe2ff">
+    <rect x="130" y="840" rx="20" ry="20" width="120" height="36" fill="#243558" stroke="#c9a84c" stroke-opacity="0.4"/>
+    <text x="152" y="865" fill="#fff">10 chapitres</text>
+    <rect x="265" y="840" rx="20" ry="20" width="170" height="36" fill="#243558" stroke="#c9a84c" stroke-opacity="0.4"/>
+    <text x="285" y="865" fill="#fff">Checklists incluses</text>
+    <rect x="450" y="840" rx="20" ry="20" width="170" height="36" fill="#243558" stroke="#c9a84c" stroke-opacity="0.4"/>
+    <text x="475" y="865" fill="#fff">100% actionnable</text>
+  </g>
+  <text x="130" y="940" fill="#c9a84c" font-family="system-ui,Segoe UI,sans-serif" font-size="17" font-weight="600">ma-conciergerie-annuaire.com</text>
+  <text x="600" y="940" fill="#9aa3bd" font-family="system-ui,Segoe UI,sans-serif" font-size="17">66 pages</text>
+</svg>

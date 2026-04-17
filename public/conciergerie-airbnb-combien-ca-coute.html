@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conciergerie Airbnb : combien ça coûte vraiment en 2026 ?</title>
+    <meta
+      name="description"
+      content="Commission, forfait, ménage, linge, check-in, frais cachés… Le vrai coût d’une conciergerie Airbnb en 2026 avec méthode de calcul, exemples et conseils pour comparer."
+    />
+    <style>
+      :root {
+        --ink: #101427;
+        --paper: #fffdf8;
+        --sand: #f5f0e8;
+        --gold: #c9a84c;
+        --muted: #5b5f6d;
+        --border: #e6dece;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.75;
+      }
+      a {
+        color: #1f5a3a;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .hero {
+        background: var(--ink);
+        color: #fff;
+        padding: 56px 20px;
+      }
+      .hero-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .badge {
+        display: inline-block;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 999px;
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        margin: 0 0 12px;
+        line-height: 1.2;
+        font-size: clamp(28px, 4vw, 44px);
+      }
+      .hero p {
+        margin: 0;
+        max-width: 75ch;
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .meta {
+        margin-top: 18px;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .wrap {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px 60px;
+      }
+      .toc {
+        background: var(--sand);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--gold);
+        padding: 20px 20px;
+        border-radius: 10px;
+        margin: 28px 0 0;
+      }
+      .toc h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+      .toc ol {
+        margin: 0;
+        padding-left: 18px;
+      }
+      section {
+        padding: 36px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      section:last-of-type {
+        border-bottom: none;
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 24px;
+      }
+      h3 {
+        margin: 22px 0 10px;
+        font-size: 18px;
+      }
+      .callout {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-left: 4px solid #b85c38;
+        padding: 14px 16px;
+        border-radius: 10px;
+        margin: 14px 0 0;
+        color: #2a2f44;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin: 16px 0 0;
+      }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 14px;
+        background: #fff;
+      }
+      .card strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+        font-size: 14px;
+      }
+      th {
+        background: var(--ink);
+        color: #fff;
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      .faq .q {
+        background: var(--sand);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin: 12px 0;
+      }
+      .faq .q strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+      .cta {
+        margin-top: 18px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #1f5a3a, #0f2f1f);
+        color: #fff;
+        padding: 22px 18px;
+      }
+      .cta a {
+        display: inline-block;
+        margin-top: 10px;
+        background: var(--gold);
+        color: #101427;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-weight: 700;
+      }
+      footer {
+        text-align: center;
+        padding: 26px 20px;
+        color: rgba(255, 255, 255, 0.65);
+        background: var(--ink);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-inner">
+        <span class="badge">Tarifs 2026 · Conciergerie Airbnb</span>
+        <h1>Conciergerie Airbnb : combien ça coûte vraiment ?</h1>
+        <p>
+          Commission, forfait, ménage, linge, check-in tardif, consommables, maintenance… Ici on met tout à plat pour
+          calculer le <strong>coût total</strong> et comparer des devis sans se faire piéger par les “frais oubliés”.
+        </p>
+        <div class="meta">
+          <span><strong>Lecture :</strong> 12 min</span>
+          <span><strong>Objectif :</strong> calcul du coût réel</span>
+          <span><strong>Année :</strong> 2026</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <nav class="toc" aria-label="Sommaire">
+        <h2>Sommaire</h2>
+        <ol>
+          <li><a href="#modele">Les 3 modèles de tarification</a></li>
+          <li><a href="#frais">Les frais souvent oubliés</a></li>
+          <li><a href="#calcul">Méthode de calcul (simple)</a></li>
+          <li><a href="#exemples">Exemples chiffrés</a></li>
+          <li><a href="#negocier">Négocier sans baisser la qualité</a></li>
+          <li><a href="#budget-modele">Modèle de budget + email type</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+      </nav>
+
+      <section id="modele">
+        <h2>1) Les 3 modèles de tarification</h2>
+        <p>
+          En 2026, la plupart des conciergeries utilisent l’un de ces 3 modèles : commission, forfait, ou hybride. Aucun
+          n’est “meilleur” dans l’absolu. Le bon choix dépend de la rotation, du niveau de service, et de votre capacité à
+          piloter la stratégie (prix, calendrier, annonce).
+        </p>
+        <div class="grid">
+          <div class="card">
+            <strong>Commission (%)</strong>
+            Alignée sur le chiffre d’affaires. Simple à comprendre, mais attention à la base de calcul et aux options
+            facturées en plus.
+          </div>
+          <div class="card">
+            <strong>Forfait mensuel</strong>
+            Coût stable. Souvent intéressant si forte rotation, ou plusieurs biens. Exigez la liste précise des services
+            inclus.
+          </div>
+          <div class="card">
+            <strong>Hybride</strong>
+            Forfait pour l’opérationnel + commission réduite pour rester aligné. Très répandu quand le prestataire fait
+            aussi du pricing et de l’optimisation.
+          </div>
+        </div>
+        <div class="callout">
+          <strong>Conseil :</strong> comparez toujours au <em>coût total</em>. Une commission “basse” + beaucoup d’extras
+          peut coûter plus cher qu’une commission “normale” bien inclusive.
+        </div>
+      </section>
+
+      <section id="frais">
+        <h2>2) Les frais souvent oubliés (et qui changent tout)</h2>
+        <p>
+          Le coût réel se cache dans les lignes secondaires : linge, check-in tardif, consommables, interventions, setup,
+          photos. Voici les postes à exiger sur un devis.
+        </p>
+        <h3>Ménage</h3>
+        <p>
+          Selon les cas, le ménage est payé par le voyageur (frais de ménage), ou par le propriétaire. Dans les deux cas,
+          demandez : qui fait le contrôle qualité ? Que se passe-t-il si un ménage est jugé insuffisant ?
+        </p>
+        <h3>Linge</h3>
+        <p>
+          Inclus, forfait par séjour, ou facturation séparée : ce poste peut représenter une part importante du coût.
+          Vérifiez le niveau de qualité et la rotation en cas de planning serré.
+        </p>
+        <h3>Check-in tardif / early check-in</h3>
+        <p>
+          Ce sont des extras fréquents. Demandez un barème clair. Sans barème, vous ne pourrez pas comparer deux devis
+          honnêtement.
+        </p>
+        <h3>Consommables</h3>
+        <p>
+          Certains incluent un kit de base (papier toilette, savon, capsules), d’autres refacturent. L’enjeu n’est pas
+          seulement le prix : c’est la constance, car les voyageurs y sont sensibles.
+        </p>
+        <h3>Maintenance et interventions</h3>
+        <p>
+          Demandez un seuil d’intervention sans validation, puis un processus (photos, compte rendu, devis). C’est un
+          poste qui évite de mauvaises notes… mais qui doit rester maîtrisé.
+        </p>
+      </section>
+
+      <section id="calcul">
+        <h2>3) La méthode simple pour estimer votre coût réel</h2>
+        <p>
+          Pour comparer, faites un tableau mensuel. L’idée : estimer le coût “prévisible” et ajouter une marge pour les
+          interventions. Ensuite, comparez ce coût au résultat attendu (note, occupation, prix moyen).
+        </p>
+        <p>
+          Pour rendre ce calcul actionnable, partez d’un scénario “moyen” sur votre bien : nombre de séjours mensuels,
+          durée moyenne, saisonnalité, et fréquence d’incidents (serrure, Wi‑Fi, petit électroménager). L’objectif n’est
+          pas d’être exact au centime : c’est d’avoir une <strong>fourchette fiable</strong> pour comparer deux offres.
+        </p>
+        <ul>
+          <li><strong>Gestion</strong> : commission ou forfait</li>
+          <li><strong>Linge</strong> : par séjour ou forfait</li>
+          <li><strong>Consommables</strong> : mensuel</li>
+          <li><strong>Interventions</strong> : moyenne (ou enveloppe)</li>
+          <li><strong>Setup</strong> : photos / création annonce (si applicable)</li>
+        </ul>
+        <h3>Deux pièges fréquents (à éviter)</h3>
+        <p>
+          <strong>Piège n°1 :</strong> comparer deux conciergeries sur la commission alors que l’une inclut le linge et
+          l’autre non. Au final, vous comparez des offres différentes.
+        </p>
+        <p>
+          <strong>Piège n°2 :</strong> oublier l’impact sur la note. Un prestataire peut être moins cher, mais s’il
+          entraîne des avis mitigés (propreté, check-in), vous perdez en visibilité et vous compensez en baissant le prix.
+        </p>
+        <div class="callout">
+          <strong>Règle simple :</strong> ne choisissez pas uniquement sur le coût. Une conciergerie “moins chère” peut
+          faire perdre de l’argent en baissant la note, en gérant mal les litiges, ou en sous-optimisant le pricing.
+        </div>
+      </section>
+
+      <section id="exemples">
+        <h2>4) Exemples chiffrés (à adapter)</h2>
+        <p>
+          Exemple illustratif pour un bien qui génère 2 500 € de CA “nuits” par mois, avec une rotation moyenne.
+        </p>
+        <div style="overflow-x: auto; margin-top: 10px">
+          <table>
+            <thead>
+              <tr>
+                <th>Poste</th>
+                <th>Hypothèse</th>
+                <th>Coût</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Commission</strong></td>
+                <td>20% sur 2 500 €</td>
+                <td>500 €</td>
+              </tr>
+              <tr>
+                <td><strong>Linge</strong></td>
+                <td>10 séjours x 15 €</td>
+                <td>150 €</td>
+              </tr>
+              <tr>
+                <td><strong>Consommables</strong></td>
+                <td>kit mensuel</td>
+                <td>30 €</td>
+              </tr>
+              <tr>
+                <td><strong>Interventions</strong></td>
+                <td>petites réparations</td>
+                <td>40 €</td>
+              </tr>
+              <tr>
+                <td><strong>Total (hors ménage)</strong></td>
+                <td>illustratif</td>
+                <td><strong>720 €</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Si une autre conciergerie propose 18% mais facture un linge plus cher, des check-in tardifs fréquents et des
+          options de reporting, vous pouvez rapidement dépasser ce total. D’où l’intérêt de comparer poste par poste.
+        </p>
+        <div class="cta">
+          <strong>Comparer des prestataires (par ville)</strong>
+          <div>
+            Pour demander 3 devis comparables (mêmes questions, même structure), partez d’une liste locale et filtrez par
+            ville.
+          </div>
+          <a href="https://ma-conciergerie-annuaire.com/annuaire">Accéder à l’annuaire</a>
+        </div>
+      </section>
+
+      <section id="simulateur">
+        <h2>4bis) Mini-simulateur (à faire sur 1 mois)</h2>
+        <p>
+          Pour connaître le vrai coût, la meilleure approche est de simuler un mois “réaliste”. Prenez votre niveau de
+          rotation (nombre de séjours) et calculez poste par poste. Ci-dessous, une structure simple à copier.
+        </p>
+        <h3>Étape 1 : fixez vos hypothèses</h3>
+        <ul>
+          <li><strong>CA nuits</strong> (ex : 2 500€)</li>
+          <li><strong>Nombre de séjours</strong> (ex : 10)</li>
+          <li><strong>Arrivées tardives</strong> (ex : 2/mois)</li>
+          <li><strong>Interventions</strong> (ex : 1 petite intervention/mois)</li>
+        </ul>
+        <h3>Étape 2 : calculez le coût total</h3>
+        <ul>
+          <li><strong>Gestion</strong> = commission (%) x CA (ou forfait)</li>
+          <li><strong>Linge</strong> = coût par séjour x nombre de séjours (ou forfait)</li>
+          <li><strong>Check-in tardif</strong> = barème x nombre d’occurrences</li>
+          <li><strong>Consommables</strong> = enveloppe mensuelle</li>
+          <li><strong>Interventions</strong> = enveloppe mensuelle (ou moyenne)</li>
+        </ul>
+        <div class="callout">
+          <strong>Astuce :</strong> comparez toujours 2 ou 3 devis sur les <em>mêmes hypothèses</em>. Sinon, vous comparez des scénarios différents.
+        </div>
+        <h3>Étape 3 : comparez à ce que vous obtenez</h3>
+        <p>
+          Le coût total doit se juger face à la valeur : note plus stable (moins de 4 étoiles), moins de litiges, occupation
+          plus régulière et prix moyen mieux tenu. Un prestataire “un peu plus cher” peut être plus rentable si la note
+          monte et si la conversion s’améliore.
+        </p>
+      </section>
+
+      <section id="frais-caches">
+        <h2>4ter) Les “frais cachés” typiques (et comment les neutraliser)</h2>
+        <p>
+          Dans les devis, les surprises ne sont pas toujours malhonnêtes : elles viennent souvent de zones non écrites.
+          Voici les frais qui reviennent le plus et la meilleure façon de les cadrer.
+        </p>
+        <h3>Check-in tardif</h3>
+        <p>Demandez un barème fixe et, si possible, un plafond mensuel (ou une règle claire).</p>
+        <h3>Linge</h3>
+        <p>Demandez : coût par séjour + nombre de jeux par lit + règle de remplacement.</p>
+        <h3>Interventions</h3>
+        <p>Fixez un <strong>seuil d’intervention</strong> (petites réparations jusqu’à X€) + compte rendu photo.</p>
+        <h3>Photos / création annonce</h3>
+        <p>Si c’est inclus, demandez ce qui est fait (shooting, retouches, ordre photos) et quand.</p>
+        <div class="callout">
+          <strong>Règle :</strong> si un poste peut coûter “par occurrence” (linge, tardif, interventions), il doit avoir un prix écrit.
+        </div>
+      </section>
+
+      <section id="negocier">
+        <h2>5) Négocier sans dégrader la qualité</h2>
+        <p>
+          La mauvaise négociation consiste à demander uniquement “baissez la commission”. La bonne négociation consiste à
+          rendre la structure plus lisible et plus efficace : plafonds sur certains extras, process qualité, reporting
+          mensuel, et règles d’intervention.
+        </p>
+        <h3>Ce que vous pouvez demander sans “casser” le service</h3>
+        <ul>
+          <li><strong>Un plafond</strong> sur certains extras (ex. check-in tardif) ou une grille tarifaire fixe.</li>
+          <li><strong>Un forfait linge</strong> plus lisible (au lieu de multiples micro-frais).</li>
+          <li><strong>Un seuil d’intervention</strong> (ex. petites réparations jusqu’à X €) + compte rendu photo.</li>
+          <li><strong>Un reporting mensuel</strong> (occupation, prix moyen, dépenses) pour piloter sans friction.</li>
+        </ul>
+        <p>
+          La meilleure négociation est celle qui améliore la lisibilité et la stabilité. Une conciergerie sérieuse préfère
+          souvent un cadre clair (même si elle ne baisse pas beaucoup la commission) plutôt qu’une relation où tout devient
+          une discussion au cas par cas.
+        </p>
+        <ul>
+          <li><strong>Plafonner</strong> certains frais (ex. check-in tardif, interventions)</li>
+          <li><strong>Clarifier</strong> le linge (forfait par séjour vs inclus)</li>
+          <li><strong>Exiger</strong> un contrôle qualité ménage</li>
+          <li><strong>Mettre</strong> un reporting mensuel (performance + dépenses)</li>
+        </ul>
+        <div class="callout">
+          <strong>Point clé :</strong> une conciergerie qui tient la qualité protège votre note, et donc vos prix. C’est
+          souvent là que se joue la rentabilité.
+        </div>
+      </section>
+
+      <section id="budget-modele">
+        <h2>6) Modèle de budget (copier-coller) + email type pour comparer 3 devis</h2>
+        <p>
+          Le piège le plus fréquent, ce n’est pas “le % de commission” : c’est l’absence de cadre. Quand plusieurs postes
+          sont facturés “à l’occurrence”, deux devis peuvent sembler proches alors qu’ils divergent fortement sur un mois
+          chargé. Ce modèle sert à comparer sur une base identique, puis à décider avec un critère simple : coût total +
+          risque qualité.
+        </p>
+        <h3>6.1) La grille mensuelle (à remplir avec des chiffres réalistes)</h3>
+        <p>
+          Prenez un mois “type” (hors pic exceptionnel) et un mois “stress” (forte rotation, week-ends, arrivées tardives).
+          Si vous ne savez pas encore, commencez avec des hypothèses conservatrices : mieux vaut une surestimation que
+          une surprise.
+        </p>
+        <ul>
+          <li><strong>Commission / forfait / hybride</strong> : ligne principale + ce qui est inclus.</li>
+          <li><strong>Ménage</strong> : par séjour + retouches + contrôle qualité (si facturé).</li>
+          <li><strong>Linge</strong> : par séjour + remplacement + stock (si applicable).</li>
+          <li><strong>Check-in / accueil</strong> : standard + tardif + départ anticipé (si applicable).</li>
+          <li><strong>Consommables</strong> : kit d’accueil + réassort + seuil de refacturation.</li>
+          <li><strong>Maintenance</strong> : déplacement + main d’œuvre + seuil d’intervention.</li>
+          <li><strong>Logiciels / extras</strong> : photos, annonce, pricing, channel manager (si mentionné).</li>
+        </ul>
+        <div class="callout">
+          <strong>Règle d’arbitrage :</strong> si deux offres sont à 10–15% d’écart sur le total, choisissez d’abord celle
+          qui réduit le risque “note / incidents” (contrôle ménage, protocole urgences, reporting).
+        </div>
+        <h3>6.2) 8 questions qui révèlent un devis “trop optimiste”</h3>
+        <ul>
+          <li>Le ménage inclut-il un <strong>contrôle photo</strong> systématique entre deux séjours ?</li>
+          <li>Que se passe-t-il si un voyageur arrive à 23h30 (tarif, plan B, assistance) ?</li>
+          <li>Le linge est-il garanti en nombre de jeux par lit, avec une règle de remplacement ?</li>
+          <li>Les consommables ont-ils un <strong>minimum</strong> listé (papier, savon, sacs poubelle) ?</li>
+          <li>Les interventions ont-elles un <strong>seuil</strong> et un compte rendu photo ?</li>
+          <li>Le pricing est-il inclus, optionnel, ou limité (nombre de règles / fréquence) ?</li>
+          <li>Le reporting mensuel est-il contractuel (KPI + incidents + dépenses) ?</li>
+          <li>Les extras ont-ils une <strong>grille écrite</strong> (pas “selon cas”) ?</li>
+        </ul>
+        <h3>6.3) Email type (à envoyer tel quel, en personnalisant 3 lignes)</h3>
+        <p>
+          Bonjour, je compare 3 prestataires pour la gestion d’un logement en location courte durée. Merci de me renvoyer
+          un devis détaillé sur une base identique : commission/forfait, ménage + contrôle qualité, linge (par séjour),
+          check-in standard et tardif, consommables, urgences + seuil d’intervention, reporting mensuel (occupation, prix
+          moyen, incidents, dépenses). Merci aussi d’indiquer ce qui est strictement inclus vs optionnel, et les cas où
+          des frais supplémentaires s’appliquent. Cordialement.
+        </p>
+        <h3>6.4) Mini-scénarios : quand “moins cher” coûte plus cher</h3>
+        <p>
+          Scénario A : commission basse, mais check-in tardif facturé souvent et linge facturé au détail. Scénario B :
+          commission un peu plus haute, mais arrivées mieux cadencées et linge stabilisé en forfait. Sur 8–12 séjours,
+          l’écart peut s’inverser rapidement, surtout si la qualité évite une série de petites déceptions (4 étoiles) qui
+          pèsent sur la visibilité.
+        </p>
+        <p>
+          Scénario C : forfait attractif, mais maintenance “au ticket” sans seuil : une semaine avec deux micro-pannes
+          peut exploser le budget. Le bon cadre n’est pas “zéro dépense”, c’est une dépense prévisible et des règles
+          d’exécution.
+        </p>
+        <h3>6.5) “Période test” : comment valider le prix sans parier 6 mois</h3>
+        <p>
+          Si vous hésitez, demandez un pilote de 30 jours avec des livrables simples : checklist ménage + photos, compte
+          rendu des incidents, et un premier reporting. L’objectif n’est pas de juger le business model du prestataire,
+          mais de vérifier que l’opérationnel tient sur la durée (ce qui est exactement ce qui fait varier votre coût
+          réel).
+        </p>
+      </section>
+
+      <section id="faq" class="faq">
+        <h2>7) FAQ</h2>
+        <div class="q">
+          <strong>Commission ou forfait : que choisir ?</strong>
+          Commission si vous voulez un alignement sur le CA et une entrée simple. Forfait si vous avez une forte rotation
+          et souhaitez un coût stable. Hybride si le prestataire optimise aussi l’annonce et le pricing.
+        </div>
+        <div class="q">
+          <strong>Qui paye le ménage et le linge ?</strong>
+          Le ménage peut être payé par le voyageur ou le propriétaire selon l’organisation. Le linge est souvent séparé :
+          vérifiez toujours sa structure de prix.
+        </div>
+        <div class="q">
+          <strong>Une conciergerie “tout inclus” existe-t-elle ?</strong>
+          Oui, mais “tout inclus” doit être documenté. Exigez un devis qui liste précisément les inclusions et les
+          exceptions.
+        </div>
+        <div class="q">
+          <strong>Est-ce rentable pour un studio ?</strong>
+          Oui si la conciergerie maintient une note élevée et optimise le pricing. Sinon, la marge peut être trop serrée.
+          Faites le calcul sur le coût total, pas uniquement sur la commission.
+        </div>
+        <div class="q">
+          <strong>Les frais voyageur réduisent-ils mon coût “réel” ?</strong>
+          Parfois, mais pas toujours : ils peuvent impacter la conversion et le positionnement prix. Le bon indicateur est
+          le revenu net après commissions + coûts opérationnels, pas la liste des frais affichés.
+        </div>
+        <div class="q">
+          <strong>Comment éviter les discussions “au cas par cas” ?</strong>
+          Exigez une grille écrite pour tout ce qui peut varier (tardif, linge, interventions) + un compte rendu mensuel.
+          Si ce n’est pas écrit, assumez que ça sera négocié sous pression, souvent au pire moment.
+        </div>
+        <div class="q">
+          <strong>Que demander si je loue sur plusieurs plateformes ?</strong>
+          Demandez comment la conciergerie gère la cohérence (messages, règles d’annulation, calendrier) et si des outils
+          sont inclus ou facturés. Le multi-canal augmente le risque opérationnel : il doit être reflété dans le devis.
+        </div>
+      </section>
+    </main>
+
+    <footer>Chiffres indicatifs. Les tarifs varient selon la ville, la saison et le niveau de service.</footer>
+  </body>
+</html>
+

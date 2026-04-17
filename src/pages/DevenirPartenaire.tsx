@@ -327,7 +327,7 @@ const DevenirPartenaire = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-gray-900">29€</div>
+                  <div className="text-3xl font-extrabold text-gray-900">11,99€</div>
                   <div className="text-sm text-gray-500">/ mois</div>
                 </div>
               </div>
@@ -376,7 +376,7 @@ const DevenirPartenaire = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-gray-900">79€</div>
+                  <div className="text-3xl font-extrabold text-gray-900">29,99€</div>
                   <div className="text-sm text-gray-500">/ mois</div>
                 </div>
               </div>

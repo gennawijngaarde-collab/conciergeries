@@ -222,6 +222,7 @@
           <li><a href="#comparatif">Comparatif 2026</a></li>
           <li><a href="#table">Tableau rapide</a></li>
           <li><a href="#choisir">Comment choisir</a></li>
+          <li><a href="#rollout">Scorecard + deploiement (14 jours)</a></li>
           <li><a href="#faq">FAQ</a></li>
         </ol>
       </nav>
@@ -340,6 +341,205 @@
         </div>
       </section>
 
+      <section id="criteres">
+        <h2>5bis) Les criteres qui font vraiment la difference (2026)</h2>
+        <p>
+          Les comparatifs "top 5" sont utiles pour decouvrir des solutions, mais votre choix doit se faire avec des criteres
+          concrets. En 2026, la valeur d'un channel manager depend surtout de sa <strong>fiabilite</strong> (anti-surbooking),
+          de son <strong>niveau d'automatisation</strong> et de sa capacite a s'integrer avec votre organisation (PMS, menage,
+          paiements, messaging).
+        </p>
+        <h3>1) Connectivite (Airbnb / Booking / Expedia / etc.)</h3>
+        <p>
+          Verifiez vos 2 canaux prioritaires et demandez : "la connexion est-elle directe ?", "quelle frequence de synchro ?",
+          "quels champs sont synchronises (tarifs, restrictions, message, frais, etc.) ?". Une connexion "partielle" peut
+          suffire au debut, mais elle cree vite des erreurs si vous augmentez le volume.
+        </p>
+        <h3>2) Gestion des restrictions (le point souvent oublie)</h3>
+        <p>
+          La plupart des bugs de calendrier viennent des restrictions mal gerees : minimum nights, arrivées autorisees,
+          fermetures, politiques d'annulation, et regles differentes selon les canaux. Un bon outil rend ces regles visibles
+          et coherentes (sinon vous gerez au "coup par coup").
+        </p>
+        <h3>3) Fiabilite & journal d'evenements</h3>
+        <p>
+          Exigez un historique clair : qui a modifie quoi, quand, et via quel canal. Sans journal d'evenements, diagnostiquer
+          un surbooking devient un cauchemar. Pour un pro, c'est un critere majeur.
+        </p>
+        <h3>4) Automatisations (gain de temps)</h3>
+        <ul>
+          <li>Messages automatiques (avant arrivee, pendant sejour, depart)</li>
+          <li>Creation de taches (menage, linge, maintenance)</li>
+          <li>Regles de prix (saisonnalite, week-end vs semaine, trous de calendrier)</li>
+        </ul>
+        <p>
+          Attention : l'automatisation ne vaut que si elle est controlee. Un bon outil permet des regles simples et une
+          supervision (alerte en cas d'anomalie).
+        </p>
+        <h3>5) Support & onboarding</h3>
+        <p>
+          Le support fait la difference quand vous avez un incident. Regardez les canaux (mail, chat, telephone), les delais
+          et surtout la qualite de l'onboarding (import, mapping canaux, tests).
+        </p>
+      </section>
+
+      <section id="cas-usage">
+        <h2>5ter) Quel channel manager selon votre profil ?</h2>
+        <p>
+          Le meilleur outil n'est pas le meme pour un proprietaire avec 1 logement et pour un gestionnaire avec 30. Voici un
+          guide simple pour choisir selon votre situation.
+        </p>
+        <h3>Profil A : 1 a 3 biens (objectif : securiser, gagner du temps)</h3>
+        <ul>
+          <li>Priorite : synchro fiable Airbnb + Booking</li>
+          <li>Besoin : interface simple + messages + regles basiques</li>
+          <li>Point vigilance : evitons les parametres trop complexes</li>
+        </ul>
+        <h3>Profil B : 4 a 20 biens (objectif : process & equipe)</h3>
+        <ul>
+          <li>Priorite : taches menage + planning equipe + reporting</li>
+          <li>Besoin : roles utilisateurs, journal, automatisations</li>
+          <li>Point vigilance : integrer vos outils (PMS, facturation, serrures)</li>
+        </ul>
+        <h3>Profil C : hotel / residence (objectif : PMS + distribution)</h3>
+        <ul>
+          <li>Priorite : PMS robuste + connectivite OTA large</li>
+          <li>Besoin : gestion multi-etablissements, facturation, check-in/out</li>
+          <li>Point vigilance : qualite des integrations et du support</li>
+        </ul>
+      </section>
+
+      <section id="implementation">
+        <h2>5quater) Checklist de mise en place (eviter le surbooking)</h2>
+        <p>
+          La plupart des "mauvaises experiences" avec un channel manager viennent d'un mauvais deploiement. Suivez cette
+          checklist pour partir proprement.
+        </p>
+        <h3>Avant de connecter vos canaux</h3>
+        <ul>
+          <li>Choisir un calendrier "source" (ne pas modifier partout)</li>
+          <li>Nettoyer les disponibilites (bloquer les dates incertaines)</li>
+          <li>Verifier les regles : min nights, horaires, frais, depots</li>
+        </ul>
+        <h3>Connexion (mode pilote)</h3>
+        <ul>
+          <li>Connecter 2 canaux maximum</li>
+          <li>Faire 3 tests : bloquer une date, changer un prix, creer une restriction</li>
+          <li>Verifier la propagation sur chaque canal</li>
+        </ul>
+        <h3>Apres 7 a 14 jours</h3>
+        <ul>
+          <li>Analyser : annulations, conflits calendrier, erreurs de prix</li>
+          <li>Ajuster les regles (trous, week-end vs semaine)</li>
+          <li>Seulement ensuite connecter d'autres canaux</li>
+        </ul>
+        <div class="callout">
+          <strong>Regle :</strong> si vous faites encore des changements manuels sur plusieurs interfaces, vous augmentez le risque de surbooking.
+        </div>
+      </section>
+
+      <section id="erreurs">
+        <h2>5quinquies) Les erreurs les plus frequentes (et comment les eviter)</h2>
+        <h3>Erreur 1 : connecter trop de canaux d'un coup</h3>
+        <p>
+          Vous multipliez les regles, les exceptions et les risques. Ajoutez un canal, stabilisez, puis etendez si cela
+          apporte vraiment du volume.
+        </p>
+        <h3>Erreur 2 : regles incoherentes entre canaux</h3>
+        <p>
+          Ex : minimum nights different, horaires incompatibles, politique d'annulation floue. Standardisez vos regles de base,
+          puis adaptez a la marge.
+        </p>
+        <h3>Erreur 3 : ne pas suivre le "cout total"</h3>
+        <p>
+          Un outil peut sembler peu cher, mais vous faire perdre de l'argent via annulations, surbooking, ou temps de support.
+          Regardez le resultat : occupation, ADR, incidents, temps gagne.
+        </p>
+      </section>
+
+      <section id="templates">
+        <h2>5sexies) Templates rapides (a copier)</h2>
+        <p>
+          Pour aller vite, voici des templates de regles et de messages. Ils reduisent les erreurs et augmentent la
+          constance, surtout quand vous commencez le multi-canal.
+        </p>
+        <h3>Template de regles (base)</h3>
+        <ul>
+          <li><strong>Minimum nights</strong> : 2 (ajustable selon saison)</li>
+          <li><strong>Arrivee / depart</strong> : horaires compatibles avec le menage</li>
+          <li><strong>Buffer</strong> : 1 nuit de marge si rotation difficile (au debut)</li>
+          <li><strong>Politique annulation</strong> : coherent avec votre tolérance au risque</li>
+        </ul>
+        <h3>Template message "pre-arrivee"</h3>
+        <p>
+          "Bonjour, voici les consignes d'arrivee et les informations utiles : adresse + photos, horaires, Wi-Fi, regles
+          principales. En cas de blocage, contactez-nous ici : [numero]. Nous avons un plan B."
+        </p>
+        <h3>Template message "incident"</h3>
+        <p>
+          "Merci pour votre message. Bien recu. Nous revenons vers vous d'ici [X] minutes et nous declenchons une action
+          (intervention / solution temporaire)."
+        </p>
+      </section>
+
+      <section id="rollout">
+        <h2>5septies) Scorecard editeur (15 criteres) + deploiement fiable en 14 jours</h2>
+        <p>
+          Choisir un channel manager, ce n'est pas seulement comparer des logos : c'est choisir une brique critique de
+          votre distribution. Si la synchro est fragile, vous payez en temps, en stress, et parfois en surbooking. La
+          scorecard ci-dessous vous aide a comparer sur des signaux objectifs, puis a deployer sans casser votre
+          operationnel.
+        </p>
+        <h3>A) Fiabilite & synchronisation</h3>
+        <ul>
+          <li><strong>Latence</strong> : delai typique de propagation (reservation, prix, restrictions).</li>
+          <li><strong>Journal d'evenements</strong> : traçabilite (qui a change quoi, depuis quel canal).</li>
+          <li><strong>Gestion des erreurs</strong> : alertes, file d'attente, reconciliation.</li>
+          <li><strong>Tests</strong> : mode pilote / sandbox / procedure de validation.</li>
+        </ul>
+        <h3>B) Regles tarifaires & restrictions</h3>
+        <ul>
+          <li><strong>Minimum nights</strong> par saison / jour de semaine.</li>
+          <li><strong>Fermetures</strong> a l'arrivee / au depart, buffers, exceptions.</li>
+          <li><strong>Promotions</strong> et packages (si vous en utilisez).</li>
+          <li><strong>Parite / coherence</strong> entre canaux (eviter les incoherences "silencieuses").</li>
+        </ul>
+        <h3>C) Integrations (PMS / PMS-lite / automatisation)</h3>
+        <ul>
+          <li><strong>PMS</strong> : qualite de la connexion (certifications, retours terrain).</li>
+          <li><strong>Facturation / menage</strong> : declenchement des taches apres reservation.</li>
+          <li><strong>Messaging</strong> : centralisation (si besoin) + templates.</li>
+        </ul>
+        <h3>D) Support & onboarding</h3>
+        <ul>
+          <li><strong>Temps de reponse</strong> support + creneaux.</li>
+          <li><strong>Documentation</strong> + accompagnement mapping des chambres / unites.</li>
+          <li><strong>Formation</strong> : equipe, roles, procedures.</li>
+        </ul>
+        <h3>E) Reporting</h3>
+        <ul>
+          <li><strong>Par canal</strong> : volume, annulations, commissions, revenu net.</li>
+          <li><strong>Qualite</strong> : incidents de synchro, erreurs de prix, conflits.</li>
+        </ul>
+        <div class="callout">
+          <strong>Astuce :</strong> notez chaque critere 0/1/2 (absent / partiel / solide). Un editeur peut etre "moins
+          cher" mais perdre sur 3-4 criteres critiques pour votre volume.
+        </div>
+        <h3>Deploiement 14 jours (simple, robuste)</h3>
+        <p>
+          Jour 1-2 : inventaire (canaux, unites, regles, exceptions). Jour 3-5 : mapping + tests sur 2 canaux max.
+          Jour 6-10 : stabilisation (surveiller annulations, trous, erreurs). Jour 11-14 : extension prudente + regles
+          de pricing + reporting hebdo puis mensuel.
+        </p>
+        <h3>Checklist "go live" (minimum)</h3>
+        <ul>
+          <li>Une seule interface devient la <strong>source de verite</strong> (discipline d'equipe).</li>
+          <li>Les restrictions sont alignees sur vos contraintes reelles (menage, rotation).</li>
+          <li>Un responsable nomme pour valider les changements tarifaires.</li>
+          <li>Une procedure surbooking (meme si l'objectif est zero).</li>
+        </ul>
+      </section>
+
       <section id="faq" class="faq">
         <h2>6) FAQ</h2>
         <div class="q">
@@ -353,6 +553,61 @@
         <div class="q">
           <strong>Combien ca coute ?</strong>
           Les prix varient selon les modules et le nombre d'unites. Comptez souvent entre 60 et 200 EUR/mois pour une solution complete.
+        </div>
+        <div class="q">
+          <strong>Dois-je prendre un channel manager si je ne suis que sur Airbnb ?</strong>
+          Pas forcement. Si vous n'avez qu'un canal, le risque de surbooking est faible. Un outil devient utile si vous voulez ajouter Booking
+          (ou d'autres canaux) ou si vous voulez automatiser (messages, taches, reporting).
+        </div>
+        <div class="q">
+          <strong>Comment etre certain que la synchro est fiable ?</strong>
+          Faites un test pilote : connectez 2 canaux, changez une date, un prix et une restriction, puis verifiez la propagation. Exigez aussi un journal
+          d'evenements pour comprendre l'origine d'un changement.
+        </div>
+        <div class="q">
+          <strong>Quel est le plus gros risque en multi-plateformes ?</strong>
+          Les regles incoherentes (restrictions, annulation, horaires) et les modifications manuelles sur plusieurs interfaces. Un seul "source of truth"
+          + une discipline de process reduisent fortement le risque.
+        </div>
+        <div class="q">
+          <strong>Un channel manager remplace-t-il un PMS ?</strong>
+          Pas toujours. Le channel manager distribue ; le PMS (ou un outil equivalent) organise l'operationnel. L'important
+          est que la chaine reservation → planning → taches soit fiable.
+        </div>
+        <div class="q">
+          <strong>Airbnb + Booking : par ou commencer ?</strong>
+          Commencez par stabiliser regles + menage + messages sur un canal, puis ajoutez le second avec un pilote court et
+          une surveillance quotidienne pendant 7-14 jours.
+        </div>
+        <div class="q">
+          <strong>Comment comparer le cout "reel" ?</strong>
+          Additionnez abonnement + modules + temps interne + incidents (annulations, erreurs). Un outil un peu plus cher
+          peut etre moins cher au total si vous evitez 2-3 crises par an.
+        </div>
+        <div class="q">
+          <strong>Que verifier lors d'une demo (15 minutes) ?</strong>
+          Faites un scenario complet : changer une date, une restriction, un prix, puis observer la propagation sur 2
+          canaux. Demandez aussi comment l'outil affiche l'origine d'un changement (journal / historique).
+        </div>
+        <div class="q">
+          <strong>Comment gerer les "exceptions" (maintenance, fermetures ponctuelles) ?</strong>
+          Verifiez que vous pouvez fermer proprement une plage sans casser les regles (min nights, arrivees) et que la
+          fermeture se synchronise partout.
+        </div>
+        <div class="q">
+          <strong>Airbnb et Booking ont des logiques differentes : est-ce un probleme ?</strong>
+          Oui si vous ne standardisez pas vos regles de base. Le channel manager aide, mais il ne remplace pas une politique
+          claire (horaires, annulations, depots).
+        </div>
+        <div class="q">
+          <strong>iCal vs connexion API : quelle difference en pratique ?</strong>
+          L'iCal peut suffire pour tester, mais il est souvent moins precis et moins riche qu'une connexion API (delais,
+          restrictions, tarifs). Si vous etes multi-canal avec rotation, privilegiez une connexion robuste et traçable.
+        </div>
+        <div class="q">
+          <strong>Que demander sur le mapping des unites / chambres ?</strong>
+          Demandez une procedure de verification : correspondance des types, restrictions, et tests apres chaque changement
+          majeur. Le mapping est une cause classique de surbooking "technique".
         </div>
 
         <div class="cta">

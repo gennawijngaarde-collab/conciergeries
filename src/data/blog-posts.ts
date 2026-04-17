@@ -2,6 +2,114 @@ import type { BlogPost } from '@/types/conciergerie';
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 28,
+    title: 'Conciergerie Airbnb : la formation complète pour créer une activité rentable dès 2026',
+    slug: 'formation-conciergerie-airbnb-livre-numerique',
+    excerpt:
+      'Livre numérique : de zéro à rentable — statut juridique, business plan, outils (PMS, pricing), marketing & SEO, fiscalité, scalabilité. Accès immédiat sur Gumroad.',
+    content: `
+L’immobilier locatif évolue. Aujourd’hui, il ne suffit plus d’acheter un bien pour générer des revenus. Ce qui fait vraiment la différence, c’est l’exploitation intelligente… et c’est exactement là que la conciergerie Airbnb devient une opportunité exceptionnelle.
+
+Si tu cherches un business rentable, accessible et scalable, cette formation est probablement le raccourci le plus efficace pour y arriver.
+
+## Pourquoi la conciergerie Airbnb explose en 2026 ?
+
+Le marché de la location courte durée continue de structurer la demande. De plus en plus de propriétaires souhaitent louer sur Airbnb… mais ne veulent pas gérer eux-mêmes :
+
+- Messages voyageurs
+- Ménage
+- Check-in / check-out
+- Optimisation des prix
+
+Résultat : ils cherchent des conciergeries fiables pour déléguer. C’est là que tu entres en jeu.
+
+## Le problème : beaucoup de gens ne savent pas par où commencer
+
+Créer une conciergerie rentable ne s’improvise pas. Erreurs fréquentes :
+
+- Mauvais statut juridique
+- Tarification trop basse
+- Aucun système automatisé
+- Zéro stratégie d’acquisition client
+
+Résultat : perte de temps, d’argent… et abandon.
+
+## La solution : un livre numérique clair et actionnable
+
+Un livre numérique ultra concret pour t’accompagner de A à Z.
+
+Objectif : te faire passer de zéro à une activité rentable.
+
+### Ce que tu vas apprendre
+
+- Créer ton entreprise et choisir le bon statut
+- Construire un business plan solide
+- Utiliser les bons outils (PMS, automatisation, pricing dynamique)
+- Trouver tes premiers clients rapidement
+- Optimiser ta visibilité avec le SEO et les annuaires
+- Comprendre la fiscalité et éviter les erreurs
+- Passer à l’échelle (recrutement & croissance)
+
+## Une formation pensée pour des résultats concrets
+
+Ce n’est pas de la théorie seulement.
+
+- 10 chapitres structurés
+- Des checklists prêtes à l’emploi
+- Des conseils directement applicables
+- Une méthode étape par étape
+
+Tu peux commencer dès aujourd’hui.
+
+## Pourquoi ce modèle se distingue ?
+
+Contrairement à d’autres business :
+
+- Pas besoin de gros capital pour démarrer
+- Pas besoin de posséder un bien immobilier
+- Pas de stock
+
+En revanche :
+
+- Tu vends un service à forte valeur
+- Revenus récurrents chaque mois
+- Possibilité de scaler avec une organisation solide
+
+## Combien peut-on facturer ?
+
+Une conciergerie facture souvent entre 15% et 30% des revenus locatifs gérés. Avec une bonne organisation, l’objectif est de construire un portefeuille de mandats stable — puis d’industrialiser l’exécution (process, équipes, outils).
+
+## Le meilleur moment pour se lancer ?
+
+Le marché des services autour de la location courte durée reste en structuration : ceux qui posent des bases solides (offre, légal, acquisition, qualité) prennent de l’avance.
+
+## Passe à l’action
+
+Tu peux continuer à chercher des infos gratuites pendant des mois… ou aller droit au but avec une méthode structurée.
+
+Cette formation complète est disponible pour 37€ sur Gumroad — à ce prix-là, c’est souvent moins qu’une erreur que tu pourrais éviter (statut, pricing, ou acquisition).
+
+👉 <strong>Obtenir la formation (accès immédiat) :</strong> <a href="https://wijngaarde6.gumroad.com/l/llnzrj" target="_blank" rel="noopener noreferrer">https://wijngaarde6.gumroad.com/l/llnzrj</a>
+`,
+    author: "L'équipe Conciergeries France",
+    date: '2026-04-17',
+    category: 'Formation',
+    image: '/images/blog/formation-conciergerie-airbnb-livre-numerique.svg',
+    imageAlt: 'Couverture du livre numérique Conciergerie Airbnb — formation complète',
+    metaTitle: 'Formation Conciergerie Airbnb 2026 — livre numérique (Gumroad)',
+    metaDescription:
+      'Livre numérique : créer une conciergerie Airbnb rentable (statut, business plan, outils, SEO, fiscalité, scalabilité). Téléchargement sur Gumroad.',
+    metaKeywords: [
+      'formation conciergerie airbnb',
+      'livre numérique conciergerie',
+      'créer conciergerie',
+      'business plan conciergerie',
+      'gumroad',
+    ],
+    tags: ['formation', 'conciergerie', 'Airbnb', 'ebook', 'entrepreneuriat', 'Gumroad'],
+    readingTimeMinutes: 10,
+  },
+  {
     id: 11,
     title: 'Channel Manager : Le Guide Complet pour Optimiser la Distribution Hôtelière en 2026',
     slug: 'channel-manager-guide-complet',
@@ -1947,6 +2055,411 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     image: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=2400&q=80",
     imageAlt: "Circuit électronique et technologie, illustration des innovations",
     tags: ["tendances", "innovation", "IA", "domotique", "durabilité", "avenir"]
+  },
+  {
+    id: 13,
+    title: 'Comment choisir une conciergerie Airbnb en 2026 ? (checklist + critères)',
+    slug: 'choisir-conciergerie-airbnb-2026',
+    excerpt:
+      "Prix, services, avis, contrat, assurance, commission… La checklist 2026 pour choisir une conciergerie Airbnb fiable et rentable près de chez vous.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/choisir-conciergerie-airbnb-2026.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Guide',
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Appartement lumineux, illustration d'un choix de conciergerie",
+    metaTitle: 'Choisir une conciergerie Airbnb en 2026 : checklist, prix, critères',
+    metaDescription:
+      "La checklist 2026 pour choisir une conciergerie Airbnb fiable : tarifs, services, contrat, avis, ménage, linge, pricing, urgences. Méthode simple + questions à poser.",
+    metaKeywords: [
+      'choisir conciergerie airbnb',
+      'conciergerie airbnb 2026',
+      'prix conciergerie airbnb',
+      'services conciergerie',
+      'checklist conciergerie',
+      'gestion location courte durée',
+    ],
+    tags: ['conciergerie', 'airbnb', 'guide', 'checklist', 'prix'],
+  },
+  {
+    id: 14,
+    title: 'Conciergerie Airbnb : combien ça coûte vraiment en 2026 ? (prix, commission, frais)',
+    slug: 'conciergerie-airbnb-combien-ca-coute',
+    excerpt:
+      "Commission, forfait, ménage, linge, check-in, frais cachés… Le vrai coût d’une conciergerie Airbnb en 2026, avec méthode de calcul et exemples.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/conciergerie-airbnb-combien-ca-coute.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Tarifs',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Calculatrice et budget, illustration du coût d'une conciergerie",
+    metaTitle: 'Prix conciergerie Airbnb 2026 : commission, forfait, frais cachés',
+    metaDescription:
+      "Combien coûte vraiment une conciergerie Airbnb en 2026 ? Commission, forfait, linge, ménage, check-in, frais cachés. Méthode de calcul + exemples.",
+    metaKeywords: [
+      'prix conciergerie airbnb',
+      'coût conciergerie airbnb',
+      'commission conciergerie',
+      'forfait conciergerie',
+      'linge airbnb',
+      'ménage airbnb',
+    ],
+    tags: ['prix', 'conciergerie', 'airbnb', 'commission', 'rentabilité'],
+  },
+  {
+    id: 15,
+    title: 'Conciergerie ou gestion en direct : que choisir pour sa location saisonnière ?',
+    slug: 'conciergerie-ou-gestion-en-direct',
+    excerpt:
+      "Temps, coûts, risques, notes, rentabilité… Comparez conciergerie vs gestion en direct avec une méthode simple et un arbre de décision.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/conciergerie-ou-gestion-en-direct.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Comparaison',
+    image: 'https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Comparaison et choix, illustration conciergerie vs gestion directe",
+    metaTitle: 'Conciergerie ou gestion en direct : que choisir en 2026 ?',
+    metaDescription:
+      "Conciergerie vs gestion en direct : temps, coûts, risques, note, rentabilité. Méthode simple + arbre de décision pour choisir la meilleure option.",
+    metaKeywords: [
+      'gestion airbnb soi-même',
+      'conciergerie ou gestion directe',
+      'gestion location saisonnière',
+      'rentabilité airbnb',
+      'déléguer conciergerie',
+    ],
+    tags: ['comparaison', 'conciergerie', 'airbnb', 'rentabilité', 'gestion'],
+  },
+  {
+    id: 16,
+    title: "Les services inclus dans une bonne conciergerie Airbnb (la checklist 2026)",
+    slug: 'services-inclus-conciergerie-airbnb',
+    excerpt:
+      'Ménage, linge, check-in, messages, maintenance, pricing… La liste complète des services à exiger d’une conciergerie Airbnb (et les questions à poser).',
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/services-inclus-conciergerie-airbnb.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Services',
+    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Accueil et service, illustration des services de conciergerie",
+    metaTitle: "Services conciergerie Airbnb 2026 : checklist complète (inclus / options)",
+    metaDescription:
+      "La checklist 2026 des services d’une conciergerie Airbnb : ménage + contrôle, linge, check-in/out, messagerie, urgences, pricing, annonce. Questions à poser + pièges.",
+    metaKeywords: [
+      'services conciergerie airbnb',
+      'checklist conciergerie',
+      'ménage airbnb',
+      'linge airbnb',
+      'check-in airbnb',
+      'pricing airbnb',
+    ],
+    tags: ['services', 'conciergerie', 'airbnb', 'checklist', 'qualité'],
+  },
+  {
+    id: 17,
+    title: 'Comment trouver une conciergerie Airbnb fiable près de chez vous ?',
+    slug: 'trouver-conciergerie-fiable-pres-de-chez-vous',
+    excerpt:
+      "Méthode pas à pas : où chercher, quelles preuves demander, quels signaux d’alerte repérer et comment comparer 3 prestataires localement.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/trouver-conciergerie-fiable-pres-de-chez-vous.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Guide',
+    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Équipe et confiance, illustration d'un choix fiable",
+    metaTitle: 'Trouver une conciergerie Airbnb fiable près de chez vous (méthode 2026)',
+    metaDescription:
+      "Comment trouver une conciergerie Airbnb fiable près de chez vous : où chercher, quelles preuves demander, scorecard, signaux d’alerte, et méthode pour comparer 3 prestataires.",
+    metaKeywords: [
+      'conciergerie airbnb fiable',
+      'conciergerie airbnb autour de moi',
+      'trouver conciergerie',
+      'avis conciergerie airbnb',
+      'choisir conciergerie',
+    ],
+    tags: ['conciergerie', 'airbnb', 'guide', 'avis', 'méthode'],
+  },
+  {
+    id: 18,
+    title: 'Top des villes où une conciergerie Airbnb est la plus utile (et pourquoi)',
+    slug: 'top-villes-conciergerie-airbnb-utile',
+    excerpt:
+      "Saisonnalité, réglementation, rotation, clientèle… Les critères qui rendent une conciergerie particulièrement utile selon les villes et les marchés.",
+    contentFormat: 'html',
+    readingTimeMinutes: 10,
+    htmlPath: '/top-villes-conciergerie-airbnb-utile.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Analyse',
+    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Ville et skyline, illustration d'une analyse par ville",
+    metaTitle: 'Villes où une conciergerie Airbnb est la plus utile (analyse 2026)',
+    metaDescription:
+      "Top des situations et villes où une conciergerie Airbnb est la plus utile : rotation, concurrence, saisonnalité, réglementation. Comment choisir un prestataire local.",
+    metaKeywords: [
+      'conciergerie airbnb ville',
+      'conciergerie airbnb utile',
+      'gestion location saisonnière',
+      'pricing airbnb',
+      'rotation airbnb',
+    ],
+    tags: ['analyse', 'villes', 'conciergerie', 'airbnb', 'marché'],
+  },
+  {
+    id: 19,
+    title: 'Conciergerie Airbnb à Paris : services, prix et critères de choix (2026)',
+    slug: 'conciergerie-airbnb-paris-services-prix',
+    excerpt:
+      "Guide local Paris : services à exiger, fourchettes de prix, points de vigilance (accès, rotation, qualité) et méthode pour comparer les prestataires.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/conciergerie-airbnb-paris-services-prix.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Local',
+    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Paris, illustration d'un guide local conciergerie",
+    metaTitle: 'Conciergerie Airbnb Paris : services, prix, critères (guide 2026)',
+    metaDescription:
+      "Conciergerie Airbnb à Paris : services indispensables, prix, points de vigilance (accès, rotation, propreté) et méthode pour comparer les prestataires en 2026.",
+    metaKeywords: [
+      'conciergerie airbnb paris',
+      'gestion airbnb paris',
+      'prix conciergerie paris',
+      'conciergerie paris',
+      'location saisonnière paris',
+    ],
+    tags: ['paris', 'local', 'conciergerie', 'airbnb', 'guide'],
+  },
+  {
+    id: 20,
+    title: 'Conciergerie Airbnb à Lyon : quelles options pour les propriétaires ? (2026)',
+    slug: 'conciergerie-airbnb-lyon-options-proprietaires',
+    excerpt:
+      "Guide local Lyon : comment choisir une conciergerie selon votre objectif (rentabilité, temps, note), et quoi vérifier dans un devis.",
+    contentFormat: 'html',
+    readingTimeMinutes: 11,
+    htmlPath: '/conciergerie-airbnb-lyon-options-proprietaires.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Local',
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Lyon, illustration d'un guide local conciergerie",
+    metaTitle: 'Conciergerie Airbnb Lyon : options propriétaires, prix, checklist (2026)',
+    metaDescription:
+      "Conciergerie Airbnb à Lyon : options de gestion, critères, checklist et points de vigilance pour choisir un prestataire fiable en 2026.",
+    metaKeywords: [
+      'conciergerie airbnb lyon',
+      'gestion airbnb lyon',
+      'conciergerie lyon',
+      'prix conciergerie lyon',
+    ],
+    tags: ['lyon', 'local', 'conciergerie', 'airbnb', 'propriétaires'],
+  },
+  {
+    id: 21,
+    title: 'Conciergerie Airbnb à Marseille : comment comparer les prestataires ?',
+    slug: 'conciergerie-airbnb-marseille-comparer-prestataires',
+    excerpt:
+      "Guide local Marseille : critères concrets (ménage, linge, urgences, avis) et méthode pour comparer des conciergeries selon votre quartier.",
+    contentFormat: 'html',
+    readingTimeMinutes: 11,
+    htmlPath: '/conciergerie-airbnb-marseille-comparer-prestataires.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Local',
+    image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Marseille, illustration d'un guide local conciergerie",
+    metaTitle: 'Conciergerie Airbnb Marseille : comparer les prestataires (checklist 2026)',
+    metaDescription:
+      "Conciergerie Airbnb à Marseille : checklist pour comparer les prestataires (ménage, linge, urgences, avis, devis). Guide local 2026.",
+    metaKeywords: [
+      'conciergerie airbnb marseille',
+      'conciergerie marseille',
+      'gestion airbnb marseille',
+      'prix conciergerie marseille',
+    ],
+    tags: ['marseille', 'local', 'conciergerie', 'airbnb', 'checklist'],
+  },
+  {
+    id: 22,
+    title: 'Conciergerie Airbnb à Bordeaux : guide local pour propriétaires (2026)',
+    slug: 'conciergerie-airbnb-bordeaux-guide-proprietaires',
+    excerpt:
+      "Bordeaux : services à exiger, prix, qualité opérationnelle et méthode pour choisir une conciergerie fiable pour booster vos notes et réservations.",
+    contentFormat: 'html',
+    readingTimeMinutes: 11,
+    htmlPath: '/conciergerie-airbnb-bordeaux-guide-proprietaires.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Local',
+    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Bordeaux, illustration d'un guide local conciergerie",
+    metaTitle: 'Conciergerie Airbnb Bordeaux : guide local propriétaires (prix + services) 2026',
+    metaDescription:
+      "Conciergerie Airbnb à Bordeaux : services indispensables, prix, critères de choix et méthode de comparaison. Guide local 2026 pour propriétaires.",
+    metaKeywords: [
+      'conciergerie airbnb bordeaux',
+      'conciergerie bordeaux',
+      'gestion airbnb bordeaux',
+      'prix conciergerie bordeaux',
+    ],
+    tags: ['bordeaux', 'local', 'conciergerie', 'airbnb', 'propriétaires'],
+  },
+  {
+    id: 23,
+    title: 'Les 10 erreurs qui font baisser les notes Airbnb (et comment les éviter)',
+    slug: '10-erreurs-baisser-notes-airbnb',
+    excerpt:
+      "Propreté, check-in, communication, literie… Les 10 erreurs qui détruisent une note Airbnb et les correctifs concrets pour remonter votre score.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/10-erreurs-baisser-notes-airbnb.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Conseils',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Checklist et qualité, illustration des notes Airbnb",
+    metaTitle: '10 erreurs qui font baisser les notes Airbnb (et solutions)',
+    metaDescription:
+      "Les 10 erreurs qui font baisser vos notes Airbnb : propreté, check-in, communication, literie, maintenance… + solutions concrètes pour remonter votre score.",
+    metaKeywords: [
+      'baisser notes airbnb',
+      'améliorer note airbnb',
+      'avis airbnb',
+      'propreté airbnb',
+      'check-in airbnb',
+    ],
+    tags: ['airbnb', 'notes', 'avis', 'qualité', 'conseils'],
+  },
+  {
+    id: 24,
+    title: 'Check-in, ménage, linge : qui fait quoi dans une conciergerie Airbnb ?',
+    slug: 'checkin-menage-linge-qui-fait-quoi-conciergerie',
+    excerpt:
+      "Qui gère le check-in, le ménage, le linge, les consommables et les urgences ? Explication claire + clauses à vérifier dans le contrat.",
+    contentFormat: 'html',
+    readingTimeMinutes: 11,
+    htmlPath: '/checkin-menage-linge-qui-fait-quoi-conciergerie.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Services',
+    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Organisation et service, illustration des responsabilités",
+    metaTitle: 'Check-in, ménage, linge : qui fait quoi dans une conciergerie Airbnb ?',
+    metaDescription:
+      "Check-in, ménage, linge, consommables, urgences : qui fait quoi dans une conciergerie Airbnb ? Clauses à vérifier pour éviter les malentendus.",
+    metaKeywords: [
+      'check-in airbnb',
+      'ménage airbnb',
+      'linge conciergerie',
+      'services conciergerie airbnb',
+      'contrat conciergerie',
+    ],
+    tags: ['services', 'conciergerie', 'airbnb', 'contrat', 'checklist'],
+  },
+  {
+    id: 25,
+    title: 'Pourquoi faire appel à une conciergerie pour augmenter ses réservations ?',
+    slug: 'pourquoi-conciergerie-augmente-reservations',
+    excerpt:
+      "Note, photos, pricing, réactivité, multi-plateformes… Les leviers concrets par lesquels une conciergerie peut augmenter vos réservations.",
+    contentFormat: 'html',
+    readingTimeMinutes: 11,
+    htmlPath: '/pourquoi-conciergerie-augmente-reservations.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Performance',
+    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Performance et réservations, illustration de la croissance",
+    metaTitle: 'Pourquoi une conciergerie augmente les réservations Airbnb (leviers 2026)',
+    metaDescription:
+      "Comment une conciergerie peut augmenter vos réservations : note, propreté, réactivité, pricing, photos, optimisation d’annonce, multi-plateformes. Leviers concrets.",
+    metaKeywords: [
+      'augmenter réservations airbnb',
+      'booster annonce airbnb',
+      'conciergerie performance',
+      'pricing airbnb',
+      'optimisation annonce airbnb',
+    ],
+    tags: ['performance', 'réservations', 'airbnb', 'conciergerie', 'optimisation'],
+  },
+  {
+    id: 26,
+    title: 'Booking.com ou Airbnb : quelle stratégie pour louer plus en 2026 ?',
+    slug: 'booking-ou-airbnb-quelle-strategie',
+    excerpt:
+      "Comparaison Airbnb vs Booking : profils voyageurs, coûts, annulations, visibilité, et stratégie multi-plateformes selon votre ville et votre objectif.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/booking-ou-airbnb-quelle-strategie.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Stratégie',
+    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Distribution et plateformes, illustration Airbnb vs Booking",
+    metaTitle: 'Booking.com ou Airbnb : quelle stratégie pour louer plus (2026) ?',
+    metaDescription:
+      "Airbnb vs Booking.com : avantages, limites, profils voyageurs, coûts, annulations, et stratégie multi-plateformes pour louer plus en 2026 selon votre ville.",
+    metaKeywords: [
+      'booking ou airbnb',
+      'airbnb vs booking',
+      'stratégie location saisonnière',
+      'multi-plateformes',
+      'channel manager',
+    ],
+    tags: ['stratégie', 'airbnb', 'booking', 'distribution', 'multi-plateformes'],
+  },
+  {
+    id: 27,
+    title: 'Comment améliorer la visibilité d’une annonce Airbnb avec une conciergerie ?',
+    slug: 'ameliorer-visibilite-annonce-airbnb-avec-conciergerie',
+    excerpt:
+      "Titre, photos, description, prix, réactivité, propreté… Les optimisations qui boostent la visibilité d’une annonce Airbnb et comment une conciergerie les met en place.",
+    contentFormat: 'html',
+    readingTimeMinutes: 12,
+    htmlPath: '/ameliorer-visibilite-annonce-airbnb-avec-conciergerie.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-03-31',
+    category: 'Optimisation',
+    image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: "Optimisation d'annonce, illustration visibilité Airbnb",
+    metaTitle: 'Visibilité annonce Airbnb : comment une conciergerie peut booster (2026)',
+    metaDescription:
+      "Comment améliorer la visibilité d’une annonce Airbnb : photos, titre, description, prix, réactivité, propreté. Et comment une conciergerie met ces optimisations en place.",
+    metaKeywords: [
+      'visibilité annonce airbnb',
+      'optimiser annonce airbnb',
+      'seo airbnb',
+      'pricing airbnb',
+      'conciergerie optimisation annonce',
+    ],
+    tags: ['optimisation', 'visibilité', 'airbnb', 'conciergerie', 'annonce'],
   }
 ];
 
