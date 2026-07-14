@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import conciergeries from '@/data/conciergeries';
 import blogPosts from '@/data/blog-posts';
+import ProductHuntBadge from '@/components/ProductHuntBadge';
 
 const Home = () => {
   // Get top 6 conciergeries by reviews
@@ -49,11 +50,14 @@ const Home = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-white/90 text-sm font-medium">
-                L'annuaire N°1 des conciergeries en France
-              </span>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="text-white/90 text-sm font-medium">
+                  L'annuaire N°1 des conciergeries en France
+                </span>
+              </div>
+              <ProductHuntBadge variant="light" size="sm" />
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">

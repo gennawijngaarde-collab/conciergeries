@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Pin, Twitter } from 'lucide-react';
+import ProductHuntBadge from '@/components/ProductHuntBadge';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -53,7 +54,7 @@ const Footer = () => {
               L'annuaire de référence des meilleures conciergeries Airbnb en France. 
               Trouvez le partenaire idéal pour maximiser vos revenus locatifs.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mb-5">
               <a href="https://pin.it/7hK20swqR" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors">
                 <Pin className="w-5 h-5" />
               </a>
@@ -67,6 +68,7 @@ const Footer = () => {
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
+            <ProductHuntBadge size="sm" />
           </div>
 
           {/* Navigation */}
