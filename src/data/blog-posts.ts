@@ -2,6 +2,44 @@ import type { BlogPost } from '@/types/conciergerie';
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 29,
+    title: 'Guesty : l’outil indispensable pour gérer vos locations courte durée (et pourquoi il peut booster votre rentabilité)',
+    slug: 'guesty-channel-manager-location-courte-duree',
+    excerpt:
+      'Guesty channel manager & PMS pour locations courte durée : synchronisation Airbnb/Booking, messagerie, opérations, automatisation. À qui ça s’adresse et comment décider.',
+    contentFormat: 'html',
+    readingTimeMinutes: 14,
+    htmlPath: '/guesty-channel-manager-location-courte-duree.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-07-15',
+    category: 'Outils',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2400&q=80',
+    imageAlt: 'Tableau de bord et gestion locative, illustration Guesty channel manager',
+    metaTitle: 'Guesty Channel Manager : guide complet location courte durée 2026',
+    metaDescription:
+      'Guesty pour locations courte durée : fonctionnalités, bénéfices, Airbnb/Booking, rentabilité, FAQ. Découvrez si Guesty est le bon channel manager / PMS pour vous.',
+    metaKeywords: [
+      'guesty',
+      'guesty channel manager',
+      'guesty location courte durée',
+      'pms airbnb',
+      'channel manager airbnb',
+      'gestion multi-plateformes',
+      'logiciel conciergerie',
+      'synchronisation calendrier airbnb booking',
+    ],
+    tags: [
+      'guesty',
+      'channel manager',
+      'pms',
+      'airbnb',
+      'booking',
+      'outils',
+      'location courte durée',
+    ],
+  },
+  {
     id: 28,
     title: 'Conciergerie Airbnb : la formation complète pour créer une activité rentable dès 2026',
     slug: 'formation-conciergerie-airbnb-livre-numerique',
@@ -169,6 +207,10 @@ La cinquième est la compatibilité mobile. De plus en plus d'hébergeurs, en pa
 Le marché propose plusieurs dizaines de solutions. Parmi les acteurs les plus établis, on retrouve des noms comme SiteMinder, Cloudbeds, Lodgify, Smoobu, Beds24, Hostaway, Guesty et Eviivo. Chacun possède ses forces et son positionnement.
 
 SiteMinder est souvent considéré comme la référence pour les hôtels de taille moyenne à grande, grâce à son réseau de plus de 450 connexions OTA et son écosystème très complet intégrant un moteur de réservation et des outils de revenue management. Cloudbeds se distingue par son approche tout-en-un qui combine PMS, channel manager et moteur de réservation dans une seule plateforme. Lodgify et Smoobu ciblent principalement les gestionnaires de locations saisonnières avec des interfaces intuitives et des fonctionnalités orientées vers Airbnb et Vrbo. Guesty et Hostaway se positionnent sur le segment des property managers qui gèrent plusieurs dizaines voire plusieurs centaines de biens, avec des outils d'automatisation avancés.
+
+Pour les gestionnaires professionnels qui souhaitent centraliser distribution, opérations et automatisation sur plusieurs biens, Guesty reste l'une des références du marché en 2026.
+
+[Découvrir Guesty](https://join.guesty.com/hcwnx9j6z9r1)
 
 Le choix dépendra de la nature de votre hébergement, du nombre de biens à gérer, de votre budget et de l'écosystème logiciel dans lequel le channel manager doit s'intégrer.
 

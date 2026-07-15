@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import BlogCard from '@/components/BlogCard';
+import AdSenseUnit from '@/components/AdSenseUnit';
 import blogPosts from '@/data/blog-posts';
 
 const Blog = () => {
@@ -132,6 +133,10 @@ const Blog = () => {
           <div className="mb-12">
             <BlogCard post={featuredPost} featured />
           </div>
+        )}
+
+        {!searchQuery && !selectedCategory && (
+          <AdSenseUnit className="mb-12 max-w-4xl mx-auto" />
         )}
 
         {/* Posts Grid */}

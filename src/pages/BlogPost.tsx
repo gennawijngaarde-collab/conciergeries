@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import blogPosts from '@/data/blog-posts';
 import BlogCard from '@/components/BlogCard';
+import AdSenseUnit from '@/components/AdSenseUnit';
 import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 
 const BlogPost = () => {
@@ -101,31 +102,43 @@ const BlogPost = () => {
 
   // Convert markdown-like content to HTML
   const formatContent = (content: string) => {
+    const withLinks = (text: string) =>
+      text.replace(
+        /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+        (_match, label: string, url: string) => {
+          const isAffiliate = /join\.guesty\.com|gumroad\.com/i.test(url);
+          const rel = isAffiliate
+            ? 'noopener noreferrer sponsored'
+            : 'noopener noreferrer';
+          return `<a href="${url}" target="_blank" rel="${rel}" class="text-blue-600 font-semibold hover:underline">${label}</a>`;
+        }
+      );
+
     return content
       .split('\n\n')
       .map((paragraph, index) => {
         if (paragraph.startsWith('## ')) {
-          return `<h2 key=${index} class="text-2xl font-bold text-gray-900 mt-8 mb-4">${paragraph.replace('## ', '')}</h2>`;
+          return `<h2 key=${index} class="text-2xl font-bold text-gray-900 mt-8 mb-4">${withLinks(paragraph.replace('## ', ''))}</h2>`;
         }
         if (paragraph.startsWith('### ')) {
-          return `<h3 key=${index} class="text-xl font-bold text-gray-900 mt-6 mb-3">${paragraph.replace('### ', '')}</h3>`;
+          return `<h3 key=${index} class="text-xl font-bold text-gray-900 mt-6 mb-3">${withLinks(paragraph.replace('### ', ''))}</h3>`;
         }
         if (paragraph.startsWith('- ')) {
           const items = paragraph.split('\n').filter(line => line.startsWith('- '));
-          return `<ul key=${index} class="list-disc list-inside space-y-2 my-4 text-gray-700">${items.map(item => `<li>${item.replace('- ', '')}</li>`).join('')}</ul>`;
+          return `<ul key=${index} class="list-disc list-inside space-y-2 my-4 text-gray-700">${items.map(item => `<li>${withLinks(item.replace('- ', ''))}</li>`).join('')}</ul>`;
         }
         if (paragraph.startsWith('| ')) {
           // Simple table handling
-          return `<div key=${index} class="overflow-x-auto my-6"><table class="min-w-full border-collapse border border-gray-300"><tbody>${paragraph.split('\n').map(row => `<tr>${row.split('|').filter(Boolean).map(cell => `<td class="border border-gray-300 px-4 py-2">${cell.trim()}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+          return `<div key=${index} class="overflow-x-auto my-6"><table class="min-w-full border-collapse border border-gray-300"><tbody>${paragraph.split('\n').map(row => `<tr>${row.split('|').filter(Boolean).map(cell => `<td class="border border-gray-300 px-4 py-2">${withLinks(cell.trim())}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
         }
         if (paragraph.startsWith('> ')) {
-          return `<blockquote key=${index} class="border-l-4 border-blue-500 pl-4 italic text-gray-600 my-6">${paragraph.replace('> ', '')}</blockquote>`;
+          return `<blockquote key=${index} class="border-l-4 border-blue-500 pl-4 italic text-gray-600 my-6">${withLinks(paragraph.replace('> ', ''))}</blockquote>`;
         }
         if (paragraph.match(/^\d+\./)) {
           const items = paragraph.split('\n').filter(line => line.match(/^\d+\./));
-          return `<ol key=${index} class="list-decimal list-inside space-y-2 my-4 text-gray-700">${items.map(item => `<li>${item.replace(/^\d+\./, '')}</li>`).join('')}</ol>`;
+          return `<ol key=${index} class="list-decimal list-inside space-y-2 my-4 text-gray-700">${items.map(item => `<li>${withLinks(item.replace(/^\d+\./, ''))}</li>`).join('')}</ol>`;
         }
-        return `<p key=${index} class="text-gray-700 leading-relaxed mb-4">${paragraph}</p>`;
+        return `<p key=${index} class="text-gray-700 leading-relaxed mb-4">${withLinks(paragraph)}</p>`;
       })
       .join('');
   };
@@ -300,6 +313,10 @@ const BlogPost = () => {
       </div>
         </>
       )}
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <AdSenseUnit key={post.slug} />
+      </div>
 
       {/* Author Card */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
