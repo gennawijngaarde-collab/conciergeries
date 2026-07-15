@@ -3,7 +3,7 @@ import type { BlogPost } from '@/types/conciergerie';
 export const blogPosts: BlogPost[] = [
   {
     id: 29,
-    title: 'Guesty : l’outil indispensable pour gérer vos locations courte durée (et pourquoi il peut booster votre rentabilité)',
+    title: 'Guesty 2026 : l’outil indispensable pour gérer vos locations courte durée (et booster votre rentabilité)',
     slug: 'guesty-channel-manager-location-courte-duree',
     excerpt:
       'Guesty channel manager & PMS pour locations courte durée : synchronisation Airbnb/Booking, messagerie, opérations, automatisation. À qui ça s’adresse et comment décider.',
@@ -335,9 +335,9 @@ Choisir le bon channel manager implique de clarifier ses besoins, d'évaluer la 
   },
   {
     id: 1,
-    title: "Comment choisir la meilleure conciergerie Airbnb en 2025",
+    title: "Comment choisir la meilleure conciergerie Airbnb en 2026",
     slug: "comment-choisir-conciergerie-airbnb-2025",
-    excerpt: "Guide complet pour sélectionner une conciergerie Airbnb fiable et performante. Découvrez les critères essentiels : commission, services inclus, réputation et couverture géographique.",
+    excerpt: "Guide 2026 pour sélectionner la meilleure conciergerie Airbnb : commission, services inclus, réputation et couverture géographique.",
     content: `
 ## Pourquoi faire appel à une conciergerie Airbnb ?
 
@@ -379,7 +379,7 @@ Une conciergerie sérieuse doit avoir minimum 4,5 étoiles avec plus de 100 avis
 
 Privilégiez une conciergerie implantée localement avec une équipe sur le terrain. Les grandes entreprises comme GuestReady ou HostnFly ont prouvé leur capacité à gérer des biens dans plusieurs villes tout en maintenant une qualité de service constante.
 
-## Notre top 3 des conciergeries en 2025
+## Notre top 3 des conciergeries en 2026
 
 ### 1. HostnFly
 - **Commission** : ~20%
@@ -419,9 +419,9 @@ Choisir une conciergerie Airbnb est une décision importante qui impacte directe
   },
   {
     id: 2,
-    title: "Top 10 des villes les plus rentables pour la location Airbnb en France",
+    title: "Top 10 des villes les plus rentables pour la location Airbnb en France (2026)",
     slug: "top-10-villes-rentables-location-airbnb-france",
-    excerpt: "Découvrez les villes françaises où la location courte durée génère les meilleurs rendements. Analyse des taux d'occupation, prix moyens et saisonnalité.",
+    excerpt: "Découvrez le top 10 2026 des villes françaises où la location Airbnb génère les meilleurs rendements : occupation, prix moyens et saisonnalité.",
     content: `
 ## Introduction
 
@@ -527,9 +527,9 @@ La location Airbnb peut générer des rendements intéressants, mais le succès 
   },
   {
     id: 3,
-    title: "Réglementation Airbnb en France : ce qu'il faut savoir en 2025",
+    title: "Réglementation Airbnb en France : ce qu'il faut savoir en 2026",
     slug: "reglementation-airbnb-france-2025",
-    excerpt: "Tout sur la réglementation des locations courte durée en France : déclaration en mairie, plafond de 120 jours à Paris, taxes et obligations légales des hôtes.",
+    excerpt: "Réglementation Airbnb 2026 en France : déclaration en mairie, plafond de 120 jours à Paris, taxes et obligations légales des hôtes.",
     content: `
 ## Introduction
 
@@ -649,7 +649,7 @@ Même pour une courte durée, un contrat écrit est recommandé avec :
 - Pénalités de retard
 - Majorations de 10% à 40%
 
-## Les nouveautés de 2025
+## Les nouveautés de 2026
 
 ### Renforcement des contrôles
 
@@ -687,7 +687,7 @@ La réglementation Airbnb en France est complexe mais respecter les règles est 
   },
   {
     id: 4,
-    title: "Comment optimiser son annonce Airbnb pour plus de réservations",
+    title: "Comment optimiser son annonce Airbnb pour plus de réservations en 2026",
     slug: "optimiser-annonce-airbnb-reservations",
     excerpt: "Astuces et stratégies pour créer une annonce Airbnb qui convertit : photos professionnelles, description persuasive, tarification dynamique et gestion des avis.",
     content: `
@@ -857,7 +857,7 @@ Optimiser une annonce Airbnb est un travail continu qui demande du temps et de l
   },
   {
     id: 5,
-    title: "Conciergerie vs Gestion locative traditionnelle : quel modèle choisir ?",
+    title: "Conciergerie vs Gestion locative traditionnelle : quel modèle choisir en 2026 ?",
     slug: "conciergerie-vs-gestion-locative-traditionnelle",
     excerpt: "Comparaison détaillée entre la conciergerie Airbnb et la gestion locative traditionnelle. Avantages, inconvénients, rentabilité et cas d'usage de chaque modèle.",
     content: `
@@ -1026,7 +1026,7 @@ Notre recommandation : si votre bien est dans une zone touristique, testez la co
   },
   {
     id: 6,
-    title: "Les services indispensables d'une conciergerie Airbnb professionnelle",
+    title: "Les services indispensables d'une conciergerie Airbnb professionnelle en 2026",
     slug: "services-indispensables-conciergerie-airbnb",
     excerpt: "Découvrez les services essentiels que doit proposer une conciergerie Airbnb de qualité : création d'annonces, gestion des réservations, ménage, maintenance et optimisation des revenus.",
     content: `
@@ -1229,7 +1229,7 @@ Comparez plusieurs offres et vérifiez que tous ces services sont inclus dans la
   },
   {
     id: 7,
-    title: "Comment devenir Superhost Airbnb : le guide complet",
+    title: "Comment devenir Superhost Airbnb : le guide complet 2026",
     slug: "comment-devenir-superhost-airbnb-guide",
     excerpt: "Toutes les astuces pour obtenir et conserver le badge Superhost Airbnb : critères officiels, conseils pratiques et avantages de ce statut prestigieux.",
     content: `
@@ -1416,7 +1416,7 @@ Si vous n'avez pas le temps de gérer vous-même votre location, une conciergeri
   },
   {
     id: 8,
-    title: "Investissement locatif : pourquoi choisir la conciergerie Airbnb",
+    title: "Investissement locatif : pourquoi choisir la conciergerie Airbnb en 2026",
     slug: "investissement-locatif-conciergerie-airbnb",
     excerpt: "Guide pour les investisseurs : comment la conciergerie Airbnb peut transformer votre investissement locatif en machine à cash passive et rentable.",
     content: `
@@ -1521,7 +1521,7 @@ La conciergerie gère **tout** :
 - Prix immobilier abordable
 - Bonne desserte (transports, aéroport)
 
-**Top villes 2025**
+**Top villes 2026**
 1. Nice (Côte d'Azur)
 2. Lyon (gastronomie + affaires)
 3. Bordeaux (vignobles + culture)
@@ -1645,7 +1645,7 @@ Si vous envisagez un investissement locatif, sérieusement considérez le modèl
   },
   {
     id: 9,
-    title: "Les erreurs à éviter quand on débute sur Airbnb",
+    title: "Les erreurs à éviter quand on débute sur Airbnb en 2026",
     slug: "erreurs-eviter-debuter-airbnb",
     excerpt: "Les pièges classiques des nouveaux hôtes Airbnb et comment les éviter. Apprenez des erreurs des autres pour démarrer votre activité de location sereinement.",
     content: `
@@ -1910,9 +1910,9 @@ Le succès sur Airbnb est accessible à tous, à condition d'être méthodique, 
   },
   {
     id: 10,
-    title: "Futur de la conciergerie : tendances et innovations 2025-2030",
+    title: "Futur de la conciergerie : tendances et innovations 2026-2030",
     slug: "futur-conciergerie-tendances-innovations-2025-2030",
-    excerpt: "Découvrez les innovations qui transformeront la conciergerie Airbnb d'ici 2030 : IA, domotique, durabilité et nouvelles expériences voyageurs.",
+    excerpt: "Découvrez les innovations 2026-2030 qui transformeront la conciergerie Airbnb : IA, domotique, durabilité et nouvelles expériences voyageurs.",
     content: `
 ## Introduction
 
@@ -2156,7 +2156,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 15,
-    title: 'Conciergerie ou gestion en direct : que choisir pour sa location saisonnière ?',
+    title: 'Conciergerie ou gestion en direct : que choisir pour sa location saisonnière en 2026 ?',
     slug: 'conciergerie-ou-gestion-en-direct',
     excerpt:
       "Temps, coûts, risques, notes, rentabilité… Comparez conciergerie vs gestion en direct avec une méthode simple et un arbre de décision.",
@@ -2211,7 +2211,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 17,
-    title: 'Comment trouver une conciergerie Airbnb fiable près de chez vous ?',
+    title: 'Comment trouver une conciergerie Airbnb fiable près de chez vous en 2026 ?',
     slug: 'trouver-conciergerie-fiable-pres-de-chez-vous',
     excerpt:
       "Méthode pas à pas : où chercher, quelles preuves demander, quels signaux d’alerte repérer et comment comparer 3 prestataires localement.",
@@ -2238,10 +2238,10 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 18,
-    title: 'Top des villes où une conciergerie Airbnb est la plus utile (et pourquoi)',
+    title: 'Top des villes où une conciergerie Airbnb est la plus utile en 2026 (et pourquoi)',
     slug: 'top-villes-conciergerie-airbnb-utile',
     excerpt:
-      "Saisonnalité, réglementation, rotation, clientèle… Les critères qui rendent une conciergerie particulièrement utile selon les villes et les marchés.",
+      "Top villes 2026 : saisonnalité, réglementation, rotation, clientèle… où une conciergerie Airbnb est la plus utile — et pourquoi.",
     contentFormat: 'html',
     readingTimeMinutes: 10,
     htmlPath: '/top-villes-conciergerie-airbnb-utile.html',
@@ -2318,10 +2318,10 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 21,
-    title: 'Conciergerie Airbnb à Marseille : comment comparer les prestataires ?',
+    title: 'Conciergerie Airbnb à Marseille : comment comparer les prestataires en 2026 ?',
     slug: 'conciergerie-airbnb-marseille-comparer-prestataires',
     excerpt:
-      "Guide local Marseille : critères concrets (ménage, linge, urgences, avis) et méthode pour comparer des conciergeries selon votre quartier.",
+      "Guide local Marseille 2026 : critères concrets (ménage, linge, urgences, avis) et méthode pour comparer des conciergeries selon votre quartier.",
     contentFormat: 'html',
     readingTimeMinutes: 11,
     htmlPath: '/conciergerie-airbnb-marseille-comparer-prestataires.html',
@@ -2370,10 +2370,10 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 23,
-    title: 'Les 10 erreurs qui font baisser les notes Airbnb (et comment les éviter)',
+    title: 'Les 10 erreurs qui font baisser les notes Airbnb en 2026 (et comment les éviter)',
     slug: '10-erreurs-baisser-notes-airbnb',
     excerpt:
-      "Propreté, check-in, communication, literie… Les 10 erreurs qui détruisent une note Airbnb et les correctifs concrets pour remonter votre score.",
+      "Propreté, check-in, communication, literie… Les 10 erreurs 2026 qui détruisent une note Airbnb et les correctifs concrets pour remonter votre score.",
     contentFormat: 'html',
     readingTimeMinutes: 12,
     htmlPath: '/10-erreurs-baisser-notes-airbnb.html',
@@ -2383,7 +2383,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     category: 'Conseils',
     image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80',
     imageAlt: "Checklist et qualité, illustration des notes Airbnb",
-    metaTitle: '10 erreurs qui font baisser les notes Airbnb (et solutions)',
+    metaTitle: '10 erreurs qui font baisser les notes Airbnb en 2026 (et solutions)',
     metaDescription:
       "Les 10 erreurs qui font baisser vos notes Airbnb : propreté, check-in, communication, literie, maintenance… + solutions concrètes pour remonter votre score.",
     metaKeywords: [
@@ -2397,7 +2397,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 24,
-    title: 'Check-in, ménage, linge : qui fait quoi dans une conciergerie Airbnb ?',
+    title: 'Check-in, ménage, linge : qui fait quoi dans une conciergerie Airbnb en 2026 ?',
     slug: 'checkin-menage-linge-qui-fait-quoi-conciergerie',
     excerpt:
       "Qui gère le check-in, le ménage, le linge, les consommables et les urgences ? Explication claire + clauses à vérifier dans le contrat.",
@@ -2424,7 +2424,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 25,
-    title: 'Pourquoi faire appel à une conciergerie pour augmenter ses réservations ?',
+    title: 'Pourquoi faire appel à une conciergerie pour augmenter ses réservations en 2026 ?',
     slug: 'pourquoi-conciergerie-augmente-reservations',
     excerpt:
       "Note, photos, pricing, réactivité, multi-plateformes… Les leviers concrets par lesquels une conciergerie peut augmenter vos réservations.",
@@ -2478,10 +2478,10 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
   },
   {
     id: 27,
-    title: 'Comment améliorer la visibilité d’une annonce Airbnb avec une conciergerie ?',
+    title: 'Comment améliorer la visibilité d’une annonce Airbnb avec une conciergerie en 2026 ?',
     slug: 'ameliorer-visibilite-annonce-airbnb-avec-conciergerie',
     excerpt:
-      "Titre, photos, description, prix, réactivité, propreté… Les optimisations qui boostent la visibilité d’une annonce Airbnb et comment une conciergerie les met en place.",
+      "Titre, photos, description, prix, réactivité, propreté… Les optimisations 2026 qui boostent la visibilité d’une annonce Airbnb avec une conciergerie.",
     contentFormat: 'html',
     readingTimeMinutes: 12,
     htmlPath: '/ameliorer-visibilite-annonce-airbnb-avec-conciergerie.html',
