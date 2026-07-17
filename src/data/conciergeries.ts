@@ -2870,6 +2870,35 @@ export const conciergeries: Conciergerie[] = [
     ],
     "commission": "17%",
     "loyer_garanti": false
+  },
+  {
+    "id": 106,
+    "name": "AppartCosy Conciergerie",
+    "slug": "appartcosy-conciergerie",
+    "city": "Saint-Quentin, Aisne, Hauts-de-France",
+    "rating": 4.7,
+    "reviews": 30,
+    "website": "https://appartcosyconciergerie.com/",
+    "phone": null,
+    "email": null,
+    "address": "20 rue Baudin, 02100 Saint-Quentin, France",
+    "description": "Conciergerie Airbnb à Saint-Quentin (Aisne) : Accueil voyageurs, entretien soigné et gestion de ~30 logements. Expérience cosy et haut de gamme pour propriétaires et voyageurs — Airbnb, Booking.com, Abritel.",
+    "logo": "default",
+    "services": [
+      "Gestion complète",
+      "Accueil voyageurs",
+      "Ménage professionnel",
+      "Multi-plateformes",
+      "Optimisation revenus",
+      "Assistance 7j/7"
+    ],
+    "platforms": [
+      "Airbnb",
+      "Booking.com",
+      "Abritel"
+    ],
+    "commission": "Sur devis",
+    "loyer_garanti": false
   }
 ];
 

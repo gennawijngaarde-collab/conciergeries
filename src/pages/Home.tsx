@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, Check, Star, MapPin, Building2, TrendingUp, Phone, Search, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +9,12 @@ import conciergeries from '@/data/conciergeries';
 import blogPosts from '@/data/blog-posts';
 import ProductHuntBadge from '@/components/ProductHuntBadge';
 
+const POPULAR_CITIES = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice', 'Toulouse', 'Lille', 'Saint-Quentin'];
+
 const Home = () => {
+  const navigate = useNavigate();
+  const [cityQuery, setCityQuery] = useState('');
+
   // Get top 6 conciergeries by reviews
   const topConciergeries = [...conciergeries]
     .sort((a, b) => b.reviews - a.reviews)
@@ -19,8 +25,15 @@ const Home = () => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 
+  const searchHref = useMemo(() => {
+    const q = cityQuery.trim();
+    return q ? `/conciergeries?city=${encodeURIComponent(q)}` : '/conciergeries';
+  }, [cityQuery]);
+
+  const directoryCount = `${conciergeries.length}+`;
+
   const features = [
-    { icon: Building2, title: '105+ Conciergeries vérifiées', description: 'Toutes nos conciergeries sont sélectionnées et évaluées selon des critères stricts de qualité.' },
+    { icon: Building2, title: `${conciergeries.length}+ Conciergeries vérifiées`, description: 'Toutes nos conciergeries sont sélectionnées et évaluées selon des critères stricts de qualité.' },
     { icon: MapPin, title: 'Couverture nationale', description: 'Des conciergeries dans plus de 200 villes à travers toute la France métropolitaine.' },
     { icon: Star, title: 'Avis authentiques', description: 'Notes et commentaires réels de propriétaires et voyageurs pour vous aider à choisir.' },
     { icon: TrendingUp, title: 'Optimisation revenus', description: 'Les meilleures conciergeries pour maximiser la rentabilité de votre bien immobilier.' },
@@ -69,28 +82,49 @@ const Home = () => {
             </h1>
 
             <p className="text-lg sm:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Comparez les <strong>105+ meilleures conciergeries</strong> de France. Gestion complète, 
+              Comparez les <strong>{directoryCount} meilleures conciergeries</strong> de France. Gestion complète, 
               optimisation des revenus, ménage professionnel. Trouvez le partenaire idéal en quelques clics.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto mb-12">
+            <form
+              className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto mb-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                navigate(searchHref);
+              }}
+            >
               <div className="flex-1 relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <Input
                   type="text"
+                  value={cityQuery}
+                  onChange={(e) => setCityQuery(e.target.value)}
                   placeholder="Dans quelle ville est votre bien ?"
                   className="w-full pl-12 pr-4 py-6 text-lg bg-white/95 backdrop-blur-sm border-0 rounded-xl shadow-xl placeholder:text-gray-500"
+                  aria-label="Rechercher une conciergerie par ville"
                 />
               </div>
               <Button
                 asChild
                 className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white px-8 py-6 text-lg font-semibold rounded-xl shadow-xl hover:shadow-2xl transition-all"
               >
-                <Link to="/conciergeries">
+                <Link to={searchHref}>
                   <Search className="w-5 h-5 mr-2" />
                   Rechercher
                 </Link>
               </Button>
+            </form>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+              {POPULAR_CITIES.map((city) => (
+                <Link
+                  key={city}
+                  to={`/conciergeries?city=${encodeURIComponent(city)}`}
+                  className="text-sm px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 hover:bg-white/20 transition-colors"
+                >
+                  {city}
+                </Link>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -119,7 +153,7 @@ const Home = () => {
               <div className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Building2 className="w-5 h-5 text-blue-400" />
-                  <span className="text-3xl sm:text-4xl font-bold text-white">105+</span>
+                  <span className="text-3xl sm:text-4xl font-bold text-white">{directoryCount}</span>
                 </div>
                 <span className="text-white/70 text-sm">Conciergeries</span>
               </div>
@@ -310,7 +344,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { value: '105+', label: 'Conciergeries partenaires' },
+              { value: directoryCount, label: 'Conciergeries partenaires' },
               { value: '200+', label: 'Villes couvertes' },
               { value: '4.5/5', label: 'Note moyenne' },
               { value: '50K+', label: 'Avis collectés' },
@@ -390,7 +424,7 @@ const Home = () => {
             Prêt à maximiser vos revenus locatifs ?
           </h2>
           <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto">
-            Comparez les <strong>105+ meilleures conciergeries</strong> de France et trouvez le partenaire 
+            Comparez les <strong>{directoryCount} meilleures conciergeries</strong> de France et trouvez le partenaire 
             idéal pour gérer votre bien. C'est gratuit et sans engagement.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

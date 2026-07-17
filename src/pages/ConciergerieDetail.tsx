@@ -108,11 +108,18 @@ const ConciergerieDetail = () => {
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link
-            to="/conciergeries"
+            to={
+              conciergerie.city.split(',')[0]?.trim()
+                ? `/conciergeries?city=${encodeURIComponent(conciergerie.city.split(',')[0].trim())}`
+                : '/conciergeries'
+            }
             className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Retour aux conciergeries
+            {conciergerie.city.split(',')[0]?.trim()
+              ? ` · ${conciergerie.city.split(',')[0].trim()}`
+              : ''}
           </Link>
         </div>
       </div>
@@ -175,7 +182,12 @@ const ConciergerieDetail = () => {
 
               <div className="flex items-start gap-2 text-white/80 mb-4">
                 <MapPin className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                <span>{conciergerie.city}</span>
+                <Link
+                  to={`/conciergeries?city=${encodeURIComponent(conciergerie.city.split(',')[0]?.trim() || '')}`}
+                  className="hover:text-white underline-offset-2 hover:underline"
+                >
+                  {conciergerie.city}
+                </Link>
               </div>
 
               {conciergerie.commission && (
@@ -381,6 +393,27 @@ const ConciergerieDetail = () => {
             </Card>
           </TabsContent>
         </Tabs>
+      </div>
+
+      {/* Guides utiles */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Guides pour bien choisir</h2>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {[
+            { label: 'Choisir une conciergerie 2026', to: '/blog/choisir-conciergerie-airbnb-2026' },
+            { label: 'Prix & commissions', to: '/blog/conciergerie-airbnb-combien-ca-coute' },
+            { label: 'Conciergerie vs gestion solo', to: '/blog/conciergerie-ou-gestion-en-direct' },
+            { label: 'Voir tout l’annuaire', to: '/conciergeries' },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="rounded-xl border bg-white px-4 py-3 text-sm font-medium text-gray-800 hover:border-blue-500 hover:text-blue-700 transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Similar Conciergeries */}

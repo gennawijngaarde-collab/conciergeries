@@ -14,16 +14,62 @@ import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 import type { Conciergerie } from '@/types/conciergerie';
 
+const POPULAR_CITIES = [
+  'Paris',
+  'Lyon',
+  'Marseille',
+  'Bordeaux',
+  'Nice',
+  'Toulouse',
+  'Lille',
+  'Nantes',
+  'Saint-Quentin',
+];
+
+const CURATED_SERVICES = [
+  'Gestion complète',
+  'Ménage professionnel',
+  'Optimisation prix',
+  'Optimisation revenus',
+  'Accueil 24/7',
+  'Accueil voyageurs',
+  'Multi-plateformes',
+  'Loyer garanti',
+  'Maintenance',
+  'Assistance 7j/7',
+];
+
 const Conciergeries = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('city') || '');
+  const [searchQuery, setSearchQuery] = useState(
+    () => searchParams.get('city') || searchParams.get('q') || ''
+  );
   const [minRating, setMinRating] = useState(0);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [conciergeries, setConciergeries] = useState<Conciergerie[]>(staticConciergeries as unknown as Conciergerie[]);
   const [myProfileSlug, setMyProfileSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fromUrl = searchParams.get('city') || searchParams.get('q') || '';
+    setSearchQuery((prev) => (prev === fromUrl ? prev : fromUrl));
+  }, [searchParams]);
+
+  const updateSearchQuery = (value: string) => {
+    setSearchQuery(value);
+    const next = new URLSearchParams(searchParams);
+    const trimmed = value.trim();
+    if (trimmed) {
+      next.set('city', trimmed);
+      next.delete('q');
+    } else {
+      next.delete('city');
+      next.delete('q');
+    }
+    setSearchParams(next, { replace: true });
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -128,37 +174,52 @@ const Conciergeries = () => {
     };
   }, [user]);
 
-  // Extract unique services and platforms
+  // Extract unique services and platforms (curated first for UX)
   const allServices = useMemo(() => {
     const services = new Set<string>();
-    conciergeries.forEach(c => c.services.forEach(s => services.add(s)));
-    return [...services].sort();
+    conciergeries.forEach((c) => c.services.forEach((s) => services.add(s)));
+    const available = [...services];
+    const preferred = CURATED_SERVICES.filter((s) => available.includes(s));
+    const extras = available
+      .filter((s) => !preferred.includes(s))
+      .sort((a, b) => a.localeCompare(b, 'fr'))
+      .slice(0, 12);
+    return [...preferred, ...extras];
   }, [conciergeries]);
 
   const allPlatforms = useMemo(() => {
     const platforms = new Set<string>();
-    conciergeries.forEach(c => c.platforms.forEach(p => platforms.add(p)));
-    return [...platforms].sort();
+    conciergeries.forEach((c) => c.platforms.forEach((p) => platforms.add(p)));
+    const preferred = ['Airbnb', 'Booking.com', 'Abritel', 'Expedia', 'Vrbo'];
+    const available = [...platforms];
+    return [
+      ...preferred.filter((p) => available.includes(p)),
+      ...available.filter((p) => !preferred.includes(p)).sort(),
+    ];
   }, [conciergeries]);
 
   // Filter conciergeries
   const filteredConciergeries = useMemo(() => {
     return conciergeries.filter((c) => {
       if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        const matchesSearch = 
-          c.name.toLowerCase().includes(query) ||
-          c.city.toLowerCase().includes(query) ||
-          c.description.toLowerCase().includes(query);
-        if (!matchesSearch) return false;
+        const query = searchQuery.toLowerCase().trim();
+        const haystack = [
+          c.name,
+          c.city,
+          c.description,
+          c.address ?? '',
+        ]
+          .join(' ')
+          .toLowerCase();
+        if (!haystack.includes(query)) return false;
       }
       if (c.rating < minRating) return false;
       if (selectedServices.length > 0) {
-        const hasService = selectedServices.some(s => c.services.includes(s));
+        const hasService = selectedServices.some((s) => c.services.includes(s));
         if (!hasService) return false;
       }
       if (selectedPlatforms.length > 0) {
-        const hasPlatform = selectedPlatforms.some(p => c.platforms.includes(p));
+        const hasPlatform = selectedPlatforms.some((p) => c.platforms.includes(p));
         if (!hasPlatform) return false;
       }
       return true;
@@ -216,7 +277,7 @@ const Conciergeries = () => {
   };
 
   const clearFilters = () => {
-    setSearchQuery('');
+    updateSearchQuery('');
     setMinRating(0);
     setSelectedServices([]);
     setSelectedPlatforms([]);
@@ -248,13 +309,14 @@ const Conciergeries = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
               <Input
-                type="text"
-                placeholder="Rechercher par ville ou nom..."
+                type="search"
+                placeholder="Ville, nom, adresse…"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => updateSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3"
+                aria-label="Rechercher une conciergerie"
               />
             </div>
 
@@ -339,13 +401,37 @@ const Conciergeries = () => {
             </div>
           </div>
 
+          <div className="flex flex-wrap items-center gap-2 mt-4">
+            <span className="text-sm text-gray-500 flex items-center gap-1">
+              <MapPin className="w-3.5 h-3.5" />
+              Villes :
+            </span>
+            {POPULAR_CITIES.map((city) => {
+              const active = searchQuery.trim().toLowerCase() === city.toLowerCase();
+              return (
+                <button
+                  key={city}
+                  type="button"
+                  onClick={() => updateSearchQuery(active ? '' : city)}
+                  className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                    active
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {city}
+                </button>
+              );
+            })}
+          </div>
+
           {activeFiltersCount > 0 && (
             <div className="flex flex-wrap items-center gap-2 mt-4">
               <span className="text-sm text-gray-500">Filtres actifs:</span>
               {searchQuery && (
                 <Badge variant="secondary" className="gap-1">
                   {searchQuery}
-                  <X className="w-3 h-3 cursor-pointer" onClick={() => setSearchQuery('')} />
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => updateSearchQuery('')} />
                 </Badge>
               )}
               {minRating > 0 && (
