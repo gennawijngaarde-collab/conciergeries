@@ -6,7 +6,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const blogPostsPath = path.join(root, 'src', 'data', 'blog-posts.ts');
 const outDir = path.join(root, 'public', 'images', 'blog');
 
-const source = fs.readFileSync(blogPostsPath, 'utf8');
+const source = fs.readFileSync(blogPostsPath, 'utf8').replace(/\r\n/g, '\n');
 const posts = [];
 const blocks = source.split(/\n  \{\n/).slice(1);
 
@@ -36,48 +36,56 @@ function esc(s) {
     .replace(/"/g, '&quot;');
 }
 
-function wrapTitle(title, max = 28) {
-  const words = title.split(/\s+/);
+/** Wrap title into up to 3 readable lines (safe for 1200px covers). */
+function wrapTitle(title, maxChars = 34) {
+  const clean = title.replace(/\s+/g, ' ').trim();
+  const words = clean.split(' ');
   const lines = [];
   let line = '';
-  for (const w of words) {
-    const next = line ? `${line} ${w}` : w;
-    if (next.length > max && line) {
+
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
       lines.push(line);
-      line = w;
-      if (lines.length === 2) break;
+      line = word;
+      if (lines.length === 3) {
+        line = '';
+        break;
+      }
     } else {
       line = next;
     }
   }
-  if (lines.length < 2 && line) lines.push(line);
-  if (words.join(' ').length > lines.join(' ').length) {
+  if (line && lines.length < 3) lines.push(line);
+
+  const joined = lines.join(' ');
+  if (joined.length < clean.length && lines.length) {
     const last = lines[lines.length - 1];
-    lines[lines.length - 1] = `${last.replace(/\s+\S*$/, '')}…`;
+    lines[lines.length - 1] = (last.length > 3 ? last.slice(0, Math.max(3, last.length - 1)) : last).replace(/\s+\S*$/, '') + '…';
   }
-  return lines.slice(0, 2);
+
+  return lines.slice(0, 3);
 }
 
 fs.mkdirSync(outDir, { recursive: true });
-
 let created = 0;
-let skipped = 0;
 
 for (let i = 0; i < posts.length; i++) {
   const { slug, title, category } = posts[i];
   const file = path.join(outDir, `${slug}.svg`);
-  if (fs.existsSync(file) && slug === 'formation-conciergerie-airbnb-livre-numerique') {
-    skipped += 1;
-    continue;
-  }
-
   const [c1, c2] = palettes[i % palettes.length];
   const lines = wrapTitle(title);
-  const y1 = 210;
+  const lineCount = Math.max(lines.length, 1);
+  const fontSize = lineCount >= 3 ? 36 : 42;
+  const lineHeight = lineCount >= 3 ? 48 : 54;
+  // Center title block vertically between category and footer
+  const blockHeight = lineCount * lineHeight;
+  const yStart = Math.round(280 - blockHeight / 2);
+
   const titleSvg = lines
     .map(
       (line, idx) =>
-        `<text x="70" y="${y1 + idx * 58}" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">${esc(line)}</text>`
+        `<text x="96" y="${yStart + idx * lineHeight}" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="${fontSize}" font-weight="700">${esc(line)}</text>`
     )
     .join('\n  ');
 
@@ -89,12 +97,12 @@ for (let i = 0; i < posts.length; i++) {
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="980" cy="120" r="180" fill="rgba(255,255,255,0.08)"/>
-  <circle cx="1080" cy="480" r="220" fill="rgba(255,255,255,0.06)"/>
-  <rect x="56" y="56" width="1088" height="518" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)"/>
-  <text x="70" y="140" fill="rgba(255,255,255,0.9)" font-family="system-ui,Segoe UI,Arial" font-size="24" letter-spacing="2">${esc(category.toUpperCase())}</text>
+  <circle cx="1040" cy="80" r="160" fill="rgba(255,255,255,0.07)"/>
+  <circle cx="80" cy="560" r="120" fill="rgba(255,255,255,0.05)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.16)"/>
+  <text x="96" y="120" fill="rgba(255,255,255,0.92)" font-family="system-ui,Segoe UI,Arial" font-size="22" letter-spacing="2.5">${esc(category.toUpperCase())}</text>
   ${titleSvg}
-  <text x="70" y="520" fill="rgba(255,255,255,0.85)" font-family="system-ui,Segoe UI,Arial" font-size="22">ma-conciergerie-annuaire.com</text>
+  <text x="96" y="545" fill="rgba(255,255,255,0.8)" font-family="system-ui,Segoe UI,Arial" font-size="20">ma-conciergerie-annuaire.com</text>
 </svg>
 `;
 
@@ -102,4 +110,4 @@ for (let i = 0; i < posts.length; i++) {
   created += 1;
 }
 
-console.log(JSON.stringify({ posts: posts.length, created, skipped, outDir }, null, 2));
+console.log(JSON.stringify({ posts: posts.length, created, outDir }, null, 2));

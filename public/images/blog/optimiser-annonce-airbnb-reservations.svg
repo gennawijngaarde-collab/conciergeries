@@ -6,11 +6,12 @@
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="980" cy="120" r="180" fill="rgba(255,255,255,0.08)"/>
-  <circle cx="1080" cy="480" r="220" fill="rgba(255,255,255,0.06)"/>
-  <rect x="56" y="56" width="1088" height="518" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)"/>
-  <text x="70" y="140" fill="rgba(255,255,255,0.9)" font-family="system-ui,Segoe UI,Arial" font-size="24" letter-spacing="2">CONSEILS</text>
-  <text x="70" y="210" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">Comment optimiser son</text>
-  <text x="70" y="268" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">annonce Airbnb pour plus…</text>
-  <text x="70" y="520" fill="rgba(255,255,255,0.85)" font-family="system-ui,Segoe UI,Arial" font-size="22">ma-conciergerie-annuaire.com</text>
+  <circle cx="1040" cy="80" r="160" fill="rgba(255,255,255,0.07)"/>
+  <circle cx="80" cy="560" r="120" fill="rgba(255,255,255,0.05)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.16)"/>
+  <text x="96" y="120" fill="rgba(255,255,255,0.92)" font-family="system-ui,Segoe UI,Arial" font-size="22" letter-spacing="2.5">CONSEILS</text>
+  <text x="96" y="208" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700">Comment optimiser son annonce</text>
+  <text x="96" y="256" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700">Airbnb pour plus de réservations</text>
+  <text x="96" y="304" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700">en 2026</text>
+  <text x="96" y="545" fill="rgba(255,255,255,0.8)" font-family="system-ui,Segoe UI,Arial" font-size="20">ma-conciergerie-annuaire.com</text>
 </svg>

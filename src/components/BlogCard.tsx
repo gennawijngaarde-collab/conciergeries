@@ -64,8 +64,8 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
             <div
               className={
                 isProductCover
-                  ? 'relative min-h-64 md:min-h-full bg-[#0f1f3d] flex items-center justify-center overflow-hidden p-4'
-                  : 'relative h-64 md:h-full bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center overflow-hidden'
+                  ? 'relative aspect-[1200/630] bg-[#0f1f3d] flex items-center justify-center overflow-hidden'
+                  : 'relative aspect-[1200/630] bg-gray-100 overflow-hidden'
               }
             >
               {resolvedSrc && (
@@ -74,33 +74,25 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
                   alt={imageAlt}
                   className={
                     isProductCover
-                      ? 'relative z-0 max-h-72 md:max-h-[420px] w-auto max-w-full object-contain drop-shadow-xl'
-                      : 'absolute inset-0 w-full h-full object-cover'
+                      ? 'absolute inset-0 h-full w-full object-cover object-center'
+                      : 'absolute inset-0 h-full w-full object-cover object-center'
                   }
                   loading="lazy"
                   onError={handleImgError}
                 />
               )}
               {!isProductCover && (
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               )}
               <Badge
                 className={
                   isProductCover
-                    ? 'absolute top-4 left-4 bg-amber-100/95 text-gray-900 border border-amber-300/80'
-                    : 'absolute top-4 left-4 bg-white/90 text-gray-900'
+                    ? 'absolute top-4 left-4 z-10 bg-amber-100/95 text-gray-900 border border-amber-300/80'
+                    : 'absolute top-4 left-4 z-10 bg-white/90 text-gray-900'
                 }
               >
                 {post.category}
               </Badge>
-              {!isProductCover && (
-                <div className="relative z-10 text-center p-8">
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <span className="text-4xl">📝</span>
-                  </div>
-                  <p className="text-white/80 text-sm">Article à la une</p>
-                </div>
-              )}
             </div>
 
             {/* Content */}
@@ -151,40 +143,31 @@ const BlogCard = ({ post, featured = false }: BlogCardProps) => {
         <div
           className={
             isProductCover
-              ? 'relative h-56 bg-[#0f1f3d] flex items-center justify-center overflow-hidden p-3'
-              : 'relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden'
+              ? 'relative aspect-[1200/630] bg-[#0f1f3d] overflow-hidden'
+              : 'relative aspect-[1200/630] bg-gray-100 overflow-hidden'
           }
         >
           {resolvedSrc && (
             <img
               src={resolvedSrc}
               alt={imageAlt}
-              className={
-                isProductCover
-                  ? 'relative z-0 max-h-52 w-auto max-w-full object-contain drop-shadow-lg'
-                  : 'absolute inset-0 w-full h-full object-cover'
-              }
+              className="absolute inset-0 h-full w-full object-cover object-center"
               loading="lazy"
               onError={handleImgError}
             />
           )}
           {!isProductCover && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
           )}
           <Badge
             className={
               isProductCover
-                ? 'absolute top-3 left-3 bg-amber-100 text-gray-900 border border-amber-300/80'
-                : 'absolute top-3 left-3 bg-blue-600 text-white'
+                ? 'absolute top-3 left-3 z-10 bg-amber-100 text-gray-900 border border-amber-300/80'
+                : 'absolute top-3 left-3 z-10 bg-blue-600 text-white'
             }
           >
             {post.category}
           </Badge>
-          {!isProductCover && (
-            <div className="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center">
-              <span className="text-3xl">📝</span>
-            </div>
-          )}
         </div>
 
         {/* Content */}

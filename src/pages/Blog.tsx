@@ -131,21 +131,17 @@ const Blog = () => {
             {filteredPosts.map((post, index) => (
               <div key={post.id}>
                 <article className="py-8 first:pt-0">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 sm:items-stretch">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 sm:items-start">
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="block shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-slate-900 sm:w-[200px]"
+                      className="block w-full shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-100 sm:w-[240px]"
                     >
                       <img
                         src={resolvePublicAssetUrl(post.image || `/images/blog/${post.slug}.svg`)}
                         alt={post.imageAlt ?? post.title}
-                        className={
-                          post.slug === 'formation-conciergerie-airbnb-livre-numerique'
-                            ? 'h-40 w-full object-contain bg-[#0f1f3d] sm:h-[132px]'
-                            : 'h-40 w-full object-cover sm:h-[132px]'
-                        }
-                        width={200}
-                        height={132}
+                        className="aspect-[1200/630] w-full object-cover object-center"
+                        width={240}
+                        height={126}
                         loading="lazy"
                         onError={(e) => {
                           const img = e.currentTarget;
@@ -174,12 +170,12 @@ const Blog = () => {
                           {readingTime(post)} min de lecture
                         </span>
                       </div>
-                      <p className="text-gray-600 leading-relaxed mb-3 text-[0.975rem] line-clamp-2 sm:line-clamp-3">
+                      <p className="text-gray-600 leading-relaxed mb-3 text-[0.975rem] line-clamp-2">
                         {post.excerpt}
                       </p>
                       <Link
                         to={`/blog/${post.slug}`}
-                        className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:underline mt-auto"
+                        className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:underline"
                       >
                         Lire l’article
                         <ArrowRight className="w-4 h-4" />

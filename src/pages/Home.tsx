@@ -393,15 +393,14 @@ const Home = () => {
               return (
               <Card key={post.id} className="group overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
                 <CardContent className="p-0 flex flex-col h-full">
-                  <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                  <div className="relative aspect-[1200/630] bg-gray-100 overflow-hidden">
                     <img
                       src={cover}
                       alt={post.imageAlt ?? post.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                    <Badge className="absolute top-3 left-3 bg-blue-600 text-white">
+                    <Badge className="absolute top-3 left-3 bg-blue-600 text-white z-10">
                       {post.category}
                     </Badge>
                   </div>
