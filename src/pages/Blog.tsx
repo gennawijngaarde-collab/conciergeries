@@ -131,44 +131,59 @@ const Blog = () => {
             {filteredPosts.map((post, index) => (
               <div key={post.id}>
                 <article className="py-8 first:pt-0">
-                  <div className="sm:flex sm:gap-6 sm:items-start">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:gap-5 sm:items-stretch">
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="mb-4 sm:mb-0 block shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-100"
-                      aria-hidden={!post.image}
+                      className="block shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-slate-900 sm:w-[200px]"
                     >
                       <img
                         src={resolvePublicAssetUrl(post.image || `/images/blog/${post.slug}.svg`)}
                         alt={post.imageAlt ?? post.title}
-                        className="h-44 w-full sm:h-28 sm:w-40 object-cover"
+                        className={
+                          post.slug === 'formation-conciergerie-airbnb-livre-numerique'
+                            ? 'h-40 w-full object-contain bg-[#0f1f3d] sm:h-[132px]'
+                            : 'h-40 w-full object-cover sm:h-[132px]'
+                        }
+                        width={200}
+                        height={132}
                         loading="lazy"
+                        onError={(e) => {
+                          const img = e.currentTarget;
+                          const fallback = resolvePublicAssetUrl(`/images/blog/${post.slug}.svg`);
+                          if (img.src !== fallback && !img.dataset.fallbackTried) {
+                            img.dataset.fallbackTried = '1';
+                            img.src = fallback;
+                          }
+                        }}
                       />
                     </Link>
-                    <div className="min-w-0 flex-1">
-                  <p className="text-sm text-blue-700 font-medium mb-2">{post.category}</p>
-                  <h2 className="text-2xl sm:text-[1.65rem] font-bold text-gray-900 leading-snug mb-3">
-                    <Link to={`/blog/${post.slug}`} className="hover:text-blue-700 transition-colors">
-                      {post.title}
-                    </Link>
-                  </h2>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
-                    <time dateTime={post.date} className="inline-flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5" />
-                      {formatDate(post.date)}
-                    </time>
-                    <span className="inline-flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5" />
-                      {readingTime(post)} min de lecture
-                    </span>
-                  </div>
-                  <p className="text-gray-700 leading-relaxed mb-4 text-[1.05rem]">{post.excerpt}</p>
-                  <Link
-                    to={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:underline"
-                  >
-                    Lire l’article
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                    <div className="min-w-0 flex-1 flex flex-col">
+                      <p className="text-sm text-blue-700 font-medium mb-1.5">{post.category}</p>
+                      <h2 className="text-xl sm:text-[1.35rem] font-bold text-gray-900 leading-snug mb-2 line-clamp-2">
+                        <Link to={`/blog/${post.slug}`} className="hover:text-blue-700 transition-colors">
+                          {post.title}
+                        </Link>
+                      </h2>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500 mb-2">
+                        <time dateTime={post.date} className="inline-flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {formatDate(post.date)}
+                        </time>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          {readingTime(post)} min de lecture
+                        </span>
+                      </div>
+                      <p className="text-gray-600 leading-relaxed mb-3 text-[0.975rem] line-clamp-2 sm:line-clamp-3">
+                        {post.excerpt}
+                      </p>
+                      <Link
+                        to={`/blog/${post.slug}`}
+                        className="inline-flex items-center gap-2 text-blue-700 font-semibold hover:underline mt-auto"
+                      >
+                        Lire l’article
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
                     </div>
                   </div>
                 </article>
