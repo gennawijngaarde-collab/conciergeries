@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import conciergeries from '@/data/conciergeries';
 import blogPosts from '@/data/blog-posts';
 import ProductHuntBadge from '@/components/ProductHuntBadge';
+import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 
 const POPULAR_CITIES = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice', 'Toulouse', 'Lille', 'Saint-Quentin'];
 
@@ -385,16 +386,24 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {latestPosts.map((post) => (
+            {latestPosts.map((post) => {
+              const cover = resolvePublicAssetUrl(
+                post.image || `/images/blog/${post.slug}.svg`
+              );
+              return (
               <Card key={post.id} className="group overflow-hidden hover:shadow-xl transition-shadow h-full flex flex-col">
                 <CardContent className="p-0 flex flex-col h-full">
-                  <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                  <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                    <img
+                      src={cover}
+                      alt={post.imageAlt ?? post.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
                     <Badge className="absolute top-3 left-3 bg-blue-600 text-white">
                       {post.category}
                     </Badge>
-                    <div className="w-16 h-16 bg-white rounded-xl shadow-md flex items-center justify-center">
-                      <span className="text-3xl">📝</span>
-                    </div>
                   </div>
                   <div className="p-5 flex flex-col flex-1">
                     <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
@@ -412,7 +421,8 @@ const Home = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

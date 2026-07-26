@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { siteConfig } from '@/data/site';
 
 declare global {
@@ -36,16 +36,25 @@ type AdSenseUnitProps = {
   className?: string;
 };
 
+/**
+ * Affiche une pub AdSense sans réserver un grand vide si aucune annonce
+ * n’est servie (localhost, bloqueur, compte non validé, etc.).
+ */
 const AdSenseUnit = ({ className = '' }: AdSenseUnitProps) => {
-  const insRef = useRef<HTMLElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const insRef = useRef<HTMLModElement>(null);
+  const [visible, setVisible] = useState(true);
   const { client, slot, format } = siteConfig.adSense;
 
   useEffect(() => {
     const ins = insRef.current;
     if (!ins || ins.dataset.adsenseFilled === 'true') return;
 
+    let cancelled = false;
+
     loadAdSenseScript(client)
       .then(() => {
+        if (cancelled) return;
         try {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
           ins.dataset.adsenseFilled = 'true';
@@ -53,15 +62,37 @@ const AdSenseUnit = ({ className = '' }: AdSenseUnitProps) => {
           // Ignore duplicate fill errors (e.g. React Strict Mode)
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (!cancelled) setVisible(false);
+      });
+
+    // Si aucune pub ne remplit le slot, on retire le bloc pour éviter le “trou” blanc
+    const timer = window.setTimeout(() => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      const h = wrap.getBoundingClientRect().height;
+      const hasIframe = Boolean(wrap.querySelector('iframe'));
+      if (!hasIframe || h < 40) setVisible(false);
+    }, 2500);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
   }, [client, slot]);
 
+  if (!visible) return null;
+
   return (
-    <div className={`overflow-hidden ${className}`} aria-label="Publicité">
+    <div
+      ref={wrapRef}
+      className={`overflow-hidden max-h-[280px] ${className}`}
+      aria-label="Publicité"
+    >
       <ins
         ref={insRef}
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', minHeight: 0 }}
         data-ad-client={client}
         data-ad-slot={slot}
         data-ad-format={format}

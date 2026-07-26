@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Building2, Phone } from 'lucide-react';
+import { Menu, X, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MyProfileButton from '@/components/MyProfileButton';
 
@@ -18,8 +18,7 @@ const Header = () => {
     { path: '/contact', label: 'Contact' },
   ];
 
-  // On desktop we keep "Devenir partenaire" as a CTA button (right side),
-  // and we avoid showing it twice in the main nav.
+  // Desktop: CTA buttons for partenaire + PMS (avoid duplicates in nav)
   const desktopNavLinks = navLinks.filter((l) => l.path !== '/devenir-partenaire');
 
   const isActive = (path: string) => {
@@ -28,27 +27,19 @@ const Header = () => {
   };
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg"
-    >
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
               <Building2 className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <span className="font-bold text-lg leading-tight text-gray-900">
-                Conciergeries
-              </span>
-              <span className="block text-xs text-blue-600">
-                France
-              </span>
+              <span className="font-bold text-lg leading-tight text-gray-900">Conciergeries</span>
+              <span className="block text-xs text-blue-600">France</span>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {desktopNavLinks.map((link) => (
               <Link
@@ -65,16 +56,15 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="tel:+33768661948"
-              className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-blue-600"
-            >
-              <Phone className="w-4 h-4" />
-              07 68 66 19 48
-            </a>
             <MyProfileButton />
+            <Button
+              asChild
+              variant="outline"
+              className="shadow-lg hover:shadow-xl transition-all border-emerald-200 text-emerald-800 hover:bg-emerald-50"
+            >
+              <Link to="/pms">PMS Cleanbnb</Link>
+            </Button>
             <Button
               asChild
               variant="outline"
@@ -82,25 +72,18 @@ const Header = () => {
             >
               <Link to="/devenir-partenaire">Devenir partenaire</Link>
             </Button>
-            <Button
-              asChild
-              className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-lg hover:shadow-xl transition-all"
-            >
-              <Link to="/conciergeries">Trouver une conciergerie</Link>
-            </Button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg transition-colors text-gray-700 hover:bg-gray-100"
+            aria-label={isMobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t shadow-xl">
           <nav className="flex flex-col p-4 space-y-2">
@@ -118,15 +101,17 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-4 border-t">
-              <a
-                href="tel:+33768661948"
-                className="flex items-center gap-2 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg"
-              >
-                <Phone className="w-4 h-4" />
-                07 68 66 19 48
-              </a>
-            </div>
+            <Link
+              to="/pms"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                isActive('/pms')
+                  ? 'bg-emerald-700 text-white'
+                  : 'text-emerald-800 bg-emerald-50 hover:bg-emerald-100'
+              }`}
+            >
+              PMS Cleanbnb
+            </Link>
           </nav>
         </div>
       )}

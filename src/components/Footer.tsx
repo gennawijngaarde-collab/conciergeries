@@ -11,6 +11,7 @@ const Footer = () => {
       { label: 'Nos conciergeries', path: '/conciergeries' },
       { label: 'Obtenir des devis', path: '/devis' },
       { label: 'Blog', path: '/blog' },
+      { label: 'PMS Cleanbnb', path: '/pms' },
       { label: 'FAQ', path: '/faq' },
       { label: 'Devenir partenaire', path: '/devenir-partenaire' },
       { label: 'Contact', path: '/contact' },
@@ -30,6 +31,7 @@ const Footer = () => {
       { label: 'Optimiser son annonce', path: '/blog/optimiser-annonce-airbnb-reservations' },
       { label: 'Réglementation Airbnb', path: '/blog/reglementation-airbnb-france-2025' },
       { label: 'Guesty channel manager', path: '/blog/guesty-channel-manager-location-courte-duree' },
+      { label: 'Cleanbnb PMS', path: '/pms' },
     ],
     legal: [
       { label: 'Mentions légales', path: '/mentions-legales' },

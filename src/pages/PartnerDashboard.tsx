@@ -379,9 +379,15 @@ export default function PartnerDashboard() {
 
   const isActive = ['active', 'trialing'].includes((sub?.status ?? '').toLowerCase());
   const canOpenPortal = Boolean(sub?.stripe_customer_id);
-  const planLabel = (sub?.plan ?? '').toLowerCase() === 'premium' ? 'Premium' : 'Standard';
+  const planRaw = String(sub?.plan ?? '').toLowerCase();
+  const planLabel =
+    planRaw === 'premium' ? 'Premium' : planRaw === 'pms' ? 'Cleanbnb PMS' : planRaw === 'standard' ? 'Standard' : '';
+  const hasPmsAccess =
+    isActive && (planRaw === 'premium' || planRaw === 'pms' || Boolean((sub as { includes_pms?: boolean } | null)?.includes_pms));
   const listingStatus = String(profile?.subscription_status ?? sub?.status ?? 'inactive').toLowerCase();
-  const listingVisible = ['active', 'trialing'].includes(listingStatus);
+  const listingVisible =
+    ['active', 'trialing'].includes(listingStatus) && planRaw !== 'pms';
+  const isTrialing = (sub?.status ?? '').toLowerCase() === 'trialing';
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -451,11 +457,19 @@ export default function PartnerDashboard() {
                         className={
                           planLabel === 'Premium'
                             ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                            : planLabel === 'Cleanbnb PMS'
+                              ? 'bg-emerald-100 text-emerald-900 hover:bg-emerald-100'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
                         }
                       >
                         {planLabel}
                       </Badge>
+                    )}
+                    {isTrialing && (
+                      <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-100">Essai 30 j.</Badge>
+                    )}
+                    {hasPmsAccess && (
+                      <Badge className="bg-emerald-100 text-emerald-900 hover:bg-emerald-100">PMS inclus</Badge>
                     )}
                   </div>
                 </CardAction>
@@ -465,15 +479,19 @@ export default function PartnerDashboard() {
                 {!loading && !sub ? (
                   <div className="space-y-3">
                     <p className="text-sm text-gray-700">
-                      Aucun abonnement détecté. Pour apparaître dans l&apos;annuaire avec un badge, choisissez Standard ou Premium.
+                      Aucun abonnement détecté. Standard (annuaire), Premium (annuaire + PMS) ou PMS seul — essai 30 jours.
                     </p>
                     {lastSessionId && (
                       <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing}>
                         {syncing ? 'Synchronisation…' : 'Synchroniser mon paiement'}
                       </Button>
                     )}
+                    <Button asChild>
+                      <Link to="/devenir-partenaire">Voir les abonnements</Link>
+                    </Button>
                   </div>
                 ) : (
+                  <div className="space-y-4">
                   <div className="grid sm:grid-cols-3 gap-4 text-sm">
                     <div className="rounded-lg border bg-white p-4">
                       <div className="text-gray-500">Plan</div>
@@ -491,6 +509,18 @@ export default function PartnerDashboard() {
                         {sub?.stripe_subscription_id ?? '—'}
                       </div>
                     </div>
+                  </div>
+                  {hasPmsAccess && (
+                    <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="text-sm text-emerald-950">
+                        <div className="font-semibold">Cleanbnb PMS disponible</div>
+                        <div>Inclus avec votre abonnement {planLabel}{isTrialing ? ' (période d’essai)' : ''}.</div>
+                      </div>
+                      <Button asChild className="bg-emerald-700 hover:bg-emerald-800">
+                        <Link to="/pms">Ouvrir le PMS</Link>
+                      </Button>
+                    </div>
+                  )}
                   </div>
                 )}
               </CardContent>

@@ -1,0 +1,31 @@
+export interface Property {
+  id: string;
+  organizationId: string;
+  name: string;
+  slug: string | null;
+  description: string | null;
+  propertyType: string | null;
+  addressLine1: string | null;
+  city: string | null;
+  postalCode: string | null;
+  country: string;
+  latitude: number | null;
+  longitude: number | null;
+  capacity: number;
+  bedrooms: number;
+  bathrooms: number;
+  basePrice: number;
+  currency: string;
+  touristTax: number | null;
+  deposit: number | null;
+  cleaningFee: number | null;
+  checkInTime: string;
+  checkOutTime: string;
+  houseRules: string | null;
+  digitalGuide: Record<string, unknown> | null;
+  amenitiesNotes: string | null;
+  isActive: boolean;
+  isPublished: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

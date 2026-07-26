@@ -69,7 +69,34 @@
   * {
     @apply border-border;
   }
+  html {
+    /* Compense le header fixe : les ancres / scroll n’arrivent plus “sous” le menu */
+    scroll-padding-top: 5.5rem;
+  }
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 6.5rem;
+    }
+  }
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Articles HTML injectés dans le DOM (SEO / AdSense — pas d'iframe) */
+.blog-html-body img,
+.blog-html-body video,
+.blog-html-body iframe,
+.blog-html-body table {
+  max-width: 100%;
+}
+
+.blog-html-body img {
+  height: auto;
+}
+
+.blog-md-body a {
+  color: #1d4ed8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }

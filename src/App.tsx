@@ -17,12 +17,18 @@ import PartnerDashboard from '@/pages/PartnerDashboard';
 import RequireAuth from '@/components/RequireAuth';
 import FAQ from '@/pages/FAQ';
 import ScrollToTop from '@/components/ScrollToTop';
+import PmsLanding from '@/pms/pages/PmsLanding';
+import PmsOnboarding from '@/pms/pages/PmsOnboarding';
+import PmsLayout from '@/pms/PmsLayout';
+import PmsDashboard from '@/pms/pages/PmsDashboard';
+import PmsProperties from '@/pms/pages/PmsProperties';
+import PmsCleanings from '@/pms/pages/PmsCleanings';
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 pt-16 lg:pt-20">
+      <main className="flex-1 pt-[4.5rem] lg:pt-24">
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -35,6 +41,13 @@ function App() {
           <Route path="/devenir-partenaire" element={<DevenirPartenaire />} />
           <Route path="/devis" element={<Devis />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/pms" element={<PmsLanding />} />
+          <Route path="/pms/onboarding" element={<PmsOnboarding />} />
+          <Route element={<PmsLayout />}>
+            <Route path="/pms/dashboard" element={<PmsDashboard />} />
+            <Route path="/pms/properties" element={<PmsProperties />} />
+            <Route path="/pms/cleanings" element={<PmsCleanings />} />
+          </Route>
           <Route path="/compte" element={<Account />} />
           <Route path="/reinitialiser-mot-de-passe" element={<ResetPassword />} />
           <Route

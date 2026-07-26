@@ -1,0 +1,22 @@
+{
+  "name": "pms-saas",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @pms/api",
+    "dev:web": "npm run dev -w @pms/web",
+    "build": "npm run build -w @pms/providers && npm run build -w @pms/api && npm run build -w @pms/web",
+    "test": "npm run test -w @pms/api",
+    "db:up": "docker compose up -d postgres redis",
+    "db:down": "docker compose down",
+    "prisma:generate": "npm run prisma:generate -w @pms/api",
+    "prisma:migrate": "npm run prisma:migrate -w @pms/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

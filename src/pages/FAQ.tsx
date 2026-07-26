@@ -85,10 +85,31 @@ const FAQ = () => {
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="partner-2">
-                  <AccordionTrigger>Comment obtenir le badge Standard ou Premium ?</AccordionTrigger>
+                  <AccordionTrigger>Quelle différence entre Standard, Premium et PMS ?</AccordionTrigger>
                   <AccordionContent>
-                    Choisissez un abonnement sur <Link to="/devenir-partenaire" className="text-blue-600 hover:underline">Devenir partenaire</Link>.
-                    Une fois le paiement validé, votre statut est synchronisé automatiquement.
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>
+                        <strong>Standard (11,99€/mois)</strong> : fiche dans l’annuaire.
+                      </li>
+                      <li>
+                        <strong>Premium (29,99€/mois)</strong> : mise en avant annuaire <em>et</em> Cleanbnb PMS inclus.
+                      </li>
+                      <li>
+                        <strong>PMS seul (19,99€/mois)</strong> : accès Cleanbnb sans pack annuaire Premium.
+                      </li>
+                    </ul>
+                    Tous les abonnements incluent <strong>30 jours d’essai gratuit</strong>. Souscription sur{' '}
+                    <Link to="/devenir-partenaire" className="text-blue-600 hover:underline">
+                      Devenir partenaire
+                    </Link>
+                    .
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="partner-2b">
+                  <AccordionTrigger>Le PMS est-il inclus dans Premium ?</AccordionTrigger>
+                  <AccordionContent>
+                    Oui. L’abonnement Premium de l’annuaire inclut Cleanbnb PMS. Vous pouvez aussi souscrire au PMS seul
+                    si vous n’avez pas besoin de la mise en avant annuaire.
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="partner-3">

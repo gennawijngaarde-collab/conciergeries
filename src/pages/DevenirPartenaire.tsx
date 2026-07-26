@@ -30,8 +30,10 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { useAuth } from '@/context/AuthContext';
+import { siteConfig, subscriptionPlans } from '@/data/site';
+import { scrollToElementWithOffset } from '@/components/ScrollToTop';
 
-const planSchema = z.enum(['standard', 'premium']);
+const planSchema = z.enum(['standard', 'premium', 'pms']);
 
 const schema = z.object({
   plan: planSchema,
@@ -87,7 +89,9 @@ const DevenirPartenaire = () => {
   });
 
   const plan = useWatch({ control: form.control, name: 'plan' }) ?? 'standard';
-  const planLabel = plan === 'premium' ? 'Premium' : 'Standard';
+  const planLabel =
+    plan === 'premium' ? 'Premium' : plan === 'pms' ? 'Cleanbnb PMS' : 'Standard';
+  const { standard, premium, pms, trialDays } = subscriptionPlans;
 
   const success = searchParams.get('success') === '1';
   const canceled = searchParams.get('canceled') === '1';
@@ -289,11 +293,16 @@ const DevenirPartenaire = () => {
         <div className="text-center mb-10">
           <Badge className="mb-3 bg-blue-100 text-blue-700 hover:bg-blue-100">Abonnements</Badge>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-            Standard ou Premium (avec badges)
+            Annuaire, Premium (avec PMS) ou PMS seul
           </h2>
-          <p className="text-gray-600 mt-2">
-            Le Premium ajoute de la mise en avant et un badge visible dans l&apos;annuaire.
+          <p className="text-gray-600 mt-2 max-w-2xl mx-auto">
+            Le Premium inclut Cleanbnb PMS. Vous pouvez aussi souscrire au PMS seul.
+            Essai gratuit de {trialDays} jours sur tous les abonnements.
           </p>
+        </div>
+
+        <div className="mb-8 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-950 text-center">
+          <strong>{trialDays} jours d’essai gratuit</strong> — puis facturation mensuelle. Résiliable depuis l’espace partenaire.
         </div>
 
         {!authLoading && !user && (
@@ -302,7 +311,7 @@ const DevenirPartenaire = () => {
               <div>
                 <div className="font-semibold">Connexion requise</div>
                 <div className="text-amber-800">
-                  Pour payer et créer votre accès à l&apos;espace partenaire, connectez-vous (ou créez un compte).
+                  Pour démarrer l’essai et accéder à l&apos;espace partenaire / PMS, connectez-vous (ou créez un compte).
                 </div>
               </div>
               <Button asChild className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800">
@@ -312,35 +321,28 @@ const DevenirPartenaire = () => {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Standard */}
           <Card className={`overflow-hidden ${plan === 'standard' ? 'ring-2 ring-blue-500' : ''}`}>
             <CardContent className="p-6 lg:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100">Standard</Badge>
+                    <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100">{standard.label}</Badge>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Fiche complète</h3>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Pour être présent dans l&apos;annuaire avec vos coordonnées.
-                  </p>
+                  <h3 className="text-xl font-bold text-gray-900">Fiche annuaire</h3>
+                  <p className="text-gray-600 text-sm mt-1">{standard.description}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-gray-900">11,99€</div>
+                  <div className="text-3xl font-extrabold text-gray-900">{standard.priceLabel}</div>
                   <div className="text-sm text-gray-500">/ mois</div>
                 </div>
               </div>
 
               <ul className="mt-6 space-y-3 text-sm text-gray-700">
-                {[
-                  'Fiche conciergerie (logo, description, services, plateformes)',
-                  'Coordonnées (téléphone, email, site web, adresse)',
-                  'Apparition dans la recherche et la carte',
-                  'Badge Standard',
-                ].map((item) => (
+                {standard.features.map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-green-600 mt-0.5" />
+                    <Check className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -349,12 +351,13 @@ const DevenirPartenaire = () => {
               <Button
                 onClick={() => {
                   form.setValue('plan', 'standard', { shouldDirty: true, shouldTouch: true, shouldValidate: true });
-                  document.getElementById('formulaire')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const el = document.getElementById('formulaire');
+                  if (el) scrollToElementWithOffset(el);
                 }}
                 variant={plan === 'standard' ? 'default' : 'outline'}
                 className="w-full mt-6"
               >
-                Choisir Standard
+                Essayer Standard ({trialDays} j.)
               </Button>
             </CardContent>
           </Card>
@@ -367,29 +370,22 @@ const DevenirPartenaire = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <Badge className="bg-yellow-400 text-yellow-900 hover:bg-yellow-400">
                       <Crown className="w-3 h-3 mr-1" />
-                      Premium
+                      {premium.label}
                     </Badge>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Mise en avant</h3>
-                  <p className="text-gray-600 text-sm mt-1">
-                    Pour maximiser votre visibilité (badge + priorisation).
-                  </p>
+                  <h3 className="text-xl font-bold text-gray-900">Annuaire + PMS</h3>
+                  <p className="text-gray-600 text-sm mt-1">{premium.description}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-gray-900">29,99€</div>
+                  <div className="text-3xl font-extrabold text-gray-900">{premium.priceLabel}</div>
                   <div className="text-sm text-gray-500">/ mois</div>
                 </div>
               </div>
 
               <ul className="mt-6 space-y-3 text-sm text-gray-700">
-                {[
-                  'Tout le Standard',
-                  'Badge Premium (visible sur les cartes et la fiche)',
-                  'Mise en avant dans l’annuaire (priorité d’affichage)',
-                  'Bloc “Conciergeries Premium” (si activé)',
-                ].map((item) => (
+                {premium.features.map((item) => (
                   <li key={item} className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-green-600 mt-0.5" />
+                    <Check className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -398,12 +394,62 @@ const DevenirPartenaire = () => {
               <Button
                 onClick={() => {
                   form.setValue('plan', 'premium', { shouldDirty: true, shouldTouch: true, shouldValidate: true });
-                  document.getElementById('formulaire')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  const el = document.getElementById('formulaire');
+                  if (el) scrollToElementWithOffset(el);
                 }}
                 className="w-full mt-6 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-amber-950"
               >
-                Choisir Premium
+                Essayer Premium ({trialDays} j.)
               </Button>
+            </CardContent>
+          </Card>
+
+          {/* PMS alone */}
+          <Card className={`overflow-hidden ${plan === 'pms' ? 'ring-2 ring-emerald-600' : ''}`}>
+            <CardContent className="p-6 lg:p-8">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-emerald-100 text-emerald-900 hover:bg-emerald-100">
+                      <Sparkles className="w-3 h-3 mr-1" />
+                      {pms.label}
+                    </Badge>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">PMS seul</h3>
+                  <p className="text-gray-600 text-sm mt-1">{pms.description}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-extrabold text-gray-900">{pms.priceLabel}</div>
+                  <div className="text-sm text-gray-500">/ mois</div>
+                </div>
+              </div>
+
+              <ul className="mt-6 space-y-3 text-sm text-gray-700">
+                {pms.features.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <Check className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                onClick={() => {
+                  form.setValue('plan', 'pms', { shouldDirty: true, shouldTouch: true, shouldValidate: true });
+                  const el = document.getElementById('formulaire');
+                  if (el) scrollToElementWithOffset(el);
+                }}
+                variant={plan === 'pms' ? 'default' : 'outline'}
+                className={`w-full mt-6 ${plan === 'pms' ? 'bg-emerald-700 hover:bg-emerald-800' : ''}`}
+              >
+                Essayer le PMS ({trialDays} j.)
+              </Button>
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Déjà Premium ? Le PMS est inclus —{' '}
+                <Link to={siteConfig.cleanbnb.appUrl} className="text-emerald-700 underline">
+                  ouvrir Cleanbnb
+                </Link>
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -446,8 +492,11 @@ const DevenirPartenaire = () => {
                   <h3 className="font-bold text-lg">Plan sélectionné: {planLabel}</h3>
                 </div>
                 <p className="text-blue-100 text-sm">
-                  Remplissez le formulaire et envoyez-nous les infos. Une fois validé, votre badge apparaîtra
-                  dans l&apos;annuaire.
+                  {plan === 'pms'
+                    ? `Essai ${trialDays} jours puis ${pms.priceLabel}/mois. Accès Cleanbnb PMS.`
+                    : plan === 'premium'
+                      ? `Essai ${trialDays} jours. Annuaire Premium + Cleanbnb PMS inclus.`
+                      : `Essai ${trialDays} jours. Fiche annuaire Standard.`}
                 </p>
               </CardContent>
             </Card>
@@ -467,7 +516,9 @@ const DevenirPartenaire = () => {
                     className={
                       plan === 'premium'
                         ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                        : plan === 'pms'
+                          ? 'bg-emerald-100 text-emerald-900 hover:bg-emerald-100'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
                     }
                   >
                     {planLabel}
@@ -486,20 +537,27 @@ const DevenirPartenaire = () => {
                             <RadioGroup
                               value={field.value}
                               onValueChange={field.onChange}
-                              className="grid sm:grid-cols-2 gap-3"
+                              className="grid sm:grid-cols-3 gap-3"
                             >
                               <label className="flex items-start gap-3 rounded-lg border p-4 cursor-pointer hover:bg-gray-50">
                                 <RadioGroupItem value="standard" className="mt-1" />
                                 <div>
                                   <div className="font-semibold text-gray-900">Standard</div>
-                                  <div className="text-sm text-gray-600">Fiche complète + badge Standard</div>
+                                  <div className="text-sm text-gray-600">Annuaire · {standard.priceLabel}/mois</div>
                                 </div>
                               </label>
                               <label className="flex items-start gap-3 rounded-lg border p-4 cursor-pointer hover:bg-gray-50">
                                 <RadioGroupItem value="premium" className="mt-1" />
                                 <div>
                                   <div className="font-semibold text-gray-900">Premium</div>
-                                  <div className="text-sm text-gray-600">Mise en avant + badge Premium</div>
+                                  <div className="text-sm text-gray-600">Annuaire + PMS · {premium.priceLabel}/mois</div>
+                                </div>
+                              </label>
+                              <label className="flex items-start gap-3 rounded-lg border p-4 cursor-pointer hover:bg-gray-50">
+                                <RadioGroupItem value="pms" className="mt-1" />
+                                <div>
+                                  <div className="font-semibold text-gray-900">PMS</div>
+                                  <div className="text-sm text-gray-600">Cleanbnb seul · {pms.priceLabel}/mois</div>
                                 </div>
                               </label>
                             </RadioGroup>

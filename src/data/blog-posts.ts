@@ -2,6 +2,50 @@ import type { BlogPost } from '@/types/conciergerie';
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 30,
+    title: 'AirDNA Avis : faut-il utiliser AirDNA pour analyser un investissement Airbnb ?',
+    slug: 'airdna-avis-investissement-airbnb',
+    excerpt:
+      'AirDNA avis 2026 : données Airbnb, occupation, tarifs, alternatives (Mashvisor, PriceLabs, Beyond Pricing, Rabbu) et tutoriel pour analyser un investissement location courte durée.',
+    contentFormat: 'html',
+    readingTimeMinutes: 22,
+    htmlPath: '/airdna-avis-investissement-airbnb.html',
+    content: '',
+    author: "L'équipe Conciergeries France",
+    date: '2026-07-22',
+    category: 'Outils',
+    image: '/images/blog/airdna-avis-investissement-airbnb.svg',
+    imageAlt:
+      'AirDNA Avis : tableau de bord d’analyse de données Airbnb pour un investissement location courte durée',
+    metaTitle: 'AirDNA Avis 2026 : analyse Airbnb ?',
+    metaDescription:
+      'AirDNA avis 2026 : données, tarifs, alternatives et tutoriel. Faut-il l’utiliser pour analyser un investissement Airbnb ? Guide complet.',
+    metaKeywords: [
+      'AirDNA Avis',
+      'AirDNA',
+      'Analyse Airbnb',
+      'Rentabilité Airbnb',
+      'Données Airbnb',
+      'Occupation Airbnb',
+      'Revenus Airbnb',
+      'Investissement location courte durée',
+      'Estimation revenus Airbnb',
+      'Outil Airbnb',
+      'AirDNA prix',
+      'AirDNA alternative',
+    ],
+    tags: [
+      'airdna',
+      'airdna avis',
+      'analyse airbnb',
+      'rentabilité airbnb',
+      'données airbnb',
+      'investissement',
+      'outils',
+      'location courte durée',
+    ],
+  },
+  {
     id: 29,
     title: 'Guesty 2026 : l’outil indispensable pour gérer vos locations courte durée (et booster votre rentabilité)',
     slug: 'guesty-channel-manager-location-courte-duree',
@@ -14,7 +58,7 @@ export const blogPosts: BlogPost[] = [
     author: "L'équipe Conciergeries France",
     date: '2026-07-15',
     category: 'Outils',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/guesty-channel-manager-location-courte-duree.svg',
     imageAlt: 'Tableau de bord et gestion locative, illustration Guesty channel manager',
     metaTitle: 'Guesty Channel Manager : guide complet location courte durée 2026',
     metaDescription:
@@ -251,7 +295,7 @@ Choisir le bon channel manager implique de clarifier ses besoins, d'évaluer la 
     author: "L'équipe Conciergeries France",
     date: '2026-03-20',
     category: 'Guide',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/channel-manager-guide-complet.svg',
     imageAlt: 'Chambre d’hôtel moderne, illustration de la distribution hôtelière',
     metaTitle: 'Channel Manager : Guide Complet pour Hôtels et Locations | 2026',
     metaDescription:
@@ -298,7 +342,7 @@ Choisir le bon channel manager implique de clarifier ses besoins, d'évaluer la 
     author: "L'équipe Conciergeries France",
     date: '2026-03-20',
     category: 'Guide',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/comparaison-channel-managers-2026.svg',
     imageAlt: 'Établissement hôtelier et réservations, illustration de la distribution',
     metaTitle: 'Comparaison des Channel Managers 2026 : Guide Complet pour Hôteliers',
     metaDescription:
@@ -413,7 +457,7 @@ Choisir une conciergerie Airbnb est une décision importante qui impacte directe
     author: "L'équipe Conciergeries France",
     date: "2025-01-15",
     category: "Guide",
-    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/comment-choisir-conciergerie-airbnb-2025.svg',
     imageAlt: "Intérieur d'appartement lumineux, symbole d'une location courte durée",
     tags: ["conciergerie", "airbnb", "guide", "location courte durée"]
   },
@@ -521,7 +565,7 @@ La location Airbnb peut générer des rendements intéressants, mais le succès 
     author: "L'équipe Conciergeries France",
     date: "2025-01-10",
     category: "Analyse",
-    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/top-10-villes-rentables-location-airbnb-france.svg',
     imageAlt: "Skyline urbain et monuments, illustration des villes rentables",
     tags: ["rentabilité", "villes", "investissement", "airbnb"]
   },
@@ -681,7 +725,7 @@ La réglementation Airbnb en France est complexe mais respecter les règles est 
     author: "L'équipe Conciergeries France",
     date: "2025-01-08",
     category: "Légal",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/reglementation-airbnb-france-2025.svg',
     imageAlt: "Signature de documents, illustration de la réglementation",
     tags: ["réglementation", "loi", "taxes", "obligations légales"]
   },
@@ -851,7 +895,7 @@ Optimiser une annonce Airbnb est un travail continu qui demande du temps et de l
     author: "L'équipe Conciergeries France",
     date: "2025-01-05",
     category: "Conseils",
-    image: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/optimiser-annonce-airbnb-reservations.svg',
     imageAlt: "Appartement soigné et déco moderne, illustration de l'optimisation d'annonce",
     tags: ["optimisation", "annonce", "photos", "tarification", "avis"]
   },
@@ -1020,7 +1064,7 @@ Notre recommandation : si votre bien est dans une zone touristique, testez la co
     author: "L'équipe Conciergeries France",
     date: "2025-01-03",
     category: "Comparaison",
-    image: "https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/conciergerie-vs-gestion-locative-traditionnelle.svg',
     imageAlt: "Deux personnes comparant des options sur un ordinateur, illustration d'une comparaison",
     tags: ["conciergerie", "gestion locative", "comparaison", "rentabilité"]
   },
@@ -1223,7 +1267,7 @@ Comparez plusieurs offres et vérifiez que tous ces services sont inclus dans la
     author: "L'équipe Conciergeries France",
     date: "2024-12-28",
     category: "Services",
-    image: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/services-indispensables-conciergerie-airbnb.svg',
     imageAlt: "Accueil et service, illustration des services de conciergerie",
     tags: ["services", "conciergerie", "ménage", "maintenance", "optimisation"]
   },
@@ -1410,7 +1454,7 @@ Si vous n'avez pas le temps de gérer vous-même votre location, une conciergeri
     author: "L'équipe Conciergeries France",
     date: "2024-12-20",
     category: "Conseils",
-    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/comment-devenir-superhost-airbnb-guide.svg',
     imageAlt: "Équipe célébrant une réussite, illustration du statut Superhost",
     tags: ["superhost", "airbnb", "badge", "qualité", "avis"]
   },
@@ -1639,7 +1683,7 @@ Si vous envisagez un investissement locatif, sérieusement considérez le modèl
     author: "L'équipe Conciergeries France",
     date: "2024-12-15",
     category: "Investissement",
-    image: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/investissement-locatif-conciergerie-airbnb.svg',
     imageAlt: "Vue d'un immeuble et d'une ville, illustration de l'investissement immobilier",
     tags: ["investissement", "rentabilité", "immobilier", "airbnb", "rendement"]
   },
@@ -1904,7 +1948,7 @@ Le succès sur Airbnb est accessible à tous, à condition d'être méthodique, 
     author: "L'équipe Conciergeries France",
     date: "2024-12-10",
     category: "Débutant",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/erreurs-eviter-debuter-airbnb.svg',
     imageAlt: "Checklist et documents, illustration des erreurs à éviter",
     tags: ["débutant", "erreurs", "conseils", "airbnb", "pièges"]
   },
@@ -2094,7 +2138,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: "2024-12-05",
     category: "Tendances",
-    image: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=2400&q=80",
+    image: '/images/blog/futur-conciergerie-tendances-innovations-2025-2030.svg',
     imageAlt: "Circuit électronique et technologie, illustration des innovations",
     tags: ["tendances", "innovation", "IA", "domotique", "durabilité", "avenir"]
   },
@@ -2111,7 +2155,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Guide',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/choisir-conciergerie-airbnb-2026.svg',
     imageAlt: "Appartement lumineux, illustration d'un choix de conciergerie",
     metaTitle: 'Choisir une conciergerie Airbnb en 2026 : checklist, prix, critères',
     metaDescription:
@@ -2139,7 +2183,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Tarifs',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-airbnb-combien-ca-coute.svg',
     imageAlt: "Calculatrice et budget, illustration du coût d'une conciergerie",
     metaTitle: 'Prix conciergerie Airbnb 2026 : commission, forfait, frais cachés',
     metaDescription:
@@ -2167,7 +2211,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Comparaison',
-    image: 'https://images.unsplash.com/photo-1556155092-8707de31f9c4?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-ou-gestion-en-direct.svg',
     imageAlt: "Comparaison et choix, illustration conciergerie vs gestion directe",
     metaTitle: 'Conciergerie ou gestion en direct : que choisir en 2026 ?',
     metaDescription:
@@ -2194,7 +2238,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Services',
-    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/services-inclus-conciergerie-airbnb.svg',
     imageAlt: "Accueil et service, illustration des services de conciergerie",
     metaTitle: "Services conciergerie Airbnb 2026 : checklist complète (inclus / options)",
     metaDescription:
@@ -2222,7 +2266,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Guide',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/trouver-conciergerie-fiable-pres-de-chez-vous.svg',
     imageAlt: "Équipe et confiance, illustration d'un choix fiable",
     metaTitle: 'Trouver une conciergerie Airbnb fiable près de chez vous (méthode 2026)',
     metaDescription:
@@ -2249,7 +2293,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Analyse',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/top-villes-conciergerie-airbnb-utile.svg',
     imageAlt: "Ville et skyline, illustration d'une analyse par ville",
     metaTitle: 'Villes où une conciergerie Airbnb est la plus utile (analyse 2026)',
     metaDescription:
@@ -2276,7 +2320,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Local',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-airbnb-paris-services-prix.svg',
     imageAlt: "Paris, illustration d'un guide local conciergerie",
     metaTitle: 'Conciergerie Airbnb Paris : services, prix, critères (guide 2026)',
     metaDescription:
@@ -2303,7 +2347,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Local',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-airbnb-lyon-options-proprietaires.svg',
     imageAlt: "Lyon, illustration d'un guide local conciergerie",
     metaTitle: 'Conciergerie Airbnb Lyon : options propriétaires, prix, checklist (2026)',
     metaDescription:
@@ -2329,7 +2373,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Local',
-    image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-airbnb-marseille-comparer-prestataires.svg',
     imageAlt: "Marseille, illustration d'un guide local conciergerie",
     metaTitle: 'Conciergerie Airbnb Marseille : comparer les prestataires (checklist 2026)',
     metaDescription:
@@ -2355,7 +2399,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Local',
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/conciergerie-airbnb-bordeaux-guide-proprietaires.svg',
     imageAlt: "Bordeaux, illustration d'un guide local conciergerie",
     metaTitle: 'Conciergerie Airbnb Bordeaux : guide local propriétaires (prix + services) 2026',
     metaDescription:
@@ -2381,7 +2425,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Conseils',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/10-erreurs-baisser-notes-airbnb.svg',
     imageAlt: "Checklist et qualité, illustration des notes Airbnb",
     metaTitle: '10 erreurs qui font baisser les notes Airbnb en 2026 (et solutions)',
     metaDescription:
@@ -2408,7 +2452,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Services',
-    image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/checkin-menage-linge-qui-fait-quoi-conciergerie.svg',
     imageAlt: "Organisation et service, illustration des responsabilités",
     metaTitle: 'Check-in, ménage, linge : qui fait quoi dans une conciergerie Airbnb ?',
     metaDescription:
@@ -2435,7 +2479,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Performance',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/pourquoi-conciergerie-augmente-reservations.svg',
     imageAlt: "Performance et réservations, illustration de la croissance",
     metaTitle: 'Pourquoi une conciergerie augmente les réservations Airbnb (leviers 2026)',
     metaDescription:
@@ -2462,7 +2506,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Stratégie',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/booking-ou-airbnb-quelle-strategie.svg',
     imageAlt: "Distribution et plateformes, illustration Airbnb vs Booking",
     metaTitle: 'Booking.com ou Airbnb : quelle stratégie pour louer plus (2026) ?',
     metaDescription:
@@ -2489,7 +2533,7 @@ L'avenir de la conciergerie s'écrit aujourd'hui. Soyez-en acteur !
     author: "L'équipe Conciergeries France",
     date: '2026-03-31',
     category: 'Optimisation',
-    image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=2400&q=80',
+    image: '/images/blog/ameliorer-visibilite-annonce-airbnb-avec-conciergerie.svg',
     imageAlt: "Optimisation d'annonce, illustration visibilité Airbnb",
     metaTitle: 'Visibilité annonce Airbnb : comment une conciergerie peut booster (2026)',
     metaDescription:

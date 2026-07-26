@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#be123c"/>
+      <stop offset="1" stop-color="#9f1239"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="180" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="1080" cy="480" r="220" fill="rgba(255,255,255,0.06)"/>
+  <rect x="56" y="56" width="1088" height="518" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)"/>
+  <text x="70" y="140" fill="rgba(255,255,255,0.9)" font-family="system-ui,Segoe UI,Arial" font-size="24" letter-spacing="2">LOCAL</text>
+  <text x="70" y="210" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">Conciergerie Airbnb à Lyon :</text>
+  <text x="70" y="268" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">quelles options pour…</text>
+  <text x="70" y="520" fill="rgba(255,255,255,0.85)" font-family="system-ui,Segoe UI,Arial" font-size="22">ma-conciergerie-annuaire.com</text>
+</svg>

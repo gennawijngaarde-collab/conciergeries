@@ -79,14 +79,28 @@ export default async function handler(req: any, res: any) {
       stripeCustomerId?: string | null;
       stripeSubscriptionId?: string | null;
       currentPeriodEnd?: number | null;
+      trialEnd?: number | null;
+      includesPms?: boolean;
+      includesDirectory?: boolean;
     }) => {
+      const plan = (args.plan ?? 'standard').toLowerCase();
+      const includesPms =
+        args.includesPms ?? (plan === 'premium' || plan === 'pms');
+      const includesDirectory =
+        args.includesDirectory ?? (plan === 'standard' || plan === 'premium');
+
       const row = {
         user_id: args.userId,
-        plan: (args.plan ?? 'standard').toLowerCase(),
+        plan,
         status: args.status,
         stripe_customer_id: args.stripeCustomerId ?? null,
         stripe_subscription_id: args.stripeSubscriptionId ?? null,
-        current_period_end: args.currentPeriodEnd ? new Date(args.currentPeriodEnd * 1000).toISOString() : null,
+        current_period_end: args.currentPeriodEnd
+          ? new Date(args.currentPeriodEnd * 1000).toISOString()
+          : null,
+        includes_pms: includesPms,
+        includes_directory: includesDirectory,
+        trial_ends_at: args.trialEnd ? new Date(args.trialEnd * 1000).toISOString() : null,
         updated_at: new Date().toISOString(),
       };
 
@@ -148,23 +162,31 @@ export default async function handler(req: any, res: any) {
         const sub = await stripe.subscriptions.retrieve(subscriptionId);
         const listingStatus = (sub as any)?.cancel_at_period_end ? 'canceled' : sub.status;
         const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
+        const trialEnd = (sub as any)?.trial_end ?? null;
+        const resolvedPlan = ((sub.metadata?.plan as string | undefined) ?? plan).toLowerCase();
         await upsertSubscription({
           userId,
-          plan: (sub.metadata?.plan as string | undefined) ?? plan,
+          plan: resolvedPlan,
           status: listingStatus,
           stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
           stripeSubscriptionId: sub.id,
           currentPeriodEnd,
+          trialEnd,
+          includesPms: resolvedPlan === 'premium' || resolvedPlan === 'pms',
+          includesDirectory: resolvedPlan === 'standard' || resolvedPlan === 'premium',
         });
 
-        await upsertPartnerProfile({
-          userId,
-          plan: (sub.metadata?.plan as string | undefined) ?? plan,
-          status: listingStatus,
-          stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
-          stripeSubscriptionId: sub.id,
-          fields: metadata as any,
-        });
+        // Fiche annuaire uniquement pour Standard / Premium (pas pour PMS seul)
+        if (resolvedPlan !== 'pms') {
+          await upsertPartnerProfile({
+            userId,
+            plan: resolvedPlan,
+            status: listingStatus,
+            stripeCustomerId: customerId ?? (typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null),
+            stripeSubscriptionId: sub.id,
+            fields: metadata as any,
+          });
+        }
       }
 
       await resend.emails.send({

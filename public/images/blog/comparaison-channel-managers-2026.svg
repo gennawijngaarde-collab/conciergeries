@@ -1,28 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#111827"/>
-      <stop offset="1" stop-color="#4f46e5"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4338ca"/>
+      <stop offset="1" stop-color="#312e81"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="70" y="70" width="1060" height="490" rx="28" fill="rgba(255,255,255,0.10)" stroke="rgba(201,168,76,0.35)"/>
-  <text x="120" y="155" fill="#c9a84c" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22" letter-spacing="5">
-    GUIDE COMPARATIF 2026
-  </text>
-  <text x="120" y="225" fill="white" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="56" font-weight="900">
-    Comparatif Channel Managers
-  </text>
-  <text x="120" y="285" fill="rgba(255,255,255,0.88)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="30">
-    SiteMinder " Cloudbeds " Amenitiz " Smoobu " Lodgify&
-  </text>
-  <g fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="10">
-    <rect x="120" y="330" width="960" height="170" rx="16" />
-    <path d="M170 375h220M170 425h360M170 475h280" />
-    <path d="M760 375h270M760 425h220M760 475h310" />
-  </g>
-  <text x="120" y="540" fill="rgba(255,255,255,0.80)" font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial" font-size="22">
-    ma-conciergerie-annuaire.com
-  </text>
+  <circle cx="980" cy="120" r="180" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="1080" cy="480" r="220" fill="rgba(255,255,255,0.06)"/>
+  <rect x="56" y="56" width="1088" height="518" rx="28" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.18)"/>
+  <text x="70" y="140" fill="rgba(255,255,255,0.9)" font-family="system-ui,Segoe UI,Arial" font-size="24" letter-spacing="2">GUIDE</text>
+  <text x="70" y="210" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">Comparaison des Channel</text>
+  <text x="70" y="268" fill="white" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700">Managers 2026 :…</text>
+  <text x="70" y="520" fill="rgba(255,255,255,0.85)" font-family="system-ui,Segoe UI,Arial" font-size="22">ma-conciergerie-annuaire.com</text>
 </svg>
-

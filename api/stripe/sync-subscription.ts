@@ -78,25 +78,33 @@ export default async function handler(req: any, res: any) {
 
     const listingStatus = (sub as any)?.cancel_at_period_end ? 'canceled' : sub.status;
     const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
+    const trialEnd = (sub as any)?.trial_end ?? null;
+    const planNormalized = String(plan).toLowerCase();
+    const includesPms = planNormalized === 'premium' || planNormalized === 'pms';
+    const includesDirectory = planNormalized === 'standard' || planNormalized === 'premium';
 
     const { error: upsertError } = await supabaseAdmin.from('subscriptions').upsert(
       {
         user_id: userId,
-        plan: String(plan).toLowerCase(),
+        plan: planNormalized,
         status: listingStatus,
         stripe_customer_id: stripeCustomerId,
         stripe_subscription_id: sub.id,
         current_period_end: currentPeriodEnd ? new Date(currentPeriodEnd * 1000).toISOString() : null,
+        includes_pms: includesPms,
+        includes_directory: includesDirectory,
+        trial_ends_at: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
         updated_at: new Date().toISOString(),
       },
       { onConflict: 'stripe_subscription_id' }
     );
     if (upsertError) throw upsertError;
 
-    // Best-effort: also upsert partner profile if table exists
+    // Best-effort: fiche annuaire pour standard/premium uniquement
+    if (includesDirectory) {
     const profilePayload: any = {
       user_id: userId,
-      plan: String(plan).toLowerCase(),
+      plan: planNormalized,
       subscription_status: listingStatus,
       stripe_customer_id: stripeCustomerId,
       stripe_subscription_id: sub.id,
@@ -130,8 +138,14 @@ export default async function handler(req: any, res: any) {
         // ignore (table might not exist yet)
       }
     }
+    }
 
-    res.status(200).json({ ok: true, status: listingStatus, plan: String(plan).toLowerCase() });
+    res.status(200).json({
+      ok: true,
+      status: listingStatus,
+      plan: planNormalized,
+      includes_pms: includesPms,
+    });
   } catch (err: any) {
     res.status(500).json({ error: err?.message ?? 'Sync failed' });
   }
