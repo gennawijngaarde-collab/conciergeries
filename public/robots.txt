@@ -1,15 +1,26 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ma-conciergerie-annuaire.com/sitemap.xml
+# Pages canoniques = routes React (/blog/..., /conciergerie/...).
+# Les fichiers HTML sources ne doivent pas être indexés (contenu dupliqué).
+Disallow: /*.html$
 
-# Interdire l'accès aux pages d'administration
 Disallow: /admin/
 Disallow: /api/
+Disallow: /espace-partenaire
+Disallow: /compte
+Disallow: /pms/dashboard
+Disallow: /pms/properties
+Disallow: /pms/cleanings
 
-# Autoriser les robots d'indexation
+Sitemap: https://ma-conciergerie-annuaire.com/sitemap.xml
+Sitemap: https://ma-conciergerie-annuaire.com/sitemaps/sitemap-seo.xml
+Sitemap: https://ma-conciergerie-annuaire.com/sitemaps/sitemap-core.xml
+
 User-agent: Googlebot
 Allow: /
+Disallow: /*.html$
 
 User-agent: Bingbot
 Allow: /
+Disallow: /*.html$

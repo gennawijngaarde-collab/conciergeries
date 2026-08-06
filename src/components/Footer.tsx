@@ -9,6 +9,8 @@ const Footer = () => {
     navigation: [
       { label: 'Accueil', path: '/' },
       { label: 'Nos conciergeries', path: '/conciergeries' },
+      { label: 'Outils Airbnb', path: '/outils-airbnb' },
+      { label: 'Comparateur outils', path: '/outils-airbnb/comparateur' },
       { label: 'Obtenir des devis', path: '/devis' },
       { label: 'Blog', path: '/blog' },
       { label: 'PMS Cleanbnb', path: '/pms' },
@@ -27,10 +29,16 @@ const Footer = () => {
     resources: [
       { label: 'Choisir une conciergerie 2026', path: '/blog/choisir-conciergerie-airbnb-2026' },
       { label: 'Guide du débutant', path: '/blog/comment-choisir-conciergerie-airbnb-2025' },
+      { label: 'Conciergerie Paris', path: '/conciergerie-paris' },
+      { label: 'Conciergerie Lyon', path: '/conciergerie-lyon' },
+      { label: 'Top PMS Airbnb', path: '/top-pms-airbnb' },
+      { label: 'Guesty vs Hostaway', path: '/comparatif-guesty-vs-hostaway' },
       { label: 'Devenir Superhost', path: '/blog/comment-devenir-superhost-airbnb-guide' },
       { label: 'Optimiser son annonce', path: '/blog/optimiser-annonce-airbnb-reservations' },
       { label: 'Réglementation Airbnb', path: '/blog/reglementation-airbnb-france-2025' },
       { label: 'Guesty channel manager', path: '/blog/guesty-channel-manager-location-courte-duree' },
+      { label: 'Meilleurs PMS', path: '/outils-airbnb/pms' },
+      { label: 'Channel Managers', path: '/outils-airbnb/channel-manager' },
       { label: 'Cleanbnb PMS', path: '/pms' },
     ],
     legal: [

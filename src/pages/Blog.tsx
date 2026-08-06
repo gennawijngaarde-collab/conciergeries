@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar, Clock, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,28 @@ import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 const Blog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    const title = 'Blog conciergerie Airbnb — guides pratiques 2026';
+    const description =
+      'Guides utiles pour choisir une conciergerie, comprendre les prix, la réglementation et les outils Airbnb. Contenu éditorial pour propriétaires et hôtes en France.';
+    const url = `${window.location.origin}/blog`;
+    document.title = title;
+    let desc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!desc) {
+      desc = document.createElement('meta');
+      desc.setAttribute('name', 'description');
+      document.head.appendChild(desc);
+    }
+    desc.content = description;
+    let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = url;
+  }, []);
 
   const categories = useMemo(() => {
     const cats = new Set<string>();
@@ -56,9 +78,26 @@ const Blog = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
             Guides et conseils location courte durée
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
+          <p className="text-lg text-gray-600 leading-relaxed mb-4">
             Articles complets pour choisir une conciergerie, optimiser vos annonces et gérer vos
-            locations Airbnb en France.
+            locations Airbnb en France — avec des ressources concrètes (annuaire, devis, outils).
+          </p>
+          <p className="flex flex-wrap gap-x-3 gap-y-1 text-sm mb-8">
+            <Link to="/devis" className="text-blue-700 font-medium hover:underline">
+              Obtenir des devis
+            </Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/conciergeries" className="text-blue-700 font-medium hover:underline">
+              Annuaire
+            </Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/outils-airbnb" className="text-blue-700 font-medium hover:underline">
+              Outils Airbnb
+            </Link>
+            <span className="text-gray-300">·</span>
+            <Link to="/faq" className="text-blue-700 font-medium hover:underline">
+              FAQ
+            </Link>
           </p>
 
           <div className="relative">
@@ -189,6 +228,13 @@ const Blog = () => {
             ))}
           </div>
         )}
+
+        <div className="mt-12 rounded-xl border border-blue-100 bg-blue-50/50 p-6 text-center">
+          <p className="text-gray-800 mb-4">Besoin d’aide concrète pour votre bien ?</p>
+          <Button asChild className="bg-blue-600 hover:bg-blue-700">
+            <Link to="/devis">Comparer des devis de conciergeries</Link>
+          </Button>
+        </div>
       </main>
     </div>
   );

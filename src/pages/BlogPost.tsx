@@ -6,8 +6,28 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import blogPosts from '@/data/blog-posts';
 import AdSenseUnit from '@/components/AdSenseUnit';
+import BlogUtilityLinks from '@/components/BlogUtilityLinks';
 import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 import { fetchBlogHtml } from '@/utils/blogHtml';
+
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  let el = document.head.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.content = content;
+}
+
+function detectCityHint(post: { slug: string; title: string; tags: string[] }): string | null {
+  const hay = `${post.slug} ${post.title} ${post.tags.join(' ')}`.toLowerCase();
+  const cities = ['paris', 'lyon', 'marseille', 'bordeaux', 'nice', 'lille', 'toulouse', 'nantes'];
+  for (const c of cities) {
+    if (hay.includes(c)) return c.charAt(0).toUpperCase() + c.slice(1);
+  }
+  return null;
+}
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -25,6 +45,8 @@ const BlogPost = () => {
       .slice(0, 5);
   }, [post]);
 
+  const cityHint = useMemo(() => (post ? detectCityHint(post) : null), [post]);
+
   const formatDate = (dateString: string) =>
     new Intl.DateTimeFormat('fr-FR', {
       day: 'numeric',
@@ -37,7 +59,7 @@ const BlogPost = () => {
     if (typeof post.readingTimeMinutes === 'number' && Number.isFinite(post.readingTimeMinutes)) {
       return Math.max(1, Math.round(post.readingTimeMinutes));
     }
-    return Math.ceil(post.content.split(' ').length / 200);
+    return Math.ceil(post.content.split(/\s+/).filter(Boolean).length / 200);
   }, [post]);
 
   const imageAlt = useMemo(() => (post ? post.imageAlt ?? post.title : ''), [post]);
@@ -54,7 +76,6 @@ const BlogPost = () => {
   const [resolvedSrc, setResolvedSrc] = useState('');
   const [htmlBody, setHtmlBody] = useState('');
   const [htmlStyles, setHtmlStyles] = useState<string[]>([]);
-  const [htmlJsonLd, setHtmlJsonLd] = useState<string[]>([]);
   const [htmlLoading, setHtmlLoading] = useState(false);
   const [htmlError, setHtmlError] = useState<string | null>(null);
 
@@ -69,7 +90,6 @@ const BlogPost = () => {
     if (!post || !isHtml) {
       setHtmlBody('');
       setHtmlStyles([]);
-      setHtmlJsonLd([]);
       setHtmlError(null);
       return;
     }
@@ -85,11 +105,9 @@ const BlogPost = () => {
           if (cancelled) return;
           setHtmlBody(parsed.bodyHtml);
           setHtmlStyles(parsed.styles);
-          setHtmlJsonLd(parsed.jsonLd ?? []);
         } else if (post.content) {
           setHtmlBody(post.content);
           setHtmlStyles([]);
-          setHtmlJsonLd([]);
         } else {
           throw new Error('Contenu HTML manquant');
         }
@@ -98,7 +116,6 @@ const BlogPost = () => {
           setHtmlError(err instanceof Error ? err.message : 'Erreur de chargement');
           setHtmlBody('');
           setHtmlStyles([]);
-          setHtmlJsonLd([]);
         }
       } finally {
         if (!cancelled) setHtmlLoading(false);
@@ -115,24 +132,18 @@ const BlogPost = () => {
     if (!post) return;
 
     const title = post.metaTitle ?? post.title;
-    document.title = title;
-
-    const ensureMeta = (name: string) => {
-      let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null;
-      if (!tag) {
-        tag = document.createElement('meta');
-        tag.setAttribute('name', name);
-        document.head.appendChild(tag);
-      }
-      return tag;
-    };
-
-    ensureMeta('description').setAttribute('content', post.metaDescription ?? post.excerpt ?? '');
-    if (post.metaKeywords?.length) {
-      ensureMeta('keywords').setAttribute('content', post.metaKeywords.join(', '));
-    }
-
+    const description = post.metaDescription ?? post.excerpt ?? '';
     const canonicalHref = `${window.location.origin}/blog/${post.slug}`;
+    const ogImage = post.image
+      ? post.image.startsWith('http')
+        ? post.image
+        : `${window.location.origin}${post.image.startsWith('/') ? '' : '/'}${post.image}`
+      : `${window.location.origin}/favicon.svg`;
+
+    document.title = title;
+    upsertMeta('name', 'description', description);
+    document.querySelector('meta[name="keywords"]')?.remove();
+
     let canonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement('link');
@@ -141,20 +152,43 @@ const BlogPost = () => {
     }
     canonical.href = canonicalHref;
 
+    upsertMeta('property', 'og:type', 'article');
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:url', canonicalHref);
+    upsertMeta('property', 'og:image', ogImage);
+    upsertMeta('property', 'og:locale', 'fr_FR');
+    upsertMeta('name', 'twitter:card', 'summary_large_image');
+    upsertMeta('name', 'twitter:title', title);
+    upsertMeta('name', 'twitter:description', description);
+    upsertMeta('name', 'twitter:image', ogImage);
+
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline: post.title,
-      description: post.metaDescription ?? post.excerpt,
+      description,
       datePublished: post.date,
+      dateModified: post.date,
+      inLanguage: 'fr-FR',
       author: { '@type': 'Organization', name: post.author },
-      image: post.image ? [resolvePublicAssetUrl(post.image)] : undefined,
-      mainEntityOfPage: canonicalHref,
+      image: post.image ? [ogImage] : undefined,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalHref },
       publisher: {
         '@type': 'Organization',
         name: 'Conciergeries France',
         url: window.location.origin,
       },
+    };
+
+    const breadcrumbLd = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil', item: window.location.origin },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${window.location.origin}/blog` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: canonicalHref },
+      ],
     };
 
     const scriptId = 'blog-article-jsonld';
@@ -167,30 +201,23 @@ const BlogPost = () => {
     }
     script.textContent = JSON.stringify(jsonLd);
 
-    htmlJsonLd.forEach((payload, index) => {
-      try {
-        JSON.parse(payload);
-      } catch {
-        return;
-      }
-      const id = `blog-html-jsonld-${index}`;
-      let node = document.getElementById(id) as HTMLScriptElement | null;
-      if (!node) {
-        node = document.createElement('script');
-        node.id = id;
-        node.type = 'application/ld+json';
-        document.head.appendChild(node);
-      }
-      node.textContent = payload;
-    });
+    const crumbId = 'blog-breadcrumb-jsonld';
+    let crumb = document.getElementById(crumbId) as HTMLScriptElement | null;
+    if (!crumb) {
+      crumb = document.createElement('script');
+      crumb.id = crumbId;
+      crumb.type = 'application/ld+json';
+      document.head.appendChild(crumb);
+    }
+    crumb.textContent = JSON.stringify(breadcrumbLd);
+
+    document.querySelectorAll('[id^="blog-html-jsonld-"]').forEach((n) => n.remove());
 
     return () => {
       document.getElementById(scriptId)?.remove();
-      htmlJsonLd.forEach((_, index) => {
-        document.getElementById(`blog-html-jsonld-${index}`)?.remove();
-      });
+      document.getElementById(crumbId)?.remove();
     };
-  }, [post, htmlJsonLd]);
+  }, [post]);
 
   const handleImgError = () => {
     if (resolvedSrc && resolvedSrc !== fallbackSrc) {
@@ -204,14 +231,28 @@ const BlogPost = () => {
 
   const formatContent = (content: string) => {
     const withLinks = (text: string) =>
-      text.replace(
-        /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-        (_match, label: string, url: string) => {
-          const isAffiliate = /join\.guesty\.com|gumroad\.com|airdna\.co/i.test(url);
-          const rel = isAffiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer';
-          return `<a href="${url}" target="_blank" rel="${rel}" class="text-blue-700 font-semibold underline underline-offset-2">${label}</a>`;
-        }
-      );
+      text
+        .replace(
+          /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+          (_match, label: string, url: string) => {
+            const isAffiliate =
+              /join\.guesty\.com|gumroad\.com|airdna\.co|eur-invite\.airdna/i.test(url);
+            const rel = isAffiliate
+              ? 'noopener noreferrer sponsored nofollow'
+              : 'noopener noreferrer';
+            return `<a href="${url}" target="_blank" rel="${rel}" class="text-blue-700 font-semibold underline underline-offset-2">${label}</a>`;
+          }
+        )
+        .replace(/\[([^\]]+)\]\((\/[^)\s]+)\)/g, (_m, label: string, path: string) => {
+          return `<a href="${path}" class="text-blue-700 font-semibold underline underline-offset-2">${label}</a>`;
+        })
+        .replace(
+          /<a href="(https?:\/\/[^"]+gumroad[^"]+)"([^>]*)>/gi,
+          (_m, url: string, rest: string) => {
+            if (/rel=/i.test(rest)) return `<a href="${url}"${rest}>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer sponsored nofollow"${rest}>`;
+          }
+        );
 
     return content
       .split('\n\n')
@@ -256,14 +297,17 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-white">
       <nav className="border-b border-gray-100" aria-label="Fil d'Ariane">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
-          <Link
-            to="/blog"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-blue-700"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Retour au blog
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-2 text-sm text-gray-600">
+          <Link to="/" className="hover:text-blue-700">
+            Accueil
           </Link>
+          <span aria-hidden>/</span>
+          <Link to="/blog" className="hover:text-blue-700 inline-flex items-center gap-1">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Blog
+          </Link>
+          <span aria-hidden>/</span>
+          <span className="text-gray-900 truncate max-w-[14rem] sm:max-w-md">{post.title}</span>
         </div>
       </nav>
 
@@ -299,6 +343,9 @@ const BlogPost = () => {
                 itemProp="articleBody"
                 dangerouslySetInnerHTML={{ __html: htmlBody }}
               />
+              <div className="max-w-[900px] mx-auto px-5">
+                <BlogUtilityLinks cityHint={cityHint} />
+              </div>
               <div className="max-w-[900px] mx-auto px-5 py-8">
                 <AdSenseUnit key={`ads-${post.slug}`} />
               </div>
@@ -309,11 +356,18 @@ const BlogPost = () => {
         <article itemScope itemType="https://schema.org/Article">
           <header className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-8">
             <p className="text-sm font-medium text-blue-700 mb-3">{post.category}</p>
-            <h1 itemProp="headline" className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-gray-900 leading-tight mb-6">
+            <h1
+              itemProp="headline"
+              className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-gray-900 leading-tight mb-6"
+            >
               {post.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
-              <time dateTime={post.date} itemProp="datePublished" className="inline-flex items-center gap-1.5">
+              <time
+                dateTime={post.date}
+                itemProp="datePublished"
+                className="inline-flex items-center gap-1.5"
+              >
                 <Calendar className="w-4 h-4" />
                 {formatDate(post.date)}
               </time>
@@ -365,6 +419,8 @@ const BlogPost = () => {
               itemProp="articleBody"
               dangerouslySetInnerHTML={{ __html: formatContent(post.content) }}
             />
+
+            <BlogUtilityLinks cityHint={cityHint} />
 
             <div className="my-10">
               <AdSenseUnit key={`ads-md-${post.slug}`} />
@@ -420,7 +476,8 @@ const BlogPost = () => {
             <div>
               <h2 className="font-bold text-lg text-gray-900">{post.author}</h2>
               <p className="text-gray-600 text-sm mt-1 leading-relaxed">
-                Conseils pratiques sur la conciergerie Airbnb et la location courte durée en France.
+                Guides pratiques et indépendants sur la conciergerie Airbnb et la location courte durée
+                en France. Transparence : certains liens peuvent être affiliés (rel=sponsored).
               </p>
             </div>
           </div>
