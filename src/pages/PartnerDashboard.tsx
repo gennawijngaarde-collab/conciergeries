@@ -27,6 +27,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
+import PartnerLogoField from '@/components/PartnerLogoField';
 
 type SubscriptionRow = {
   id: string;
@@ -447,8 +448,8 @@ export default function PartnerDashboard() {
               <CardHeader className="border-b">
                 <CardTitle>Abonnement</CardTitle>
                 <CardDescription>Gère ton abonnement Stripe et vérifie le statut.</CardDescription>
-                <CardAction>
-                  <div className="flex items-center gap-2">
+                <CardAction className="!col-span-2 !col-start-1 !row-start-3 !justify-self-stretch mt-2 sm:!col-auto sm:!col-start-2 sm:!row-span-2 sm:!row-start-1 sm:!justify-self-end sm:mt-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <Badge className={statusBadge(sub?.status ?? 'inconnu')}>
                       {loading ? 'Chargement…' : sub?.status ?? 'Aucun abonnement'}
                     </Badge>
@@ -596,12 +597,14 @@ export default function PartnerDashboard() {
                         />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">Logo (URL)</label>
-                        <Input
-                          value={draft.logoUrl}
-                          onChange={(e) => setDraft((d) => ({ ...d, logoUrl: e.target.value }))}
-                          placeholder="https://…/logo.png"
-                        />
+                        <label className="text-sm font-medium text-gray-700">Logo</label>
+                        <div className="mt-1.5">
+                          <PartnerLogoField
+                            value={draft.logoUrl}
+                            onChange={(url) => setDraft((d) => ({ ...d, logoUrl: url }))}
+                            userId={user?.id}
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="text-sm font-medium text-gray-700">Téléphone</label>

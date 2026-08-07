@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, lazy, Suspense } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Search, MapPin, SlidersHorizontal, Grid3X3, Map as MapIcon, X, Star, ExternalLink, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,11 +8,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import Map from '@/components/Map';
+import ConciergerieLogo from '@/components/ConciergerieLogo';
 import staticConciergeries from '@/data/conciergeries';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 import type { Conciergerie } from '@/types/conciergerie';
+
+const Map = lazy(() => import('@/components/Map'));
 
 const POPULAR_CITIES = [
   'Paris',
@@ -254,11 +256,6 @@ const Conciergeries = () => {
       return String(a.name).localeCompare(String(b.name), 'fr', { sensitivity: 'base' });
     });
   }, [filteredConciergeries]);
-
-  const getLogoSrc = (c: Conciergerie) => {
-    if (c.logoUrl) return c.logoUrl;
-    return `/logos/${c.logo}.svg`;
-  };
 
   const toggleService = (service: string) => {
     setSelectedServices(prev =>
@@ -555,14 +552,10 @@ const Conciergeries = () => {
                             Votre fiche
                           </Badge>
                         )}
-                        <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
-                          <img 
-                            src={getLogoSrc(conciergerie)}
-                            alt={conciergerie.name}
-                            className="w-16 h-16 object-contain"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).src = '/logos/default.svg';
-                            }}
+                        <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden p-2">
+                          <ConciergerieLogo
+                            conciergerie={conciergerie}
+                            imgClassName="w-full h-full object-contain"
                           />
                         </div>
                       </div>
@@ -624,8 +617,16 @@ const Conciergeries = () => {
                 ))}
               </div>
             ) : (
-              <Card className="h-[600px] overflow-hidden">
-                <Map conciergeries={prioritizedConciergeries} />
+              <Card className="h-[min(70svh,600px)] overflow-hidden">
+                <Suspense
+                  fallback={
+                    <div className="h-full flex items-center justify-center text-sm text-gray-500">
+                      Chargement de la carte…
+                    </div>
+                  }
+                >
+                  <Map conciergeries={prioritizedConciergeries} />
+                </Suspense>
               </Card>
             )}
 

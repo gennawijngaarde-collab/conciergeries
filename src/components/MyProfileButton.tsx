@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
+import { cn } from '@/lib/utils';
 
-export default function MyProfileButton() {
+type Props = {
+  className?: string;
+};
+
+export default function MyProfileButton({ className }: Props) {
   const { user } = useAuth();
   const [slug, setSlug] = useState<string | null>(null);
 
@@ -47,7 +52,10 @@ export default function MyProfileButton() {
     <Button
       asChild
       variant="outline"
-      className="shadow-lg hover:shadow-xl transition-all border-gray-200 text-gray-800 hover:bg-gray-100"
+      className={cn(
+        'shadow-lg hover:shadow-xl transition-all border-gray-200 text-gray-800 hover:bg-gray-100',
+        className,
+      )}
     >
       <Link to={href}>Ma fiche</Link>
     </Button>

@@ -1,0 +1,744 @@
+[
+  {
+    "slug": "hostnfly",
+    "host": "hostnfly.com",
+    "status": "ok",
+    "file": "/logos/remote/hostnfly.png",
+    "source": "https://unavatar.io/hostnfly.com?fallback=false"
+  },
+  {
+    "slug": "guestready",
+    "host": "guestready.com",
+    "status": "ok",
+    "file": "/logos/remote/guestready.png",
+    "source": "https://unavatar.io/guestready.com?fallback=false"
+  },
+  {
+    "slug": "wehost",
+    "host": "wehost.fr",
+    "status": "ok",
+    "file": "/logos/remote/wehost.png",
+    "source": "https://unavatar.io/wehost.fr?fallback=false"
+  },
+  {
+    "slug": "butler",
+    "host": "agence-butler.com",
+    "status": "ok",
+    "file": "/logos/remote/butler.png",
+    "source": "https://unavatar.io/agence-butler.com?fallback=false"
+  },
+  {
+    "slug": "guester",
+    "host": "guester.fr",
+    "status": "ok",
+    "file": "/logos/remote/guester.png",
+    "source": "https://unavatar.io/guester.fr?fallback=false"
+  },
+  {
+    "slug": "hoomy",
+    "host": "hoomy.fr",
+    "status": "ok",
+    "file": "/logos/remote/hoomy.png",
+    "source": "https://unavatar.io/hoomy.fr?fallback=false"
+  },
+  {
+    "slug": "upperkey",
+    "host": "theupperkey.com",
+    "status": "ok",
+    "file": "/logos/remote/upperkey.png",
+    "source": "https://unavatar.io/theupperkey.com?fallback=false"
+  },
+  {
+    "slug": "bnb-groom-services",
+    "host": "bnbgroomservices.com",
+    "status": "ok",
+    "file": "/logos/remote/bnb-groom-services.png",
+    "source": "https://unavatar.io/bnbgroomservices.com?fallback=false"
+  },
+  {
+    "slug": "yourhosthelper",
+    "host": "yourhosthelper.com",
+    "status": "ok",
+    "file": "/logos/remote/yourhosthelper.png",
+    "source": "https://unavatar.io/yourhosthelper.com?fallback=false"
+  },
+  {
+    "slug": "nestor-and-jeeves",
+    "host": "nestorandjeeves.com",
+    "status": "ok",
+    "file": "/logos/remote/nestor-and-jeeves.png",
+    "source": "https://icon.horse/icon/nestorandjeeves.com"
+  },
+  {
+    "slug": "happy-keys",
+    "host": "happy-keys.com",
+    "status": "ok",
+    "file": "/logos/remote/happy-keys.png",
+    "source": "https://unavatar.io/happy-keys.com?fallback=false"
+  },
+  {
+    "slug": "simply-home-conciergerie",
+    "host": "simplyhomeconciergerie.fr",
+    "status": "ok",
+    "file": "/logos/remote/simply-home-conciergerie.png",
+    "source": "https://icon.horse/icon/simplyhomeconciergerie.fr"
+  },
+  {
+    "slug": "welkeys",
+    "host": "welkeys.com",
+    "status": "ok",
+    "file": "/logos/remote/welkeys.png",
+    "source": "https://unavatar.io/welkeys.com?fallback=false"
+  },
+  {
+    "slug": "louloue",
+    "host": "louloue.com",
+    "status": "ok",
+    "file": "/logos/remote/louloue.png",
+    "source": "https://unavatar.io/louloue.com?fallback=false"
+  },
+  {
+    "slug": "clickyourflat",
+    "host": "clickyourflat.com",
+    "status": "ok",
+    "file": "/logos/remote/clickyourflat.png",
+    "source": "https://unavatar.io/clickyourflat.com?fallback=false"
+  },
+  {
+    "slug": "the-konciergerie-marais",
+    "host": "thekonciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/the-konciergerie-marais.png",
+    "source": "https://unavatar.io/thekonciergerie.com?fallback=false"
+  },
+  {
+    "slug": "conciergerie-parisienne",
+    "host": "conciergerie-parisienne.fr",
+    "status": "ok",
+    "file": "/logos/remote/conciergerie-parisienne.png",
+    "source": "https://unavatar.io/conciergerie-parisienne.fr?fallback=false"
+  },
+  {
+    "slug": "paris-autrement",
+    "host": "parisautrement.com",
+    "status": "ok",
+    "file": "/logos/remote/paris-autrement.png",
+    "source": "https://unavatar.io/parisautrement.com?fallback=false"
+  },
+  {
+    "slug": "luxury-flat-paris",
+    "host": "luxuryflatparis.com",
+    "status": "ok",
+    "file": "/logos/remote/luxury-flat-paris.png",
+    "source": "https://icon.horse/icon/luxuryflatparis.com"
+  },
+  {
+    "slug": "my-home-in-paris",
+    "host": "myhomeinparis.com",
+    "status": "ok",
+    "file": "/logos/remote/my-home-in-paris.png",
+    "source": "https://unavatar.io/myhomeinparis.com?fallback=false"
+  },
+  {
+    "slug": "manasteos",
+    "host": "manasteos.com",
+    "status": "ok",
+    "file": "/logos/remote/manasteos.png",
+    "source": "https://unavatar.io/manasteos.com?fallback=false"
+  },
+  {
+    "slug": "cannes-conciergerie",
+    "host": "cannes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/cannes-conciergerie.jpg",
+    "source": "https://unavatar.io/cannes-conciergerie.com?fallback=false"
+  },
+  {
+    "slug": "azur-conciergerie",
+    "host": "azur-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/azur-conciergerie.png",
+    "source": "https://icon.horse/icon/azur-conciergerie.com"
+  },
+  {
+    "slug": "riviera-home",
+    "host": "rivierahome.com",
+    "status": "ok",
+    "file": "/logos/remote/riviera-home.png",
+    "source": "https://icon.horse/icon/rivierahome.com"
+  },
+  {
+    "slug": "nice-premium",
+    "host": "nicepremium.com",
+    "status": "ok",
+    "file": "/logos/remote/nice-premium.png",
+    "source": "https://unavatar.io/nicepremium.com?fallback=false"
+  },
+  {
+    "slug": "bordeaux-conciergerie",
+    "host": "bordeaux-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/bordeaux-conciergerie.png",
+    "source": "https://icon.horse/icon/bordeaux-conciergerie.com"
+  },
+  {
+    "slug": "gironde-hosting",
+    "host": "girondehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/gironde-hosting.png",
+    "source": "https://icon.horse/icon/girondehosting.com"
+  },
+  {
+    "slug": "wine-and-stay",
+    "host": "wineandstay.com",
+    "status": "ok",
+    "file": "/logos/remote/wine-and-stay.png",
+    "source": "https://icon.horse/icon/wineandstay.com"
+  },
+  {
+    "slug": "lyon-conciergerie",
+    "host": "lyon-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lyon-conciergerie.png",
+    "source": "https://icon.horse/icon/lyon-conciergerie.com"
+  },
+  {
+    "slug": "onlylyon-hosting",
+    "host": "onlylyonhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/onlylyon-hosting.png",
+    "source": "https://icon.horse/icon/onlylyonhosting.com"
+  },
+  {
+    "slug": "alpes-conciergerie",
+    "host": "alpes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/alpes-conciergerie.png",
+    "source": "https://icon.horse/icon/alpes-conciergerie.com"
+  },
+  {
+    "slug": "marseille-hosting",
+    "host": "marseillehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/marseille-hosting.png",
+    "source": "https://icon.horse/icon/marseillehosting.com"
+  },
+  {
+    "slug": "provence-conciergerie",
+    "host": "provence-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/provence-conciergerie.png",
+    "source": "https://icon.horse/icon/provence-conciergerie.com"
+  },
+  {
+    "slug": "calanques-rentals",
+    "host": "calanquesrentals.com",
+    "status": "ok",
+    "file": "/logos/remote/calanques-rentals.png",
+    "source": "https://icon.horse/icon/calanquesrentals.com"
+  },
+  {
+    "slug": "nantes-conciergerie",
+    "host": "nantes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/nantes-conciergerie.png",
+    "source": "https://icon.horse/icon/nantes-conciergerie.com"
+  },
+  {
+    "slug": "loire-valley-stays",
+    "host": "loirevalleystays.com",
+    "status": "ok",
+    "file": "/logos/remote/loire-valley-stays.png",
+    "source": "https://icon.horse/icon/loirevalleystays.com"
+  },
+  {
+    "slug": "bretagne-conciergerie",
+    "host": "bretagne-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/bretagne-conciergerie.png",
+    "source": "https://icon.horse/icon/bretagne-conciergerie.com"
+  },
+  {
+    "slug": "lille-conciergerie",
+    "host": "lille-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lille-conciergerie.png",
+    "source": "https://icon.horse/icon/lille-conciergerie.com"
+  },
+  {
+    "slug": "nord-hosting",
+    "host": "nordhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/nord-hosting.png",
+    "source": "https://icon.horse/icon/nordhosting.com"
+  },
+  {
+    "slug": "strasbourg-conciergerie",
+    "host": "strasbourg-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/strasbourg-conciergerie.png",
+    "source": "https://icon.horse/icon/strasbourg-conciergerie.com"
+  },
+  {
+    "slug": "alsace-hosting",
+    "host": "alsacehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/alsace-hosting.png",
+    "source": "https://icon.horse/icon/alsacehosting.com"
+  },
+  {
+    "slug": "toulouse-conciergerie",
+    "host": "toulouse-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/toulouse-conciergerie.png",
+    "source": "https://icon.horse/icon/toulouse-conciergerie.com"
+  },
+  {
+    "slug": "occitanie-stays",
+    "host": "occitaniestays.com",
+    "status": "ok",
+    "file": "/logos/remote/occitanie-stays.png",
+    "source": "https://icon.horse/icon/occitaniestays.com"
+  },
+  {
+    "slug": "montpellier-hosting",
+    "host": "montpellierhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/montpellier-hosting.png",
+    "source": "https://icon.horse/icon/montpellierhosting.com"
+  },
+  {
+    "slug": "cap-dagde-conciergerie",
+    "host": "capdagde-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/cap-dagde-conciergerie.png",
+    "source": "https://icon.horse/icon/capdagde-conciergerie.com"
+  },
+  {
+    "slug": "annecy-premium",
+    "host": "annecypremium.com",
+    "status": "ok",
+    "file": "/logos/remote/annecy-premium.png",
+    "source": "https://icon.horse/icon/annecypremium.com"
+  },
+  {
+    "slug": "biarritz-hosting",
+    "host": "biarritzhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/biarritz-hosting.png",
+    "source": "https://icon.horse/icon/biarritzhosting.com"
+  },
+  {
+    "slug": "corse-conciergerie",
+    "host": "corse-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/corse-conciergerie.png",
+    "source": "https://icon.horse/icon/corse-conciergerie.com"
+  },
+  {
+    "slug": "larochelle-hosting",
+    "host": "larochellehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/larochelle-hosting.png",
+    "source": "https://icon.horse/icon/larochellehosting.com"
+  },
+  {
+    "slug": "honfleur-conciergerie",
+    "host": "honfleur-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/honfleur-conciergerie.png",
+    "source": "https://icon.horse/icon/honfleur-conciergerie.com"
+  },
+  {
+    "slug": "reims-conciergerie",
+    "host": "reims-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/reims-conciergerie.svg",
+    "source": "https://icon.horse/icon/reims-conciergerie.com"
+  },
+  {
+    "slug": "dijon-hosting",
+    "host": "dijonhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/dijon-hosting.png",
+    "source": "https://icon.horse/icon/dijonhosting.com"
+  },
+  {
+    "slug": "grenoble-conciergerie",
+    "host": "grenoble-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/grenoble-conciergerie.png",
+    "source": "https://icon.horse/icon/grenoble-conciergerie.com"
+  },
+  {
+    "slug": "avignon-hosting",
+    "host": "avignonhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/avignon-hosting.png",
+    "source": "https://icon.horse/icon/avignonhosting.com"
+  },
+  {
+    "slug": "saint-malo-conciergerie",
+    "host": "saintmalo-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/saint-malo-conciergerie.png",
+    "source": "https://icon.horse/icon/saintmalo-conciergerie.com"
+  },
+  {
+    "slug": "quimper-hosting",
+    "host": "quimperhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/quimper-hosting.png",
+    "source": "https://icon.horse/icon/quimperhosting.com"
+  },
+  {
+    "slug": "vannes-conciergerie",
+    "host": "vannes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/vannes-conciergerie.png",
+    "source": "https://icon.horse/icon/vannes-conciergerie.com"
+  },
+  {
+    "slug": "rouen-hosting",
+    "host": "rouenhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/rouen-hosting.png",
+    "source": "https://icon.horse/icon/rouenhosting.com"
+  },
+  {
+    "slug": "caen-conciergerie",
+    "host": "caen-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/caen-conciergerie.png",
+    "source": "https://icon.horse/icon/caen-conciergerie.com"
+  },
+  {
+    "slug": "lemans-hosting",
+    "host": "lemanshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/lemans-hosting.png",
+    "source": "https://icon.horse/icon/lemanshosting.com"
+  },
+  {
+    "slug": "orleans-conciergerie",
+    "host": "orleans-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/orleans-conciergerie.png",
+    "source": "https://icon.horse/icon/orleans-conciergerie.com"
+  },
+  {
+    "slug": "tours-hosting",
+    "host": "tourshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/tours-hosting.png",
+    "source": "https://icon.horse/icon/tourshosting.com"
+  },
+  {
+    "slug": "clermont-conciergerie",
+    "host": "clermont-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/clermont-conciergerie.png",
+    "source": "https://icon.horse/icon/clermont-conciergerie.com"
+  },
+  {
+    "slug": "limoges-hosting",
+    "host": "limogeshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/limoges-hosting.png",
+    "source": "https://icon.horse/icon/limogeshosting.com"
+  },
+  {
+    "slug": "poitiers-conciergerie",
+    "host": "poitiers-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/poitiers-conciergerie.png",
+    "source": "https://icon.horse/icon/poitiers-conciergerie.com"
+  },
+  {
+    "slug": "niort-hosting",
+    "host": "niorthosting.com",
+    "status": "ok",
+    "file": "/logos/remote/niort-hosting.png",
+    "source": "https://icon.horse/icon/niorthosting.com"
+  },
+  {
+    "slug": "larochesuryon-conciergerie",
+    "host": "larochesuryon-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/larochesuryon-conciergerie.png",
+    "source": "https://icon.horse/icon/larochesuryon-conciergerie.com"
+  },
+  {
+    "slug": "angers-hosting",
+    "host": "angershosting.com",
+    "status": "ok",
+    "file": "/logos/remote/angers-hosting.png",
+    "source": "https://icon.horse/icon/angershosting.com"
+  },
+  {
+    "slug": "lehavre-conciergerie",
+    "host": "lehavre-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lehavre-conciergerie.png",
+    "source": "https://icon.horse/icon/lehavre-conciergerie.com"
+  },
+  {
+    "slug": "amiens-hosting",
+    "host": "amienshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/amiens-hosting.png",
+    "source": "https://icon.horse/icon/amienshosting.com"
+  },
+  {
+    "slug": "metz-conciergerie",
+    "host": "metz-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/metz-conciergerie.png",
+    "source": "https://icon.horse/icon/metz-conciergerie.com"
+  },
+  {
+    "slug": "nancy-hosting",
+    "host": "nancyhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/nancy-hosting.png",
+    "source": "https://icon.horse/icon/nancyhosting.com"
+  },
+  {
+    "slug": "besancon-conciergerie",
+    "host": "besancon-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/besancon-conciergerie.png",
+    "source": "https://icon.horse/icon/besancon-conciergerie.com"
+  },
+  {
+    "slug": "perpignan-hosting",
+    "host": "perpignanhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/perpignan-hosting.png",
+    "source": "https://icon.horse/icon/perpignanhosting.com"
+  },
+  {
+    "slug": "nimes-conciergerie",
+    "host": "nimes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/nimes-conciergerie.png",
+    "source": "https://icon.horse/icon/nimes-conciergerie.com"
+  },
+  {
+    "slug": "carcassonne-hosting",
+    "host": "carcassonnehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/carcassonne-hosting.png",
+    "source": "https://icon.horse/icon/carcassonnehosting.com"
+  },
+  {
+    "slug": "beziers-conciergerie",
+    "host": "beziers-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/beziers-conciergerie.png",
+    "source": "https://icon.horse/icon/beziers-conciergerie.com"
+  },
+  {
+    "slug": "aix-hosting",
+    "host": "aixhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/aix-hosting.png",
+    "source": "https://icon.horse/icon/aixhosting.com"
+  },
+  {
+    "slug": "saintetienne-conciergerie",
+    "host": "saintetienne-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/saintetienne-conciergerie.svg",
+    "source": "https://icon.horse/icon/saintetienne-conciergerie.com"
+  },
+  {
+    "slug": "valence-hosting",
+    "host": "valencehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/valence-hosting.png",
+    "source": "https://icon.horse/icon/valencehosting.com"
+  },
+  {
+    "slug": "gap-conciergerie",
+    "host": "gap-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/gap-conciergerie.png",
+    "source": "https://icon.horse/icon/gap-conciergerie.com"
+  },
+  {
+    "slug": "chambery-hosting",
+    "host": "chamberyhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/chambery-hosting.png",
+    "source": "https://icon.horse/icon/chamberyhosting.com"
+  },
+  {
+    "slug": "annemasse-conciergerie",
+    "host": "annemasse-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/annemasse-conciergerie.png",
+    "source": "https://icon.horse/icon/annemasse-conciergerie.com"
+  },
+  {
+    "slug": "evian-hosting",
+    "host": "evianhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/evian-hosting.png",
+    "source": "https://icon.horse/icon/evianhosting.com"
+  },
+  {
+    "slug": "chamonix-conciergerie",
+    "host": "chamonix-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/chamonix-conciergerie.png",
+    "source": "https://icon.horse/icon/chamonix-conciergerie.com"
+  },
+  {
+    "slug": "megeve-hosting",
+    "host": "megevehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/megeve-hosting.png",
+    "source": "https://icon.horse/icon/megevehosting.com"
+  },
+  {
+    "slug": "courchevel-conciergerie",
+    "host": "courchevel-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/courchevel-conciergerie.jpg",
+    "source": "https://icon.horse/icon/courchevel-conciergerie.com"
+  },
+  {
+    "slug": "valdisere-hosting",
+    "host": "valdiserehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/valdisere-hosting.png",
+    "source": "https://icon.horse/icon/valdiserehosting.com"
+  },
+  {
+    "slug": "lesarcs-conciergerie",
+    "host": "lesarcs-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lesarcs-conciergerie.png",
+    "source": "https://icon.horse/icon/lesarcs-conciergerie.com"
+  },
+  {
+    "slug": "alpedhuez-hosting",
+    "host": "alpedhuezhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/alpedhuez-hosting.png",
+    "source": "https://icon.horse/icon/alpedhuezhosting.com"
+  },
+  {
+    "slug": "avoriaz-conciergerie",
+    "host": "avoriaz-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/avoriaz-conciergerie.png",
+    "source": "https://icon.horse/icon/avoriaz-conciergerie.com"
+  },
+  {
+    "slug": "lesdeuxalpes-hosting",
+    "host": "lesdeuxalpeshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/lesdeuxalpes-hosting.png",
+    "source": "https://icon.horse/icon/lesdeuxalpeshosting.com"
+  },
+  {
+    "slug": "laplagne-conciergerie",
+    "host": "laplagne-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/laplagne-conciergerie.png",
+    "source": "https://icon.horse/icon/laplagne-conciergerie.com"
+  },
+  {
+    "slug": "meribel-hosting",
+    "host": "meribelhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/meribel-hosting.png",
+    "source": "https://icon.horse/icon/meribelhosting.com"
+  },
+  {
+    "slug": "tignes-conciergerie",
+    "host": "tignes-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/tignes-conciergerie.jpg",
+    "source": "https://icon.horse/icon/tignes-conciergerie.com"
+  },
+  {
+    "slug": "serrechevalier-hosting",
+    "host": "serrechevalierhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/serrechevalier-hosting.png",
+    "source": "https://icon.horse/icon/serrechevalierhosting.com"
+  },
+  {
+    "slug": "lesmenuires-conciergerie",
+    "host": "lesmenuires-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lesmenuires-conciergerie.png",
+    "source": "https://icon.horse/icon/lesmenuires-conciergerie.com"
+  },
+  {
+    "slug": "flaine-hosting",
+    "host": "flainehosting.com",
+    "status": "ok",
+    "file": "/logos/remote/flaine-hosting.png",
+    "source": "https://icon.horse/icon/flainehosting.com"
+  },
+  {
+    "slug": "larosiere-conciergerie",
+    "host": "larosiere-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/larosiere-conciergerie.png",
+    "source": "https://icon.horse/icon/larosiere-conciergerie.com"
+  },
+  {
+    "slug": "saintlary-hosting",
+    "host": "saintlaryhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/saintlary-hosting.png",
+    "source": "https://icon.horse/icon/saintlaryhosting.com"
+  },
+  {
+    "slug": "piauengaly-conciergerie",
+    "host": "piauengaly-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/piauengaly-conciergerie.png",
+    "source": "https://icon.horse/icon/piauengaly-conciergerie.com"
+  },
+  {
+    "slug": "peyragudes-hosting",
+    "host": "peyragudeshosting.com",
+    "status": "ok",
+    "file": "/logos/remote/peyragudes-hosting.png",
+    "source": "https://icon.horse/icon/peyragudeshosting.com"
+  },
+  {
+    "slug": "luchon-conciergerie",
+    "host": "luchon-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/luchon-conciergerie.png",
+    "source": "https://icon.horse/icon/luchon-conciergerie.com"
+  },
+  {
+    "slug": "fontromeu-hosting",
+    "host": "fontromeuhosting.com",
+    "status": "ok",
+    "file": "/logos/remote/fontromeu-hosting.png",
+    "source": "https://icon.horse/icon/fontromeuhosting.com"
+  },
+  {
+    "slug": "lesangles-conciergerie",
+    "host": "lesangles-conciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/lesangles-conciergerie.png",
+    "source": "https://icon.horse/icon/lesangles-conciergerie.com"
+  },
+  {
+    "slug": "appartcosy-conciergerie",
+    "host": "appartcosyconciergerie.com",
+    "status": "ok",
+    "file": "/logos/remote/appartcosy-conciergerie.png",
+    "source": "https://icon.horse/icon/appartcosyconciergerie.com"
+  }
+]

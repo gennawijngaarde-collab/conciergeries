@@ -3,6 +3,7 @@ import { Star, MapPin, Phone, Mail, ExternalLink, Crown } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import ConciergerieLogo from '@/components/ConciergerieLogo';
 import type { Conciergerie } from '@/types/conciergerie';
 
 interface ConciergerieCardProps {
@@ -11,12 +12,6 @@ interface ConciergerieCardProps {
 }
 
 const ConciergerieCard = ({ conciergerie, featured = false }: ConciergerieCardProps) => {
-  // Get logo URL based on conciergerie logo field
-  const getLogoUrl = (logo: string) => {
-    return `/logos/${logo}.svg`;
-  };
-  const logoSrc = conciergerie.logoUrl || getLogoUrl(conciergerie.logo);
-
   const planBadge =
     conciergerie.listingPlan === 'premium' ? (
       <Badge className="absolute top-3 left-3 bg-yellow-400 text-yellow-900 font-semibold hover:bg-yellow-400">
@@ -42,15 +37,10 @@ const ConciergerieCard = ({ conciergerie, featured = false }: ConciergerieCardPr
               Recommandé
             </Badge>
           )}
-          <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
-            <img 
-              src={logoSrc} 
-              alt={conciergerie.name}
-              className="w-16 h-16 object-contain"
-              onError={(e) => {
-                // Fallback to default logo if the specific one fails
-                (e.target as HTMLImageElement).src = '/logos/default.svg';
-              }}
+          <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden p-2">
+            <ConciergerieLogo
+              conciergerie={conciergerie}
+              imgClassName="w-full h-full object-contain"
             />
           </div>
         </div>

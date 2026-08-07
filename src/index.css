@@ -72,6 +72,7 @@
   html {
     /* Compense le header fixe : les ancres / scroll n’arrivent plus “sous” le menu */
     scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
   }
   @media (min-width: 1024px) {
     html {
@@ -80,6 +81,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
+  }
+  img, video, canvas, svg {
+    max-width: 100%;
   }
 }
 

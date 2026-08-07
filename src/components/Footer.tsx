@@ -158,9 +158,9 @@ const Footer = () => {
             <p className="text-gray-500 text-sm text-center md:text-left">
               {currentYear} Conciergeries France. Tous droits réservés.
             </p>
-            <div className="flex items-center gap-6">
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2">
               {footerLinks.legal.map((link) => (
-                <Link key={link.path} to={link.path} className="text-gray-500 hover:text-white text-sm transition-colors">
+                <Link key={link.path} to={link.path} className="text-gray-500 hover:text-white text-sm transition-colors py-1">
                   {link.label}
                 </Link>
               ))}

@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import conciergeries from '@/data/conciergeries';
 import { supabase } from '@/lib/supabaseClient';
 import type { Conciergerie } from '@/types/conciergerie';
+import ConciergerieLogo from '@/components/ConciergerieLogo';
 
 const ConciergerieDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -79,12 +80,6 @@ const ConciergerieDetail = () => {
     )
     .slice(0, 3);
 
-  // Get logo URL
-  const getLogoUrl = (logo: string) => {
-    return `/logos/${logo}.svg`;
-  };
-  const logoSrc = conciergerie.logoUrl || getLogoUrl(conciergerie.logo);
-
   const renderStars = (rating: number) => {
     return (
       <div className="flex items-center gap-0.5">
@@ -129,14 +124,10 @@ const ConciergerieDetail = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="flex flex-col lg:flex-row gap-8 items-start">
             {/* Logo */}
-            <div className="w-24 h-24 lg:w-32 lg:h-32 bg-white rounded-2xl shadow-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
-              <img 
-                src={logoSrc} 
-                alt={conciergerie.name}
-                className="w-20 h-20 lg:w-28 lg:h-28 object-contain"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logos/default.svg';
-                }}
+            <div className="w-24 h-24 lg:w-32 lg:h-32 bg-white rounded-2xl shadow-xl flex items-center justify-center flex-shrink-0 overflow-hidden p-2">
+              <ConciergerieLogo
+                conciergerie={conciergerie}
+                imgClassName="w-full h-full object-contain"
               />
             </div>
 
@@ -428,14 +419,10 @@ const ConciergerieDetail = () => {
                 <Card key={c.id} className="group overflow-hidden hover:shadow-xl transition-shadow">
                   <CardContent className="p-0">
                     <div className="relative h-32 bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center overflow-hidden">
-                        <img 
-                          src={getLogoUrl(c.logo)} 
-                          alt={c.name}
-                          className="w-12 h-12 object-contain"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/logos/default.svg';
-                          }}
+                      <div className="w-16 h-16 bg-white rounded-xl shadow-lg flex items-center justify-center overflow-hidden p-1.5">
+                        <ConciergerieLogo
+                          conciergerie={c}
+                          imgClassName="w-full h-full object-contain"
                         />
                       </div>
                     </div>

@@ -3,45 +3,55 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Home from '@/pages/Home';
-import Conciergeries from '@/pages/Conciergeries';
-import ConciergerieDetail from '@/pages/ConciergerieDetail';
-import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
-import Contact from '@/pages/Contact';
-import { MentionsLegales, Confidentialite, CGV } from '@/pages/Legal';
-import NotFound from '@/pages/NotFound';
-import DevenirPartenaire from '@/pages/DevenirPartenaire';
-import Devis from '@/pages/Devis';
-import Account from '@/pages/Account';
-import ResetPassword from '@/pages/ResetPassword';
-import PartnerDashboard from '@/pages/PartnerDashboard';
-import RequireAuth from '@/components/RequireAuth';
-import FAQ from '@/pages/FAQ';
 import ScrollToTop from '@/components/ScrollToTop';
-import PmsLanding from '@/pms/pages/PmsLanding';
-import PmsOnboarding from '@/pms/pages/PmsOnboarding';
-import PmsLayout from '@/pms/PmsLayout';
-import PmsDashboard from '@/pms/pages/PmsDashboard';
-import PmsProperties from '@/pms/pages/PmsProperties';
-import PmsCleanings from '@/pms/pages/PmsCleanings';
-import ToolsHub from '@/pages/tools/ToolsHub';
-import ToolsComparatorPage from '@/pages/tools/ToolsComparatorPage';
-import ToolsSlugPage from '@/pages/tools/ToolsSlugPage';
+import RequireAuth from '@/components/RequireAuth';
 import { SEO_CATCHALL_PATH } from '@/routes/seoRoutes';
 
+const Conciergeries = lazy(() => import('@/pages/Conciergeries'));
+const ConciergerieDetail = lazy(() => import('@/pages/ConciergerieDetail'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const BlogPost = lazy(() => import('@/pages/BlogPost'));
+const Contact = lazy(() => import('@/pages/Contact'));
+const MentionsLegales = lazy(() =>
+  import('@/pages/Legal').then((m) => ({ default: m.MentionsLegales })),
+);
+const Confidentialite = lazy(() =>
+  import('@/pages/Legal').then((m) => ({ default: m.Confidentialite })),
+);
+const CGV = lazy(() => import('@/pages/Legal').then((m) => ({ default: m.CGV })));
+const NotFound = lazy(() => import('@/pages/NotFound'));
+const DevenirPartenaire = lazy(() => import('@/pages/DevenirPartenaire'));
+const Devis = lazy(() => import('@/pages/Devis'));
+const Account = lazy(() => import('@/pages/Account'));
+const ResetPassword = lazy(() => import('@/pages/ResetPassword'));
+const PartnerDashboard = lazy(() => import('@/pages/PartnerDashboard'));
+const FAQ = lazy(() => import('@/pages/FAQ'));
+const PmsLanding = lazy(() => import('@/pms/pages/PmsLanding'));
+const PmsOnboarding = lazy(() => import('@/pms/pages/PmsOnboarding'));
+const PmsLayout = lazy(() => import('@/pms/PmsLayout'));
+const PmsDashboard = lazy(() => import('@/pms/pages/PmsDashboard'));
+const PmsProperties = lazy(() => import('@/pms/pages/PmsProperties'));
+const PmsCleanings = lazy(() => import('@/pms/pages/PmsCleanings'));
+const ToolsHub = lazy(() => import('@/pages/tools/ToolsHub'));
+const ToolsComparatorPage = lazy(() => import('@/pages/tools/ToolsComparatorPage'));
+const ToolsSlugPage = lazy(() => import('@/pages/tools/ToolsSlugPage'));
 const ProgrammaticSeoPage = lazy(() => import('@/pages/seo/ProgrammaticSeoPage'));
+
+function RouteFallback() {
+  return (
+    <div className="min-h-[40vh] flex items-center justify-center text-gray-500 text-sm px-4">
+      Chargement…
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-[4.5rem] lg:pt-24">
+      <main className="flex-1 pt-[4.5rem] lg:pt-24 min-w-0">
         <ScrollToTop />
-        <Suspense
-          fallback={
-            <div className="min-h-[40vh] flex items-center justify-center text-gray-500">Chargement…</div>
-          }
-        >
+        <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/index.html" element={<Navigate to="/" replace />} />

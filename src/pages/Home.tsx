@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import conciergeries from '@/data/conciergeries';
 import blogPosts from '@/data/blog-posts';
 import ProductHuntBadge from '@/components/ProductHuntBadge';
+import ConciergerieLogo from '@/components/ConciergerieLogo';
 import { resolvePublicAssetUrl } from '@/utils/publicAssetUrl';
 
 const POPULAR_CITIES = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice', 'Toulouse', 'Lille', 'Saint-Quentin'];
@@ -52,19 +53,25 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[85svh] sm:min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-            alt="Luxury apartment"
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=75"
+            srcSet="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=640&q=70 640w, https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=960&q=72 960w, https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=75 1200w, https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=75 1600w"
+            sizes="100vw"
+            alt="Appartement de standing géré par une conciergerie Airbnb"
+            width={1200}
+            height={800}
+            fetchPriority="high"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-900/70 to-blue-900/60" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-40">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6 sm:mb-8">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-white/90 text-sm font-medium">
@@ -74,7 +81,7 @@ const Home = () => {
               <ProductHuntBadge variant="light" size="sm" />
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               Trouvez la{' '}
               <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
                 meilleure conciergerie
@@ -82,7 +89,7 @@ const Home = () => {
               Airbnb pour votre bien
             </h1>
 
-            <p className="text-lg sm:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-white/80 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
               Comparez les <strong>{directoryCount} meilleures conciergeries</strong> de France. Gestion complète, 
               optimisation des revenus, ménage professionnel. Trouvez le partenaire idéal en quelques clics.
             </p>
@@ -121,7 +128,7 @@ const Home = () => {
                 <Link
                   key={city}
                   to={`/conciergeries?city=${encodeURIComponent(city)}`}
-                  className="text-sm px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 hover:bg-white/20 transition-colors"
+                  className="text-sm px-3 py-2 min-h-10 rounded-full bg-white/10 border border-white/20 text-white/90 hover:bg-white/20 transition-colors"
                 >
                   {city}
                 </Link>
@@ -242,14 +249,10 @@ const Home = () => {
                         Top 1
                       </Badge>
                     )}
-                    <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden">
-                      <img 
-                        src={`/logos/${conciergerie.logo}.svg`}
-                        alt={conciergerie.name}
-                        className="w-16 h-16 object-contain"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = '/logos/default.svg';
-                        }}
+                    <div className="w-20 h-20 bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden p-2">
+                      <ConciergerieLogo
+                        conciergerie={conciergerie}
+                        imgClassName="w-full h-full object-contain"
                       />
                     </div>
                   </div>

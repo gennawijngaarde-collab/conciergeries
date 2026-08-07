@@ -125,7 +125,7 @@ export default function Account() {
                 type="button"
                 variant={mode === 'login' ? 'default' : 'outline'}
                 onClick={() => setMode('login')}
-                className="flex-1"
+                className="flex-1 min-h-11"
               >
                 Se connecter
               </Button>
@@ -133,7 +133,7 @@ export default function Account() {
                 type="button"
                 variant={mode === 'signup' ? 'default' : 'outline'}
                 onClick={() => setMode('signup')}
-                className="flex-1"
+                className="flex-1 min-h-11"
               >
                 Créer un compte
               </Button>

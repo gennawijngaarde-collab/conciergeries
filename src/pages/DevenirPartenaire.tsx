@@ -32,6 +32,7 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { siteConfig, subscriptionPlans } from '@/data/site';
 import { scrollToElementWithOffset } from '@/components/ScrollToTop';
+import PartnerLogoField from '@/components/PartnerLogoField';
 
 const planSchema = z.enum(['standard', 'premium', 'pms']);
 
@@ -48,7 +49,7 @@ const schema = z.object({
     .string()
     .min(30, 'Décrivez votre conciergerie (min. 30 caractères)')
     .max(450, 'Description trop longue (max. 450 caractères)'),
-  logoUrl: z.string().url('URL invalide').max(250).optional().or(z.literal('')),
+  logoUrl: z.string().url('URL invalide').max(500).optional().or(z.literal('')),
   siret: z.string().max(40).optional().or(z.literal('')),
   notes: z.string().max(450).optional().or(z.literal('')),
   acceptTerms: z.boolean().refine((v) => v, 'Vous devez accepter la politique de confidentialité'),
@@ -458,21 +459,21 @@ const DevenirPartenaire = () => {
       {/* Form */}
       <div id="formulaire" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
             <Card>
               <CardContent className="p-6">
                 <h3 className="font-bold text-lg text-gray-900 mb-4">Besoin d&apos;aide ?</h3>
                 <div className="space-y-3 text-sm">
                   <a
                     href="mailto:contact@conciergeries-france.fr"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors min-h-11"
                   >
                     <Mail className="w-4 h-4" />
                     contact@conciergeries-france.fr
                   </a>
                   <a
                     href="tel:+33768661948"
-                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors"
+                    className="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition-colors min-h-11"
                   >
                     <Phone className="w-4 h-4" />
                     07 68 66 19 48
@@ -485,7 +486,7 @@ const DevenirPartenaire = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
+            <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white hidden lg:block">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   {plan === 'premium' ? <Crown className="w-5 h-5" /> : <BadgeCheck className="w-5 h-5" />}
@@ -502,12 +503,12 @@ const DevenirPartenaire = () => {
             </Card>
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-1 lg:order-2">
             <Card>
-              <CardContent className="p-6 lg:p-8">
-                <div className="flex items-center justify-between gap-4 mb-6">
+              <CardContent className="p-5 sm:p-6 lg:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">Formulaire d&apos;inscription</h2>
+                    <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Formulaire d&apos;inscription</h2>
                     <p className="text-gray-600 text-sm mt-1">
                       Coordonnées, logo, description… pour créer votre fiche sur l&apos;annuaire.
                     </p>
@@ -515,15 +516,29 @@ const DevenirPartenaire = () => {
                   <Badge
                     className={
                       plan === 'premium'
-                        ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400'
+                        ? 'bg-yellow-400 text-yellow-900 hover:bg-yellow-400 w-fit'
                         : plan === 'pms'
-                          ? 'bg-emerald-100 text-emerald-900 hover:bg-emerald-100'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-100'
+                          ? 'bg-emerald-100 text-emerald-900 hover:bg-emerald-100 w-fit'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-100 w-fit'
                     }
                   >
                     {planLabel}
                   </Badge>
                 </div>
+
+                {!authLoading && !user && (
+                  <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <div className="font-semibold">Étape 1 — Connexion</div>
+                      <div className="text-amber-800">
+                        Créez un compte ou connectez-vous avant le paiement Stripe.
+                      </div>
+                    </div>
+                    <Button asChild className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 min-h-11">
+                      <Link to={accountLink}>Se connecter</Link>
+                    </Button>
+                  </div>
+                )}
 
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -537,7 +552,7 @@ const DevenirPartenaire = () => {
                             <RadioGroup
                               value={field.value}
                               onValueChange={field.onChange}
-                              className="grid sm:grid-cols-3 gap-3"
+                              className="grid grid-cols-1 sm:grid-cols-3 gap-3"
                             >
                               <label className="flex items-start gap-3 rounded-lg border p-4 cursor-pointer hover:bg-gray-50">
                                 <RadioGroupItem value="standard" className="mt-1" />
@@ -625,6 +640,28 @@ const DevenirPartenaire = () => {
                       />
                     </div>
 
+                    <FormField
+                      control={form.control}
+                      name="logoUrl"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Logo de votre conciergerie</FormLabel>
+                          <FormControl>
+                            <PartnerLogoField
+                              value={field.value || ''}
+                              onChange={field.onChange}
+                              userId={user?.id}
+                            />
+                          </FormControl>
+                          <FormDescription>
+                            Importez un fichier (compte connecté) ou collez une URL. Visible sur votre
+                            fiche publique.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
                     <div className="grid sm:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}
@@ -635,20 +672,6 @@ const DevenirPartenaire = () => {
                             <FormControl>
                               <Input placeholder="https://..." {...field} />
                             </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="logoUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Logo (URL)</FormLabel>
-                            <FormControl>
-                              <Input placeholder="https://.../logo.svg" {...field} />
-                            </FormControl>
-                            <FormDescription>Optionnel. Vous pouvez aussi nous l&apos;envoyer par email.</FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}
@@ -759,20 +782,27 @@ const DevenirPartenaire = () => {
                       </div>
                     )}
 
-                    <Button
-                      type="submit"
-                      disabled={isRedirectingToStripe || authLoading || !user}
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white py-6 disabled:opacity-70"
-                    >
-                      <BadgeCheck className="w-4 h-4 mr-2" />
-                      {authLoading
-                        ? 'Chargement…'
-                        : !user
-                          ? 'Connectez-vous pour payer'
-                          : isRedirectingToStripe
-                            ? 'Redirection vers Stripe…'
-                            : 'Payer et envoyer la demande'}
-                    </Button>
+                    <div className="space-y-3 sticky bottom-0 -mx-5 sm:mx-0 px-5 sm:px-0 py-4 sm:py-0 bg-white/95 sm:bg-transparent backdrop-blur sm:backdrop-blur-none border-t sm:border-0 z-10">
+                      {!user && !authLoading && (
+                        <Button asChild variant="outline" className="w-full min-h-11 sm:hidden">
+                          <Link to={accountLink}>Se connecter pour continuer</Link>
+                        </Button>
+                      )}
+                      <Button
+                        type="submit"
+                        disabled={isRedirectingToStripe || authLoading || !user}
+                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white min-h-12 py-6 disabled:opacity-70"
+                      >
+                        <BadgeCheck className="w-4 h-4 mr-2" />
+                        {authLoading
+                          ? 'Chargement…'
+                          : !user
+                            ? 'Connectez-vous pour payer'
+                            : isRedirectingToStripe
+                              ? 'Redirection vers Stripe…'
+                              : `Payer — essai ${trialDays} j. gratuit`}
+                      </Button>
+                    </div>
 
                     <div className="text-xs text-gray-500">
                       Paiement sécurisé via Stripe. Une fois le paiement validé, nous recevons automatiquement
