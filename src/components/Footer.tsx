@@ -126,6 +126,20 @@ const Footer = () => {
               ))}
             </ul>
 
+            <h3 className="font-semibold text-lg mb-4">Outils recommandés</h3>
+            <ul className="space-y-3 mb-6">
+              <li>
+                <a
+                  href="https://share.turno.com/69mvdcf"
+                  target="_blank"
+                  rel="nofollow sponsored noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                >
+                  Turno (ménage & turnovers)
+                </a>
+              </li>
+            </ul>
+
             <h3 className="font-semibold text-lg mb-4">Contact</h3>
             <ul className="space-y-3">
               <li>
