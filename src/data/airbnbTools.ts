@@ -469,7 +469,7 @@ export const airbnbTools: AirbnbTool[] = [
     note: 4.2,
     priceLabel: 'Freemium / commission',
     site: 'https://turno.com',
-    lienAffiliation: 'https://turno.com',
+    lienAffiliation: 'https://share.turno.com/69mvdcf',
     badges: ['Ménage'],
     fonctionnalites: ['Matching cleaners', 'Scheduling', 'Quality checklist'],
     avantages: ['Réseau de cleaners', 'Automatise le turnover'],
