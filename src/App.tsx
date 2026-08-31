@@ -6,6 +6,8 @@ import Home from '@/pages/Home';
 import ScrollToTop from '@/components/ScrollToTop';
 import RequireAuth from '@/components/RequireAuth';
 import { SEO_CATCHALL_PATH } from '@/routes/seoRoutes';
+import IntlRouter from '@/pages/intl/IntlRouter';
+import HubRouter from '@/pages/hub/HubRouter';
 
 const Conciergeries = lazy(() => import('@/pages/Conciergeries'));
 const ConciergerieDetail = lazy(() => import('@/pages/ConciergerieDetail'));
@@ -36,6 +38,21 @@ const ToolsHub = lazy(() => import('@/pages/tools/ToolsHub'));
 const ToolsComparatorPage = lazy(() => import('@/pages/tools/ToolsComparatorPage'));
 const ToolsSlugPage = lazy(() => import('@/pages/tools/ToolsSlugPage'));
 const ProgrammaticSeoPage = lazy(() => import('@/pages/seo/ProgrammaticSeoPage'));
+const BookingHub = lazy(() => import('@/pages/platforms/BookingHub'));
+const BookingBestConciergerie = lazy(() => import('@/pages/platforms/BookingBestConciergerie'));
+const AbritelHub = lazy(() => import('@/pages/platforms/AbritelHub'));
+const AbritelBestConciergerie = lazy(() => import('@/pages/platforms/AbritelBestConciergerie'));
+const AirbnbVsBookingVsAbritel = lazy(() => import('@/pages/comparatifs/AirbnbVsBookingVsAbritel'));
+const BookingGestion = lazy(() => import('@/pages/platforms/BookingIntents').then((m) => ({ default: m.BookingGestion })));
+const BookingCommission = lazy(() => import('@/pages/platforms/BookingIntents').then((m) => ({ default: m.BookingCommission })));
+const BookingOptimiserAnnonce = lazy(() =>
+  import('@/pages/platforms/BookingIntents').then((m) => ({ default: m.BookingOptimiserAnnonce }))
+);
+const AbritelGestion = lazy(() => import('@/pages/platforms/AbritelIntents').then((m) => ({ default: m.AbritelGestion })));
+const AbritelCommission = lazy(() => import('@/pages/platforms/AbritelIntents').then((m) => ({ default: m.AbritelCommission })));
+const AbritelOptimiserAnnonce = lazy(() =>
+  import('@/pages/platforms/AbritelIntents').then((m) => ({ default: m.AbritelOptimiserAnnonce }))
+);
 
 function RouteFallback() {
   return (
@@ -57,6 +74,26 @@ function App() {
             <Route path="/index.html" element={<Navigate to="/" replace />} />
             <Route path="/conciergeries" element={<Conciergeries />} />
             <Route path="/conciergerie/:slug" element={<ConciergerieDetail />} />
+            {/* Platform clusters (additive, does not replace existing URLs) */}
+            <Route path="/booking" element={<BookingHub />} />
+            <Route path="/booking/meilleure-conciergerie-booking" element={<BookingBestConciergerie />} />
+            <Route path="/booking/gestion-booking" element={<BookingGestion />} />
+            <Route path="/booking/commission-booking" element={<BookingCommission />} />
+            <Route path="/booking/optimiser-annonce-booking" element={<BookingOptimiserAnnonce />} />
+            <Route path="/abritel" element={<AbritelHub />} />
+            <Route path="/abritel/meilleure-conciergerie-abritel" element={<AbritelBestConciergerie />} />
+            <Route path="/abritel/gestion-abritel" element={<AbritelGestion />} />
+            <Route path="/abritel/commission-abritel" element={<AbritelCommission />} />
+            <Route path="/abritel/optimiser-annonce-abritel" element={<AbritelOptimiserAnnonce />} />
+            <Route path="/comparatifs/airbnb-vs-booking-vs-abritel" element={<AirbnbVsBookingVsAbritel />} />
+            {/* Hub "Création d'entreprise & Finance" (do not let SEO catch-all intercept /hub) */}
+            <Route path="/hub/*" element={<HubRouter />} />
+            {/* International directory (progressive rollout) */}
+            <Route path="/france/*" element={<IntlRouter />} />
+            <Route path="/belgique/*" element={<IntlRouter />} />
+            <Route path="/suisse/*" element={<IntlRouter />} />
+            <Route path="/canada/*" element={<IntlRouter />} />
+            {/* Phase 2+ (Espagne/Portugal/Italie/UK/USA/Afrique) : on ajoute les routes seulement après validation crawl/index */}
             <Route path="/outils-airbnb" element={<ToolsHub />} />
             <Route path="/outils-airbnb/comparateur" element={<ToolsComparatorPage />} />
             <Route path="/outils-airbnb/:slug" element={<ToolsSlugPage />} />

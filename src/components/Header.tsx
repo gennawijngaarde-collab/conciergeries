@@ -13,6 +13,7 @@ const Header = () => {
   const navLinks = [
     { path: '/', label: 'Accueil' },
     { path: '/conciergeries', label: 'Conciergeries' },
+    { path: '/hub', label: 'Créer sa conciergerie' },
     { path: '/outils-airbnb', label: 'Outils Airbnb' },
     { path: '/devis', label: 'Devis' },
     { path: '/blog', label: 'Blog' },

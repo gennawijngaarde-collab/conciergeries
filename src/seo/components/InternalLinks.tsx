@@ -78,6 +78,12 @@ export function InternalLinks({ city, showTools = true, showGuides = true }: Pro
             <Link to="/guide-prix-conciergerie-airbnb" className="text-blue-700 hover:underline">
               Prix d’une conciergerie
             </Link>
+            <Link to="/hub" className="text-blue-700 hover:underline">
+              Créer sa conciergerie (Hub)
+            </Link>
+            <Link to="/hub/simulateur-rentabilite" className="text-blue-700 hover:underline">
+              Simulateur rentabilité
+            </Link>
             <Link to="/outils-airbnb" className="text-blue-700 hover:underline">
               Marketplace outils
             </Link>

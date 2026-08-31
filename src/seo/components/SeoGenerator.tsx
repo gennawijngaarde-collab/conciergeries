@@ -10,6 +10,8 @@ type Props = {
   faqs?: SeoFaqItem[];
   breadcrumbs?: SeoBreadcrumbItem[];
   image?: string;
+  /** Optional robots directive (ex: "noindex,follow"). Leave undefined for existing behavior. */
+  robots?: string;
   /** Extra JSON-LD graphs merged into the page */
   extraJsonLd?: Record<string, unknown>[];
 };
@@ -62,6 +64,7 @@ export function SeoGenerator({
   faqs = [],
   breadcrumbs = [],
   image,
+  robots,
   extraJsonLd = [],
 }: Props) {
   useEffect(() => {
@@ -70,6 +73,7 @@ export function SeoGenerator({
 
     document.title = title;
     upsertMeta('name', 'description', description);
+    if (typeof robots === 'string' && robots.trim()) upsertMeta('name', 'robots', robots.trim());
     upsertLink('canonical', url);
     upsertMeta('property', 'og:type', type === 'guide' || type === 'comparatif' ? 'article' : 'website');
     upsertMeta('property', 'og:title', title);
@@ -136,7 +140,7 @@ export function SeoGenerator({
     return () => {
       JSON_LD_IDS.forEach((id) => document.getElementById(id)?.remove());
     };
-  }, [title, description, path, type, faqs, breadcrumbs, image, extraJsonLd]);
+  }, [title, description, path, type, faqs, breadcrumbs, image, robots, extraJsonLd]);
 
   return null;
 }

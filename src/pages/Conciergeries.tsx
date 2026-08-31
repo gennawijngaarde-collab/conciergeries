@@ -59,6 +59,43 @@ const Conciergeries = () => {
     setSearchQuery((prev) => (prev === fromUrl ? prev : fromUrl));
   }, [searchParams]);
 
+  // Keep /conciergeries canonical regardless of filters to avoid indexing filter combinations.
+  useEffect(() => {
+    const title = "Annuaire conciergeries — Airbnb, Booking, Abritel (France)";
+    const description =
+      "Trouvez une conciergerie pour gérer votre location courte durée : Airbnb, Booking, Abritel. Filtrez par ville, services et plateformes.";
+    const url = `${window.location.origin}/conciergeries`;
+    document.title = title;
+    let desc = document.querySelector('meta[name=\"description\"]') as HTMLMetaElement | null;
+    if (!desc) {
+      desc = document.createElement('meta');
+      desc.setAttribute('name', 'description');
+      document.head.appendChild(desc);
+    }
+    desc.content = description;
+    let canonical = document.querySelector('link[rel=\"canonical\"]') as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement('link');
+      canonical.rel = 'canonical';
+      document.head.appendChild(canonical);
+    }
+    canonical.href = url;
+  }, []);
+
+  // Read platform filters from URL: /conciergeries?platform=Booking.com,Abritel
+  useEffect(() => {
+    const raw = String(searchParams.get('platform') ?? '').trim();
+    if (!raw) return;
+    const fromUrl = raw
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+    setSelectedPlatforms((prev) => {
+      const same = prev.length === fromUrl.length && prev.every((p, i) => p === fromUrl[i]);
+      return same ? prev : fromUrl;
+    });
+  }, [searchParams]);
+
   const updateSearchQuery = (value: string) => {
     setSearchQuery(value);
     const next = new URLSearchParams(searchParams);
@@ -266,11 +303,14 @@ const Conciergeries = () => {
   };
 
   const togglePlatform = (platform: string) => {
-    setSelectedPlatforms(prev =>
-      prev.includes(platform)
-        ? prev.filter(p => p !== platform)
-        : [...prev, platform]
-    );
+    setSelectedPlatforms((prev) => {
+      const nextArr = prev.includes(platform) ? prev.filter((p) => p !== platform) : [...prev, platform];
+      const next = new URLSearchParams(searchParams);
+      if (nextArr.length) next.set('platform', nextArr.join(','));
+      else next.delete('platform');
+      setSearchParams(next, { replace: true });
+      return nextArr;
+    });
   };
 
   const clearFilters = () => {
@@ -298,6 +338,30 @@ const Conciergeries = () => {
             Comparez et trouvez la meilleure conciergerie pour gérer votre location 
             courte durée. <strong>{conciergeries.length} conciergeries</strong> référencées en France.
           </p>
+
+          <Card className="mt-6 border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50">
+            <CardContent className="p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div>
+                <Badge className="mb-2 bg-blue-600 hover:bg-blue-600">Nouveau</Badge>
+                <h2 className="text-xl font-bold text-gray-900">Vous souhaitez créer votre propre conciergerie ?</h2>
+                <p className="text-sm text-gray-700 max-w-2xl mt-1">
+                  Accède à notre Hub “Création d’entreprise & Finance”: statut, banque pro, assurance, comptabilité, financement
+                  et simulateur de rentabilité.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                  <Link to="/hub">Voir le hub</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/hub/simulateur-rentabilite">Simulateur</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link to="/devis">Obtenir des devis</Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
