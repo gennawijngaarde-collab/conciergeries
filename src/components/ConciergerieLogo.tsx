@@ -23,14 +23,19 @@ export default function ConciergerieLogo({
   const [index, setIndex] = useState(0);
   const src = candidates[Math.min(index, candidates.length - 1)] ?? '/logos/default.svg';
 
+  const seoAlt = alt ?? `Logo conciergerie ${conciergerie.name} - Gestion locative Airbnb professionnelle`;
+
   return (
     <div className={className}>
       <img
         src={src}
-        alt={alt ?? `Logo ${conciergerie.name}`}
+        alt={seoAlt}
+        title={`${conciergerie.name} - Conciergerie Airbnb`}
         className={imgClassName}
         loading="lazy"
         decoding="async"
+        width="80"
+        height="80"
         onError={() => {
           setIndex((i) => (i + 1 < candidates.length ? i + 1 : i));
         }}

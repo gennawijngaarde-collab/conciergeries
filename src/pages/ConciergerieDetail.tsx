@@ -9,6 +9,7 @@ import conciergeries from '@/data/conciergeries';
 import { supabase } from '@/lib/supabaseClient';
 import type { Conciergerie } from '@/types/conciergerie';
 import ConciergerieLogo from '@/components/ConciergerieLogo';
+import ConciergerieStructuredData from '@/components/ConciergerieStructuredData';
 
 const ConciergerieDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -99,6 +100,9 @@ const ConciergerieDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* SEO: Structured Data for images and organization */}
+      <ConciergerieStructuredData conciergerie={conciergerie} />
+      
       {/* Breadcrumb */}
       <div className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
