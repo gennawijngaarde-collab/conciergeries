@@ -47,13 +47,29 @@ export async function POST(request: NextRequest) {
       type: event.eventType,
     });
     
-    // In a real system, this would trigger workflow execution
-    // For MVP, we'll add a background job processor
+    // Trigger workflow execution for termination events
+    if (event.eventType === 'employee.terminated') {
+      console.log('🔄 Triggering offboarding workflow...');
+      
+      // Call workflow execution API (async, don't wait)
+      fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/workflows/execute`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          eventId: event.id,
+          workflowType: 'offboarding',
+          tenantId: event.tenantId,
+        }),
+      }).catch(error => {
+        console.error('Failed to trigger workflow:', error);
+      });
+    }
     
     return NextResponse.json({
       success: true,
       eventId: event.id,
       message: 'Event received and queued for processing',
+      workflowTriggered: event.eventType === 'employee.terminated',
     });
     
   } catch (error: any) {

@@ -10,7 +10,8 @@
     "lint": "next lint",
     "db:migration": "supabase migration new",
     "db:push": "supabase db push",
-    "db:reset": "supabase db reset"
+    "db:reset": "supabase db reset",
+    "seed:offboarding": "tsx scripts/seed-offboarding-workflow.ts"
   },
   "dependencies": {
     "next": "^14.2.15",
@@ -70,7 +71,8 @@
     "jsonwebtoken": "^9.0.2",
     "bcryptjs": "^2.4.3",
     "@microsoft/microsoft-graph-client": "^3.0.7",
-    "@azure/identity": "^4.5.0"
+    "@azure/identity": "^4.5.0",
+    "tsx": "^4.19.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
