@@ -87,6 +87,27 @@
       ]
     }
     </script>
+    
+    <!-- Google Analytics 4 -->
+    <script>
+      (function() {
+        var measurementId = '%VITE_GA_MEASUREMENT_ID%';
+        if (measurementId && measurementId.startsWith('G-')) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', measurementId, {
+            send_page_view: false
+          });
+          
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
