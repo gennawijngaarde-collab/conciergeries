@@ -98,7 +98,9 @@ const FAQ = () => {
                         <strong>PMS seul (19,99€/mois)</strong> : accès Cleanbnb sans pack annuaire Premium.
                       </li>
                     </ul>
-                    Tous les abonnements incluent <strong>30 jours d’essai gratuit</strong>. Souscription sur{' '}
+                    Tous les abonnements incluent <strong>30 jours d’essai gratuit</strong>. La carte est
+                    demandée à l’inscription, et le prélèvement mensuel est automatique à la fin de l’essai, sans
+                    nouvelle action. Souscription sur{' '}
                     <Link to="/devenir-partenaire" className="text-blue-600 hover:underline">
                       Devenir partenaire
                     </Link>

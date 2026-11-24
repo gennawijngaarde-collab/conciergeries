@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
+import { subscriptionIdFromInvoice } from './subscriptionCheckout';
 
 function requireEnv(name: string): string {
   const v = process.env[name];
@@ -100,8 +101,14 @@ export default async function handler(req: any, res: any) {
           : null,
         includes_pms: includesPms,
         includes_directory: includesDirectory,
-        trial_ends_at: args.trialEnd ? new Date(args.trialEnd * 1000).toISOString() : null,
         updated_at: new Date().toISOString(),
+        ...(args.trialEnd !== undefined
+          ? {
+              trial_ends_at: args.trialEnd
+                ? new Date(args.trialEnd * 1000).toISOString()
+                : null,
+            }
+          : {}),
       };
 
       const { error } = await supabaseAdmin
@@ -224,6 +231,7 @@ export default async function handler(req: any, res: any) {
       if (userId) {
         const listingStatus = (sub as any)?.cancel_at_period_end ? 'canceled' : sub.status;
         const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
+        const trialEnd = (sub as any)?.trial_end ?? null;
         await upsertSubscription({
           userId,
           plan,
@@ -231,6 +239,7 @@ export default async function handler(req: any, res: any) {
           stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
           stripeSubscriptionId: sub.id,
           currentPeriodEnd,
+          trialEnd,
         });
 
         await upsertPartnerProfile({
@@ -240,6 +249,38 @@ export default async function handler(req: any, res: any) {
           stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
           stripeSubscriptionId: sub.id,
         });
+      }
+    }
+
+    // Trial end and later renewals: Stripe charges the saved card, then sends these events.
+    if (event.type === 'invoice.paid' || event.type === 'invoice.payment_failed') {
+      const invoice = event.data.object as Stripe.Invoice;
+      const subscriptionId = subscriptionIdFromInvoice(invoice);
+      if (subscriptionId) {
+        const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        const userId = (sub.metadata?.userId as string | undefined) ?? null;
+        const plan = (sub.metadata?.plan as string | undefined) ?? null;
+        if (userId) {
+          const listingStatus = (sub as any)?.cancel_at_period_end ? 'canceled' : sub.status;
+          const currentPeriodEnd = (sub as any)?.current_period_end ?? null;
+          const trialEnd = (sub as any)?.trial_end ?? null;
+          await upsertSubscription({
+            userId,
+            plan,
+            status: listingStatus,
+            stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
+            stripeSubscriptionId: sub.id,
+            currentPeriodEnd,
+            trialEnd,
+          });
+          await upsertPartnerProfile({
+            userId,
+            plan,
+            status: listingStatus,
+            stripeCustomerId: typeof sub.customer === 'string' ? sub.customer : sub.customer?.id ?? null,
+            stripeSubscriptionId: sub.id,
+          });
+        }
       }
     }
 

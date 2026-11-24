@@ -303,7 +303,7 @@ const DevenirPartenaire = () => {
         </div>
 
         <div className="mb-8 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-950 text-center">
-          <strong>{trialDays} jours d’essai gratuit</strong> — puis facturation mensuelle. Résiliable depuis l’espace partenaire.
+          <strong>{trialDays} jours d’essai gratuit</strong>. La carte est enregistrée aujourd’hui, et le premier prélèvement part automatiquement à la fin de l’essai, puis chaque mois. Résiliable avant cette date depuis l’espace partenaire.
         </div>
 
         {!authLoading && !user && (
@@ -800,13 +800,14 @@ const DevenirPartenaire = () => {
                             ? 'Connectez-vous pour payer'
                             : isRedirectingToStripe
                               ? 'Redirection vers Stripe…'
-                              : `Payer — essai ${trialDays} j. gratuit`}
+                              : `Démarrer l’essai — paiement automatique ensuite`}
                       </Button>
                     </div>
 
                     <div className="text-xs text-gray-500">
-                      Paiement sécurisé via Stripe. Une fois le paiement validé, nous recevons automatiquement
-                      votre demande par email pour activer votre fiche et le badge.
+                      Paiement sécurisé via Stripe. Aucun montant n’est débité pendant les {trialDays} jours
+                      d’essai. À la fin de l’essai, le prix mensuel est prélevé automatiquement sur la carte
+                      enregistrée. Nous recevons votre demande par email pour activer votre fiche et le badge.
                     </div>
                   </form>
                 </Form>
