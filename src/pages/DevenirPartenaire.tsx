@@ -33,6 +33,7 @@ import { useAuth } from '@/context/AuthContext';
 import { siteConfig, subscriptionPlans } from '@/data/site';
 import { scrollToElementWithOffset } from '@/components/ScrollToTop';
 import PartnerLogoField from '@/components/PartnerLogoField';
+import { trackPremiumClick, trackPmsCheckout, trackPmsPurchase } from '@/lib/analytics';
 
 const planSchema = z.enum(['standard', 'premium', 'pms']);
 
@@ -98,18 +99,35 @@ const DevenirPartenaire = () => {
   const canceled = searchParams.get('canceled') === '1';
   const sessionId = searchParams.get('session_id');
 
+  // Track successful purchase after Stripe redirect
   useEffect(() => {
     if (!success || !sessionId) return;
     try {
       localStorage.setItem('stripe:lastCheckoutSessionId', sessionId);
+      
+      // Track purchase
+      const planData = plan === 'premium' ? premium : plan === 'pms' ? pms : standard;
+      trackPmsPurchase({
+        plan: plan,
+        price: planData.priceMonthly,
+        currency: 'EUR',
+      });
     } catch {
       // ignore
     }
-  }, [success, sessionId]);
+  }, [success, sessionId, plan, premium, pms, standard]);
 
   const onSubmit = async (values: FormValues) => {
     setSubmitError(null);
     setIsRedirectingToStripe(true);
+
+    // Track checkout start
+    const planData = values.plan === 'premium' ? premium : values.plan === 'pms' ? pms : standard;
+    trackPmsCheckout({
+      plan: values.plan,
+      price: planData.priceMonthly,
+      currency: 'EUR',
+    });
 
     try {
       const token = session?.access_token;
@@ -395,6 +413,7 @@ const DevenirPartenaire = () => {
               <Button
                 onClick={() => {
                   form.setValue('plan', 'premium', { shouldDirty: true, shouldTouch: true, shouldValidate: true });
+                  trackPremiumClick({ premium: true });
                   const el = document.getElementById('formulaire');
                   if (el) scrollToElementWithOffset(el);
                 }}

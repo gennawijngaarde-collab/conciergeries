@@ -13,6 +13,7 @@ import staticConciergeries from '@/data/conciergeries';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/context/AuthContext';
 import type { Conciergerie } from '@/types/conciergerie';
+import { trackDirectoryView, trackDirectorySearch } from '@/lib/analytics';
 
 const Map = lazy(() => import('@/components/Map'));
 
@@ -53,6 +54,11 @@ const Conciergeries = () => {
   const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
   const [conciergeries, setConciergeries] = useState<Conciergerie[]>(staticConciergeries as unknown as Conciergerie[]);
   const [myProfileSlug, setMyProfileSlug] = useState<string | null>(null);
+
+  // Track directory view on mount
+  useEffect(() => {
+    trackDirectoryView();
+  }, []);
 
   useEffect(() => {
     const fromUrl = searchParams.get('city') || searchParams.get('q') || '';
@@ -103,6 +109,12 @@ const Conciergeries = () => {
     if (trimmed) {
       next.set('city', trimmed);
       next.delete('q');
+      
+      // Track search
+      trackDirectorySearch({
+        search_term: trimmed,
+        city: trimmed,
+      });
     } else {
       next.delete('city');
       next.delete('q');

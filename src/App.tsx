@@ -8,6 +8,7 @@ import RequireAuth from '@/components/RequireAuth';
 import { SEO_CATCHALL_PATH } from '@/routes/seoRoutes';
 import IntlRouter from '@/pages/intl/IntlRouter';
 import HubRouter from '@/pages/hub/HubRouter';
+import { usePageTracking } from '@/hooks/usePageTracking';
 
 const Conciergeries = lazy(() => import('@/pages/Conciergeries'));
 const ConciergerieDetail = lazy(() => import('@/pages/ConciergerieDetail'));
@@ -63,6 +64,9 @@ function RouteFallback() {
 }
 
 function App() {
+  // Track page views automatically
+  usePageTracking();
+
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
       <Header />

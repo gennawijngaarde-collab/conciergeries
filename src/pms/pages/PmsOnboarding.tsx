@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { addCleaning, addProperty, saveProfile, seedDemoData } from '../storage';
+import { trackPmsSignup } from '@/lib/analytics';
 
 const steps = ['Votre conciergerie', 'Premier logement', 'Premier ménage', 'Terminé'];
 
@@ -37,6 +38,12 @@ export default function PmsOnboarding() {
       onboardedAt: new Date().toISOString(),
     });
     seedDemoData();
+    
+    // Track PMS signup
+    trackPmsSignup({
+      plan: 'demo',
+    });
+    
     navigate('/pms/dashboard');
   };
 

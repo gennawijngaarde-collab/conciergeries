@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { trackQuoteClick, trackQuoteSubmit } from '@/lib/analytics';
 
 const LEADS_EMAIL = 'genna.wijngaarde@gmail.com';
 
@@ -89,6 +90,11 @@ const Devis = () => {
   const onSubmit = (values: FormValues) => {
     setSubmitError(null);
     setIsSubmitted(true);
+
+    // Track quote submission
+    trackQuoteSubmit({
+      city: values.city,
+    });
 
     try {
       localStorage.setItem(

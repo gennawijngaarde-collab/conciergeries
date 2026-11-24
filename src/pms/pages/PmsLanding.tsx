@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { getProfile } from '../storage';
 import { subscriptionPlans, siteConfig } from '@/data/site';
+import { useEffect } from 'react';
+import { trackPmsView } from '@/lib/analytics';
 
 const features = [
   {
@@ -28,6 +30,11 @@ export default function PmsLanding() {
   const profile = getProfile();
   const ctaTo = profile?.onboarded ? '/pms/dashboard' : '/pms/onboarding';
   const { premium, pms, trialDays } = subscriptionPlans;
+
+  // Track PMS view
+  useEffect(() => {
+    trackPmsView();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">

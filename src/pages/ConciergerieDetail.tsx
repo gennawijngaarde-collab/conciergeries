@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabaseClient';
 import type { Conciergerie } from '@/types/conciergerie';
 import ConciergerieLogo from '@/components/ConciergerieLogo';
 import ConciergerieStructuredData from '@/components/ConciergerieStructuredData';
+import { trackListingView, trackPhoneClick, trackEmailClick, trackWebsiteClick, type ListingParams } from '@/lib/analytics';
 
 const ConciergerieDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -67,6 +68,21 @@ const ConciergerieDetail = () => {
 
   const conciergerie = useMemo(() => staticConciergerie ?? remoteConciergerie, [staticConciergerie, remoteConciergerie]);
 
+  // Track listing view when conciergerie is loaded
+  useEffect(() => {
+    if (conciergerie) {
+      const listingParams: ListingParams = {
+        listing_id: conciergerie.slug,
+        listing_name: conciergerie.name,
+        city: conciergerie.city.split(',')[0]?.trim(),
+        department: conciergerie.city.split(',')[1]?.trim(),
+        country: 'France',
+        premium: conciergerie.listingPlan === 'premium',
+      };
+      trackListingView(listingParams);
+    }
+  }, [conciergerie]);
+
   if (!conciergerie) {
     if (loadingRemote) return null;
     return <Navigate to="/conciergeries" replace />;
@@ -96,6 +112,28 @@ const ConciergerieDetail = () => {
         ))}
       </div>
     );
+  };
+
+  // Helper function to get listing params for tracking
+  const getListingParams = (): ListingParams => ({
+    listing_id: conciergerie.slug,
+    listing_name: conciergerie.name,
+    city: conciergerie.city.split(',')[0]?.trim(),
+    department: conciergerie.city.split(',')[1]?.trim(),
+    country: 'France',
+    premium: conciergerie.listingPlan === 'premium',
+  });
+
+  const handlePhoneClick = () => {
+    trackPhoneClick(getListingParams());
+  };
+
+  const handleEmailClick = () => {
+    trackEmailClick(getListingParams());
+  };
+
+  const handleWebsiteClick = () => {
+    trackWebsiteClick(getListingParams());
   };
 
   return (
@@ -200,7 +238,7 @@ const ConciergerieDetail = () => {
                   asChild
                   className="bg-white text-blue-600 hover:bg-blue-50 px-8"
                 >
-                  <a href={conciergerie.website} target="_blank" rel="noopener noreferrer">
+                  <a href={conciergerie.website} target="_blank" rel="noopener noreferrer" onClick={handleWebsiteClick}>
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Visiter le site
                   </a>
@@ -212,7 +250,7 @@ const ConciergerieDetail = () => {
                   variant="outline"
                   className="border-white/30 text-white hover:bg-white/10"
                 >
-                  <a href={`tel:${conciergerie.phone}`}>
+                  <a href={`tel:${conciergerie.phone}`} onClick={handlePhoneClick}>
                     <Phone className="w-4 h-4 mr-2" />
                     Appeler
                   </a>
@@ -224,7 +262,7 @@ const ConciergerieDetail = () => {
                   variant="outline"
                   className="border-white/30 text-white hover:bg-white/10"
                 >
-                  <a href={`mailto:${conciergerie.email}`}>
+                  <a href={`mailto:${conciergerie.email}`} onClick={handleEmailClick}>
                     <Mail className="w-4 h-4 mr-2" />
                     Envoyer un email
                   </a>
@@ -326,6 +364,7 @@ const ConciergerieDetail = () => {
                   {conciergerie.phone && (
                     <a
                       href={`tel:${conciergerie.phone}`}
+                      onClick={handlePhoneClick}
                       className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors p-4 bg-gray-50 rounded-lg"
                     >
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -341,6 +380,7 @@ const ConciergerieDetail = () => {
                   {conciergerie.email && (
                     <a
                       href={`mailto:${conciergerie.email}`}
+                      onClick={handleEmailClick}
                       className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors p-4 bg-gray-50 rounded-lg"
                     >
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -358,6 +398,7 @@ const ConciergerieDetail = () => {
                       href={conciergerie.website}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={handleWebsiteClick}
                       className="flex items-center gap-4 text-gray-600 hover:text-blue-600 transition-colors p-4 bg-gray-50 rounded-lg"
                     >
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
