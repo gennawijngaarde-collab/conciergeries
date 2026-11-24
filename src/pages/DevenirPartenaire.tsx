@@ -94,6 +94,7 @@ const DevenirPartenaire = () => {
     plan === 'premium' ? 'Premium' : plan === 'pms' ? 'Cleanbnb PMS' : 'Standard';
   const { standard, premium, pms, trialDays } = subscriptionPlans;
 
+  const fromSignup = searchParams.get('inscription') === '1';
   const success = searchParams.get('success') === '1';
   const canceled = searchParams.get('canceled') === '1';
   const sessionId = searchParams.get('session_id');
@@ -301,6 +302,12 @@ const DevenirPartenaire = () => {
             Essai gratuit de {trialDays} jours sur tous les abonnements.
           </p>
         </div>
+
+        {fromSignup && (
+          <div className="mb-8 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-950 text-center">
+            Votre compte est créé, mais aucun prélèvement n’a encore été lancé. Enregistrez une carte ci-dessous pour que le paiement parte automatiquement à la fin de l’essai.
+          </div>
+        )}
 
         <div className="mb-8 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-950 text-center">
           <strong>{trialDays} jours d’essai gratuit</strong>. La carte est enregistrée aujourd’hui, et le premier prélèvement part automatiquement à la fin de l’essai, puis chaque mois. Résiliable avant cette date depuis l’espace partenaire.

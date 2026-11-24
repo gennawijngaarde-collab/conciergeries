@@ -482,7 +482,7 @@ export default function PartnerDashboard() {
                 {!loading && !sub ? (
                   <div className="space-y-3">
                     <p className="text-sm text-gray-700">
-                      Aucun abonnement détecté. Standard (annuaire), Premium (annuaire + PMS) ou PMS seul — essai 30 jours.
+                      Ce compte Supabase n’a pas d’abonnement Stripe. Créer un compte n’enregistre pas de carte et ne déclenche aucun prélèvement. Choisissez une offre : la carte est demandée maintenant, et le premier débit part automatiquement à la fin des 30 jours d’essai.
                     </p>
                     {lastSessionId && (
                       <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing}>
