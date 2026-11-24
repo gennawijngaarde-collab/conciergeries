@@ -66,11 +66,20 @@ export default function Account() {
     setBusy(true);
     try {
       if (mode === 'signup') {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email: values.email,
           password: values.password,
         });
         if (error) throw error;
+        // A Supabase account does not start a charge. The card is collected on the partner form.
+        if (!data.session) {
+          setResetNote(
+            'Compte créé. Confirmez votre email, puis ouvrez Devenir partenaire pour enregistrer une carte. Aucun prélèvement n’est lancé tant que Stripe n’a pas la carte.',
+          );
+          return;
+        }
+        navigate('/devenir-partenaire?inscription=1', { replace: true });
+        return;
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: values.email,
@@ -185,8 +194,11 @@ export default function Account() {
                     >
                       {resetBusy ? 'Envoi…' : 'Mot de passe oublié ?'}
                     </button>
-                    {resetNote && <span className="text-xs text-gray-600">{resetNote}</span>}
                   </div>
+                )}
+
+                {resetNote && (
+                  <p className="text-sm text-gray-700 rounded-lg border border-amber-200 bg-amber-50 p-3">{resetNote}</p>
                 )}
 
                 <Button

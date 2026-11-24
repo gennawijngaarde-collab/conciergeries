@@ -41,7 +41,7 @@ export default function PmsLanding() {
           </h1>
           <p className="text-lg text-white/75 max-w-2xl mb-4">
             Inclus dans l’abonnement Premium de l’annuaire, ou disponible en abonnement PMS dédié.
-            Essai gratuit {trialDays} jours.
+            Essai gratuit {trialDays} jours, puis prélèvement automatique.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button asChild size="lg" className="bg-[#c9a57a] text-[#114c09] hover:bg-[#b89268]">

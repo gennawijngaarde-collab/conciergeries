@@ -18,7 +18,9 @@ Créer 3 prix récurrents mensuels et renseigner :
 - `STRIPE_PREMIUM_PRICE` → 29,99€
 - `STRIPE_PMS_PRICE` → 19,99€
 
-Le checkout active `trial_period_days: 30` automatiquement (`api/stripe/create-checkout-session.ts`).
+Le checkout (`api/stripe/create-checkout-session.ts`) ouvre un essai de 30 jours et exige une carte (`payment_method_collection: always`). Rien n’est débité pendant l’essai. À la fin, Stripe prélève automatiquement cette carte (`charge_automatically`), puis chaque mois. Sans carte, l’abonnement est annulé au lieu de rester gratuit.
+
+Webhooks à écouter en plus de `checkout.session.completed` : `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`. Le premier prélèvement met le statut à `active`.
 
 ## Base Supabase
 

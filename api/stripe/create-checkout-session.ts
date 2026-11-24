@@ -1,8 +1,7 @@
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
-
-const TRIAL_DAYS = 30;
+import { automaticTrialCheckout, TRIAL_DAYS } from './subscriptionCheckout';
 
 const schema = z.object({
   plan: z.enum(['standard', 'premium', 'pms']),
@@ -66,7 +65,7 @@ export default async function handler(req: any, res: any) {
     }
 
     const body = (typeof req.body === 'string' ? JSON.parse(req.body) : req.body) as unknown;
-    const values: FormBody = schema.parse(body);
+    const values: ReqBody = schema.parse(body);
 
     const baseUrl = requireEnv('PUBLIC_BASE_URL').replace(/\/+$/, '');
     const price = resolvePriceId(values.plan);
@@ -88,6 +87,7 @@ export default async function handler(req: any, res: any) {
         ? `/pms?trial=1&session_id={CHECKOUT_SESSION_ID}`
         : `/devenir-partenaire?success=1&session_id={CHECKOUT_SESSION_ID}`;
 
+    const trial = automaticTrialCheckout(TRIAL_DAYS);
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price, quantity: 1 }],
@@ -96,8 +96,10 @@ export default async function handler(req: any, res: any) {
       client_reference_id: userId,
       success_url: `${baseUrl}${successPath}`,
       cancel_url: `${baseUrl}/devenir-partenaire?canceled=1`,
+      // Card is saved now. Stripe charges it automatically when the trial ends.
+      payment_method_collection: trial.payment_method_collection,
       subscription_data: {
-        trial_period_days: TRIAL_DAYS,
+        ...trial.subscription_data,
         metadata: {
           userId,
           plan: values.plan,

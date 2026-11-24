@@ -37,6 +37,7 @@ type SubscriptionRow = {
   stripe_customer_id: string | null;
   stripe_subscription_id: string | null;
   current_period_end: string | null;
+  trial_ends_at?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -389,6 +390,7 @@ export default function PartnerDashboard() {
   const listingVisible =
     ['active', 'trialing'].includes(listingStatus) && planRaw !== 'pms';
   const isTrialing = (sub?.status ?? '').toLowerCase() === 'trialing';
+  const automaticChargeOn = sub?.trial_ends_at || sub?.current_period_end || null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -480,7 +482,7 @@ export default function PartnerDashboard() {
                 {!loading && !sub ? (
                   <div className="space-y-3">
                     <p className="text-sm text-gray-700">
-                      Aucun abonnement détecté. Standard (annuaire), Premium (annuaire + PMS) ou PMS seul — essai 30 jours.
+                      Ce compte Supabase n’a pas d’abonnement Stripe. Créer un compte n’enregistre pas de carte et ne déclenche aucun prélèvement. Choisissez une offre : la carte est demandée maintenant, et le premier débit part automatiquement à la fin des 30 jours d’essai.
                     </p>
                     {lastSessionId && (
                       <Button variant="outline" onClick={() => void syncFromStripe()} disabled={syncing}>
@@ -511,6 +513,15 @@ export default function PartnerDashboard() {
                       </div>
                     </div>
                   </div>
+                  {isTrialing && (
+                    <p className="text-sm text-gray-700">
+                      À la fin de l’essai
+                      {automaticChargeOn
+                        ? ` (${new Date(automaticChargeOn).toLocaleDateString('fr-FR')})`
+                        : ''}
+                      , le paiement mensuel est prélevé automatiquement sur la carte enregistrée.
+                    </p>
+                  )}
                   {hasPmsAccess && (
                     <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="text-sm text-emerald-950">
